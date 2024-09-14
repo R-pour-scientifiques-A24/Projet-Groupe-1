@@ -117,7 +117,7 @@ Ici, on aurait que T~Exp(1).
 Quelle est la probabilité que le nombre d’événements entre les temps 100
 et 150 \> 60?  
 N(t)-N(s)~Poisson(a(t-s)) -\> N(150)-N(100)~Poisson(50).  
-P(N(150)-N(100)) \> 60) = 0.07216018
+P(N(150)-N(100)) \> 60) = 0.07216018  
 
 ``` r
 ppois(60, lambda=50, lower = FALSE)

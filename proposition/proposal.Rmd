@@ -51,6 +51,7 @@ Il s’agirait ici de modéliser la loi que suit la variable T, soit le temps é
 
 **Exemple où un utilisateur visualise la distribution de T et y ajuste une exponentielle(1).**
 ```{r loi T, echo=FALSE}
+set.seed(444444)
 randexp<-rexp(100, 1)
 hist(randexp, prob=TRUE, breaks = 20, main = "Distribution des temps écoulés entre 2 événements", xlab="Temps écoulé entre 2 événements", ylab="Proportion")
 x<-seq(from=0, to=6, length=1000)
@@ -73,7 +74,7 @@ Et finalement calculer des probabilités:
 Si T\~Exp(a), alors le nombre d'événement au temps t N(t)\~Poisson(at). Ici, on aurait que T\~Exp(1).\
 Quelle est la probabilité que le nombre d'événements entre les temps 100 et 150 > 60? \
 N(t)-N(s)\~Poisson(a(t-s)) -> N(150)-N(100)\~Poisson(50).\
-P(N(150)-N(100)) > 60) = 0.07216018
+P(N(150)-N(100)) > 60) = 0.07216018 \
 
 ```{r Probabilité, echo=TRUE}
 ppois(60, lambda=50, lower = FALSE)
