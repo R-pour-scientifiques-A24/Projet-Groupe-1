@@ -1,17 +1,26 @@
 ---
 title: "Proposition de projet"
-author: "Noms des membres de l'équipe"
+author: "Erika Audet, Anne-Marie Groulx et Allison Picard"
 output: github_document
 ---
 
-```{r load-packages, message = FALSE}
+```{r load-packages, message = FALSE, echo = FALSE}
 library(tidyverse)
 library(broom)
 ```
 
 ## 1. Introduction
 
+À l’aide d’une base de données qui recense 11200 éruptions volcaniques sur 13 000 ans, nous aimerions créer une application qui permette d’évaluer les probabilités d’activités volcaniques futures et de visualiser la répartition géographique de celles-ci. 
 
+Le jeu de données provient du Smithsonian Institution. Considérant l’énorme intervalle de temps sur lequel se déroulent les événements volcaniques recensés, les données ont été collectées de différentes manières. On trouve par exemple des données collectées et datées par observations historiques, par radiocarbone, par téphrochronologie et par 17 autres méthodes différentes. Cette information est disponible pour chaque observation dans le jeu de données sous la variable Evidence_method_dating. 
+
+Nous avons pris les données sur Kaggle et il s’agit d’une version de 2020. L’avantage de travailler avec ces données plutôt que celles provenant directement du Smithsonian est qu’elles sont déjà *tidy*. Le jeu de données contient 5 tables, mais nous pensons nous en tenir à 3 d’entre elles, soit: 
+
+- eruption.csv : Recensement des éruptions volcaniques. 
+- event.csv : Recensement de chaque type d'événement par éruption. Par exemple, l'éruption 10011 contient 6 événements différents: Explosion, coulée de lave, etc...
+
+- volcanoes.csv : Information géographique et géologique sur les volcans. 
 
 ## 2. Données
 
@@ -19,5 +28,56 @@ library(broom)
 
 ## 3. Plan de travail
 
+### Objectif
+
+L’objectif principal de notre application web en lien avec notre jeu de données est de prédire les années des prochaines éruptions volcaniques de chaque volcan, le type d’éruption ainsi que leur force à l’aide d’un modèle prédictif. L’utilisateur de l’application pourrait choisir un volcan précis ou certains critères géographiques pour que des probabilités d’événements et d’intensité lui soit retournées. 
+
+Si le temps le permet, nous aimerions aussi faire un volet cartographique. L’utilisateur pourrait indiquer un endroit pour que l’application lui retourne le volcan le plus près et ses probabilités d’activité volcanique. Il serait aussi possible de cartographier l’intensité de l’activité volcanique (par force et par fréquence) à l’aide d’un code de couleurs. L’utilisateur pourrait filtrer par années, par altitude, par longitude, etc... et voir cette carte se mettre à jour en fonction des critères sélectionnés. Il pourrait aussi être intéressant de faire une animation qui présente l’évolution de l’intensité d’activité volcanique dans le temps. 
+
+### Statistiques descriptives et exploration de données
+Pour analyser les données de façon très préliminaire, nous pensons faire des diagrammes en boîte pour les variables numériques suivantes: Année d'éruption et indice de force. On pourrait aussi faire des diagrammes à barres qui présentent la fréquence de chaque type d'éruption. Des histogrammes de la fréquences des éruptions dans le temps pourrait aussi être pertinents. Toutes ces analyses pourraient être faites sur l'ensemble des données et marginalement par continent, par volcan ou selon une autre variable catégorielle.
+
+### Calculs sur les données
+Il pourrait être pratique de créer une nouvelle variable qui calcule le temps écoulé entre 2 événements consécutifs pour chaque volcan (voir la section [Processus de dénombrement] à ce sujet). Il pourrait aussi être pratique de fusionner les variables année, mois et jour pour créer une variable de type date.
+
+### Visualisations incluses dans l'application
+Pour visualiser les données, on pourrait regrouper les volcans en groupe selon différents facteurs à l’aide des k-moyennes. Il faudrait d’abord trouver le nombre de groupes favorables à nos données. Aussi, on pourrait les mettre sur une carte du monde en fonction de leur emplacement. Si nous faisons un processus de dénombrement, nous pourrions visualiser la loi d’un volcan donné à l’aide d’un graphique. 
+
+### Méthodes anticipées pour la création d'un modèle prédictif
+Ce n’est pas encore clair pour nous qu’elle sera la meilleure méthode pour faire un modèle prédictif, mais voici ce à quoi nous avons pensé jusqu’à maintenant. 
+
+#### Processus de dénombrement 
+Il s’agirait ici de modéliser la loi que suit la variable T, soit le temps écoulé entre 2 événements. À partir de cette loi, on pourrait calculer les probabilités qu’un nouvel événement survienne dans un intervalle donné. Pour trouver les paramètres de la loi de T, on pourrait faire une interface dans laquelle l’utilisateur peut comparer la répartition des temps écoulés entre 2 éruptions pour un volcan donné et les fonctions de densité des lois théoriques. Une fois la loi choisie pour T, l’utilisateur peut calculer des probabilités.
+
+**Exemple où un utilisateur visualise la distribution de T et y ajuste une exponentielle(1).**
+```{r loi T, echo=FALSE}
+randexp<-rexp(100, 1)
+hist(randexp, prob=TRUE, breaks = 20, main = "Distribution des temps écoulés entre 2 événements", xlab="Temps écoulé entre 2 événements", ylab="Proportion")
+x<-seq(from=0, to=6, length=1000)
+lines(x,dexp(x,1), col = "red", lwd = 2)
+
+```
 
 
+Il peut ensuite voir le processus de dénombrement associée à la loi de T choisie:
+```{r processus dénombrement, echo=FALSE}
+
+even<-c(0,1:100)
+temps<-c(0,cumsum(randexp))
+plot(even~temps, type = "s", main = "Dénombrement des événements en fonction du temps écoulé", xlab="Temps écoulé", ylab="Nombre d'événements")
+
+```
+
+Et finalement calculer des probabilités:
+
+Si T~Exp(a), alors le nombre d'événement au temps t N(t)~Poisson(at). Ici, on aurait que T~Exp(1).\
+Quelle est la probabilité que le nombre d'événements entre les temps 100 et 150 > 60? \
+N(t)-N(s)~Poisson(a(t-s)) -> N(150)-N(100)~Poisson(50).\
+P(N(150)-N(100)) > 60) = 0.07216018
+
+```{r Probabilité, echo=TRUE}
+ppois(60, lambda=50, lower = FALSE)
+```
+
+#### Méthodes d'apprentissage supervisé (ou non-supervisé, je sais plus?!)
+Méthodes vues dans le cours d'analyse des données, à revoir.
