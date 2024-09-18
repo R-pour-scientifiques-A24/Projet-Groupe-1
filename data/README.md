@@ -4,11 +4,9 @@ Placez le(s) fichier(s) de données dans ce dossier.
 
 Ensuite, incluez un dictionnaire des données (variables et leurs descriptions) pour vos fichiers de données en utilisant le format suivant.
 
-## nom du fichier de données
+## Eruption.csv
 
-Nous utiliserons 3 jeux de données.
-
-Le premier, eruption.csv, comporte 15 variables
+Ce jeu comporte 15 variables
 
 -	`Volcano_number` : un identifiant unique pour chaque volcan
 -	`Volcano_name` : le nom du volcan
@@ -26,7 +24,9 @@ Le premier, eruption.csv, comporte 15 variables
 -	`Latitude` : la latitude du volcan
 -	`Longitude` : la longitude du volcan
 
-Le deuxième, events.csv, comporte 10 variables
+## Events.csv
+
+Ce jeu comporte 10 variables
 
 -	`Volcano_number` : un identifiant unique pour chaque volcan
 -	`Volcano_name` : le nom du volcan
@@ -39,7 +39,9 @@ Le deuxième, events.csv, comporte 10 variables
 -	`Event_date_month` : le mois où l’événement s’est produit
 -	`Event_date_day` : la date de la journée où l’événement s’est produit
 
-Le troisième, volcano.csv, comporte 26 variables
+## Volcano.csv
+
+Ce jeu comporte 26 variables
 
 -	`Volcano_number` : un identifiant unique pour chaque volcan
 -	`Volcano_name` : le nom du volcan
