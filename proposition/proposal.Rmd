@@ -1,6 +1,6 @@
 ---
 title: "Proposition de projet"
-author: "Erika Audet, Anne-Marie Groulx et Allison Picard"
+author: "Erika Audet, Anne-Marie Groulx et Allisson Picard"
 output: github_document
 ---
 
