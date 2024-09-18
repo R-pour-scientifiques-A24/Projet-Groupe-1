@@ -11,7 +11,7 @@ library(broom)
 
 ## 1. Introduction
 
-À l’aide d’une base de données qui recense 11200 éruptions volcaniques sur 13 000 ans, nous aimerions créer une application qui permette d’évaluer les probabilités d’activités volcaniques futures et de visualiser la répartition géographique de celles-ci. 
+À l’aide d’une base de données qui recense 11200 éruptions volcaniques sur 13 000 ans, nous aimerions créer une application qui permet d’évaluer les probabilités d’activités volcaniques futures et de visualiser la répartition géographique de celles-ci. 
 
 Le jeu de données provient du Smithsonian Institution. Considérant l’énorme intervalle de temps sur lequel se déroulent les événements volcaniques recensés, les données ont été collectées de différentes manières. On trouve par exemple des données collectées et datées par observations historiques, par radiocarbone, par téphrochronologie et par 17 autres méthodes différentes. Cette information est disponible pour chaque observation dans le jeu de données sous la variable Evidence_method_dating. 
 
