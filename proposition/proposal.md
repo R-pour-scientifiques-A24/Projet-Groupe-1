@@ -1,11 +1,11 @@
 Proposition de projet
 ================
-Erika Audet, Anne-Marie Groulx et Allison Picard
+Erika Audet, Anne-Marie Groulx et Allisson Picard
 
 ## 1. Introduction
 
 À l’aide d’une base de données qui recense 11200 éruptions volcaniques
-sur 13 000 ans, nous aimerions créer une application qui permette
+sur 13 000 ans, nous aimerions créer une application qui permet
 d’évaluer les probabilités d’activités volcaniques futures et de
 visualiser la répartition géographique de celles-ci.
 
@@ -28,14 +28,136 @@ d’entre elles, soit:
 - event.csv : Recensement de chaque type d’événement par éruption. Par
   exemple, l’éruption 10011 contient 6 événements différents: Explosion,
   coulée de lave, etc…
-- volcanoes.csv : Information géographique et géologique sur les
-  volcans.
+- volcano.csv : Information géographique et géologique sur les volcans.
 
 ## 2. Données
 
 Les jeux de données sont dans le dossier ‘data’.  
 Voir le fichier README du dossier data pour voir le détail sur les
 variables.
+
+|                                                  |           |
+|:-------------------------------------------------|:----------|
+| Name                                             | eruptions |
+| Number of rows                                   | 11178     |
+| Number of columns                                | 15        |
+| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_   |           |
+| Column type frequency:                           |           |
+| character                                        | 4         |
+| numeric                                          | 11        |
+| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ |           |
+| Group variables                                  | None      |
+
+Data summary
+
+**Variable type: character**
+
+| skim_variable          | n_missing | complete_rate | min | max | empty | n_unique | whitespace |
+|:-----------------------|----------:|--------------:|----:|----:|------:|---------:|-----------:|
+| volcano_name           |         0 |          1.00 |   3 |  37 |     0 |      921 |          0 |
+| eruption_category      |         0 |          1.00 |  18 |  20 |     0 |        3 |          0 |
+| area_of_activity       |      6484 |          0.42 |   3 |  60 |     0 |     2592 |          0 |
+| evidence_method_dating |      1280 |          0.89 |   5 |  25 |     0 |       20 |          0 |
+
+**Variable type: numeric**
+
+| skim_variable   | n_missing | complete_rate |      mean |       sd |        p0 |       p25 |       p50 |       p75 |      p100 | hist  |
+|:----------------|----------:|--------------:|----------:|---------:|----------:|----------:|----------:|----------:|----------:|:------|
+| volcano_number  |         0 |          1.00 | 300284.37 | 52321.19 | 210010.00 | 263310.00 | 290050.00 | 343030.00 | 600000.00 | ▇▇▁▁▁ |
+| eruption_number |         0 |          1.00 |  15666.91 |  3297.61 |  10001.00 |  12817.25 |  15650.50 |  18463.75 |  22355.00 | ▇▇▇▇▅ |
+| vei             |      2906 |          0.74 |      1.95 |     1.16 |      0.00 |      1.00 |      2.00 |      2.00 |      7.00 | ▅▇▃▁▁ |
+| start_year      |         1 |          1.00 |    622.85 |  2482.17 | -11345.00 |    680.00 |   1847.00 |   1950.00 |   2020.00 | ▁▁▁▁▇ |
+| start_month     |       193 |          0.98 |      3.45 |     4.07 |      0.00 |      0.00 |      1.00 |      7.00 |     12.00 | ▇▁▂▁▂ |
+| start_day       |       196 |          0.98 |      7.02 |     9.65 |      0.00 |      0.00 |      0.00 |     15.00 |     31.00 | ▇▁▂▁▁ |
+| end_year        |      6846 |          0.39 |   1917.33 |   157.65 |   -475.00 |   1895.00 |   1957.00 |   1992.00 |   2020.00 | ▁▁▁▁▇ |
+| end_month       |      6849 |          0.39 |      6.22 |     3.69 |      0.00 |      3.00 |      6.00 |      9.00 |     12.00 | ▇▅▇▆▇ |
+| end_day         |      6852 |          0.39 |     13.32 |     9.83 |      0.00 |      4.00 |     15.00 |     21.00 |     31.00 | ▇▃▆▃▅ |
+| latitude        |         0 |          1.00 |     16.87 |    30.76 |    -77.53 |     -6.10 |     17.60 |     40.82 |     85.61 | ▁▃▇▆▃ |
+| longitude       |         0 |          1.00 |     31.57 |   115.25 |   -179.97 |    -77.66 |     55.71 |    139.39 |    179.58 | ▂▃▂▁▇ |
+
+Data summary
+
+|                                                  |        |
+|:-------------------------------------------------|:-------|
+| Name                                             | events |
+| Number of rows                                   | 41322  |
+| Number of columns                                | 10     |
+| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_   |        |
+| Column type frequency:                           |        |
+| character                                        | 3      |
+| numeric                                          | 7      |
+| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ |        |
+| Group variables                                  | None   |
+
+**Variable type: character**
+
+| skim_variable | n_missing | complete_rate | min | max | empty | n_unique | whitespace |
+|:--------------|----------:|--------------:|----:|----:|------:|---------:|-----------:|
+| volcano_name  |         0 |          1.00 |   3 |  37 |     0 |      899 |          0 |
+| event_type    |         0 |          1.00 |   3 |  35 |     0 |       56 |          0 |
+| event_remarks |     36442 |          0.12 |   2 | 593 |     0 |      342 |          0 |
+
+**Variable type: numeric**
+
+| skim_variable       | n_missing | complete_rate |      mean |       sd |     p0 |       p25 |      p50 |       p75 |   p100 | hist  |
+|:--------------------|----------:|--------------:|----------:|---------:|-------:|----------:|---------:|----------:|-------:|:------|
+| volcano_number      |         0 |          1.00 | 296428.86 | 48713.19 | 210010 | 263250.00 | 284210.0 | 342090.00 | 600000 | ▇▆▁▁▁ |
+| eruption_number     |         0 |          1.00 |  15428.93 |  3190.71 |  10001 |  12693.25 |  15334.5 |  18081.75 |  22352 | ▇▇▇▇▃ |
+| eruption_start_year |         0 |          1.00 |    850.53 |  2298.53 | -11345 |   1257.00 |   1884.0 |   1968.00 |   2020 | ▁▁▁▁▇ |
+| event_number        |         0 |          1.00 | 127402.19 | 15453.72 | 100001 | 113978.25 | 127832.5 | 141701.75 | 153202 | ▆▇▆▇▇ |
+| event_date_year     |     31315 |          0.24 |   1365.65 |  1707.33 |  -9650 |   1773.00 |   1912.0 |   1977.00 |   2020 | ▁▁▁▁▇ |
+| event_date_month    |     34190 |          0.17 |      6.38 |     3.52 |      1 |      3.00 |      6.0 |      9.00 |     12 | ▇▅▅▅▇ |
+| event_date_day      |     35399 |          0.14 |     15.46 |     8.96 |      1 |      8.00 |     15.0 |     23.00 |     31 | ▇▆▆▆▆ |
+
+Data summary
+
+|                                                  |         |
+|:-------------------------------------------------|:--------|
+| Name                                             | volcano |
+| Number of rows                                   | 958     |
+| Number of columns                                | 26      |
+| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_   |         |
+| Column type frequency:                           |         |
+| character                                        | 18      |
+| numeric                                          | 8       |
+| \_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ |         |
+| Group variables                                  | None    |
+
+**Variable type: character**
+
+| skim_variable        | n_missing | complete_rate | min | max | empty | n_unique | whitespace |
+|:---------------------|----------:|--------------:|----:|----:|------:|---------:|-----------:|
+| volcano_name         |         0 |             1 |   3 |  34 |     0 |      954 |          0 |
+| primary_volcano_type |         0 |             1 |   6 |  19 |     0 |       26 |          0 |
+| last_eruption_year   |         0 |             1 |   1 |   7 |     0 |      342 |          0 |
+| country              |         0 |             1 |   4 |  32 |     0 |       89 |          0 |
+| region               |         0 |             1 |   6 |  30 |     0 |       19 |          0 |
+| subregion            |         0 |             1 |   4 |  38 |     0 |       98 |          0 |
+| tectonic_settings    |         0 |             1 |   7 |  47 |     0 |       11 |          0 |
+| evidence_category    |         0 |             1 |  14 |  18 |     0 |        5 |          0 |
+| major_rock_1         |         0 |             1 |   6 |  40 |     0 |       10 |          0 |
+| major_rock_2         |         0 |             1 |   1 |  40 |     0 |       11 |          0 |
+| major_rock_3         |         0 |             1 |   1 |  40 |     0 |       11 |          0 |
+| major_rock_4         |         0 |             1 |   1 |  40 |     0 |       11 |          0 |
+| major_rock_5         |         0 |             1 |   1 |  40 |     0 |       11 |          0 |
+| minor_rock_1         |         0 |             1 |   1 |  40 |     0 |       11 |          0 |
+| minor_rock_2         |         0 |             1 |   1 |  40 |     0 |       11 |          0 |
+| minor_rock_3         |         0 |             1 |   1 |  40 |     0 |        9 |          0 |
+| minor_rock_4         |         0 |             1 |   1 |  23 |     0 |        3 |          0 |
+| minor_rock_5         |         0 |             1 |   1 |   1 |     0 |        1 |          0 |
+
+**Variable type: numeric**
+
+| skim_variable            | n_missing | complete_rate |       mean |         sd |        p0 |       p25 |       p50 |        p75 |        p100 | hist  |
+|:-------------------------|----------:|--------------:|-----------:|-----------:|----------:|----------:|----------:|-----------:|------------:|:------|
+| volcano_number           |         0 |             1 |  298585.33 |   49792.66 | 210010.00 | 263025.00 | 300055.50 |  343088.00 |   390829.00 | ▆▇▇▇▆ |
+| latitude                 |         0 |             1 |      14.98 |      31.58 |    -78.50 |     -5.40 |     14.51 |      40.80 |       71.08 | ▁▂▆▇▆ |
+| longitude                |         0 |             1 |      23.54 |     109.85 |   -179.97 |    -78.28 |     36.39 |     131.05 |      179.58 | ▃▅▂▃▇ |
+| elevation                |         0 |             1 |    1867.03 |    1401.55 |  -2500.00 |    881.00 |   1622.50 |    2548.25 |     6879.00 | ▁▆▇▂▁ |
+| population_within_5_km   |         0 |             1 |   47860.46 |  298668.99 |      0.00 |      0.00 |    295.00 |    4642.00 |  5783287.00 | ▇▁▁▁▁ |
+| population_within_10_km  |         0 |             1 |   61217.75 |  302385.96 |      0.00 |     23.25 |   1633.50 |   20730.25 |  5783287.00 | ▇▁▁▁▁ |
+| population_within_30_km  |         0 |             1 |  304044.35 |  735422.11 |      0.00 |    408.00 |  13918.00 |  256521.00 |  7073814.00 | ▇▁▁▁▁ |
+| population_within_100_km |         0 |             1 | 2730174.00 | 5690980.66 |      0.00 |  11397.75 | 354646.00 | 2981102.25 | 40640105.00 | ▇▁▁▁▁ |
 
 ## 3. Plan de travail
 

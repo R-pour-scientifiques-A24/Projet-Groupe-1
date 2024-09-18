@@ -19,12 +19,29 @@ Nous avons pris les données sur Kaggle et il s’agit d’une version de 2020. 
 
 - eruption.csv : Recensement des éruptions volcaniques. 
 - event.csv : Recensement de chaque type d'événement par éruption. Par exemple, l'éruption 10011 contient 6 événements différents: Explosion, coulée de lave, etc...
-- volcanoes.csv : Information géographique et géologique sur les volcans. 
+- volcano.csv : Information géographique et géologique sur les volcans. 
 
 ## 2. Données
 
 Les jeux de données sont dans le dossier 'data'.\
 Voir le fichier README du dossier data pour voir le détail sur les variables.
+
+```{r Data import, echo=FALSE, message=FALSE}
+library(readr)
+library(skimr)
+
+eruptions <- read_csv("../data/eruptions.csv")
+events <- read_csv("../data/events.csv")
+volcano <- read_csv("../data/volcano.csv")
+
+skim(eruptions)
+skim(events)
+skim(volcano)
+
+
+```
+
+
 
 ## 3. Plan de travail
 
