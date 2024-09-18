@@ -25,11 +25,9 @@ jeu de données contient 5 tables, mais nous pensons nous en tenir à 3
 d’entre elles, soit:
 
 - eruption.csv : Recensement des éruptions volcaniques.
-
 - event.csv : Recensement de chaque type d’événement par éruption. Par
   exemple, l’éruption 10011 contient 6 événements différents: Explosion,
   coulée de lave, etc…
-
 - volcanoes.csv : Information géographique et géologique sur les
   volcans.
 
@@ -45,10 +43,10 @@ variables.
 
 L’objectif principal de notre application web en lien avec notre jeu de
 données est de prédire les années des prochaines éruptions volcaniques
-de chaque volcan, le type d’éruption ainsi que leur force à l’aide d’un
-modèle prédictif. L’utilisateur de l’application pourrait choisir un
-volcan précis ou certains critères géographiques pour que des
-probabilités d’événements et d’intensité lui soit retournées.
+de chaque volcan ainsi que leur force à l’aide d’un modèle prédictif.
+L’utilisateur de l’application pourrait choisir un volcan précis ou
+certains critères géographiques pour que des probabilités d’événements
+et une prévision d’intensité lui soit retournées.
 
 Si le temps le permet, nous aimerions aussi faire un volet
 cartographique. L’utilisateur pourrait indiquer un endroit pour que
@@ -59,7 +57,7 @@ l’aide d’un code de couleurs. L’utilisateur pourrait filtrer par années,
 par altitude, par longitude, etc… et voir cette carte se mettre à jour
 en fonction des critères sélectionnés. Il pourrait aussi être
 intéressant de faire une animation qui présente l’évolution de
-l’intensité d’activité volcanique dans le temps.
+l’intensité et de la fréquence d’activité volcanique dans le temps.
 
 ### Statistiques descriptives et exploration de données
 
@@ -70,7 +68,7 @@ barres qui présentent la fréquence de chaque type d’éruption. Des
 histogrammes de la fréquences des éruptions dans le temps pourrait aussi
 être pertinents. Toutes ces analyses pourraient être faites sur
 l’ensemble des données et marginalement par continent, par volcan ou
-selon une autre variable catégorielle.
+selon d’autres variable catégorielle.
 
 ### Calculs sur les données
 
@@ -79,15 +77,6 @@ temps écoulé entre 2 événements consécutifs pour chaque volcan (voir la
 section [Processus de dénombrement](#processus-de-dénombrement) à ce
 sujet). Il pourrait aussi être pratique de fusionner les variables
 année, mois et jour pour créer une variable de type date.
-
-### Visualisations incluses dans l’application
-
-Pour visualiser les données, on pourrait regrouper les volcans en groupe
-selon différents facteurs à l’aide des k-moyennes. Il faudrait d’abord
-trouver le nombre de groupes favorables à nos données. Aussi, on
-pourrait les mettre sur une carte du monde en fonction de leur
-emplacement. Si nous faisons un processus de dénombrement, nous
-pourrions visualiser la loi d’un volcan donné à l’aide d’un graphique.
 
 ### Méthodes anticipées pour la création d’un modèle prédictif
 
@@ -116,11 +105,11 @@ choisie:
 
 Et finalement calculer des probabilités:
 
-Si T~Exp(a), alors le nombre d’événement au temps t N(t)~Poisson(at).  
-Ici, on aurait que T~Exp(1).  
+Si $T\sim Exp(a)$, alors le nombre d’événement au temps t
+$N(t)\sim Poisson(at)$. Ici, on aurait que $T\sim Exp(1)$.  
 Quelle est la probabilité que le nombre d’événements entre les temps 100
 et 150 \> 60?  
-N(t)-N(s)~Poisson(a(t-s)) -\> N(150)-N(100)~Poisson(50).  
+$N(t)-N(s)\sim Poisson(a(t-s))$ -\> $N(150)-N(100)\sim Poisson(50))$  
 P(N(150)-N(100)) \> 60) = 0.07216018  
 
 ``` r
@@ -129,6 +118,9 @@ ppois(60, lambda=50, lower = FALSE)
 
     ## [1] 0.07216018
 
-#### Méthodes d’apprentissage supervisé (ou non-supervisé, je sais plus?!)
+#### Modèle linéaire généralisé
 
-Méthodes vues dans le cours d’analyse des données, à revoir.
+Nous pourrions tenter d’adapter un modèle linéaire généralisé pour
+prédire l’indice de force d’une éruption. Nous ferons les tests
+appropriés sur les variables explicatives pour trouver celles qui sont
+les plus significatives.
