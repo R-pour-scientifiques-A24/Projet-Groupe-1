@@ -1,8 +1,6 @@
 # Les données
 
-Placez le(s) fichier(s) de données dans ce dossier.
-
-Ensuite, incluez un dictionnaire des données (variables et leurs descriptions) pour vos fichiers de données en utilisant le format suivant.
+Nous utiliserons 3 jeux de données.
 
 ## Eruption.csv
 
