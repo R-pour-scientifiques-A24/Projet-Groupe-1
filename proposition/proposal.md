@@ -112,7 +112,7 @@ choisie:
 
 Et finalement calculer des probabilités:
 
-Si T~Exp(a), alors le nombre d’événement au temps t N(t)~Poisson(at).
+Si T~Exp(a), alors le nombre d’événement au temps t N(t)~Poisson(at).  
 Ici, on aurait que T~Exp(1).  
 Quelle est la probabilité que le nombre d’événements entre les temps 100
 et 150 \> 60?  
