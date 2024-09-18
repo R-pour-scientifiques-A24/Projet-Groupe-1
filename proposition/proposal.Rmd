@@ -71,7 +71,8 @@ plot(even~temps, type = "s", main = "Dénombrement des événements en fonction 
 
 Et finalement calculer des probabilités:
 
-Si T\~Exp(a), alors le nombre d'événement au temps t N(t)\~Poisson(at). Ici, on aurait que T\~Exp(1).\
+Si T\~Exp(a), alors le nombre d'événement au temps t N(t)\~Poisson(at). \
+Ici, on aurait que T\~Exp(1).\
 Quelle est la probabilité que le nombre d'événements entre les temps 100 et 150 > 60? \
 N(t)-N(s)\~Poisson(a(t-s)) -> N(150)-N(100)\~Poisson(50).\
 P(N(150)-N(100)) > 60) = 0.07216018 \
