@@ -78,5 +78,5 @@ ppois(60, lambda=50, lower = FALSE)
 ```
 
 #### Modèle linéaire généralisé
-Nous pourrions tenter d'adapter un modèle linéaire généralisé pour prédire l'indice de force d'une éruption.Nous ferons les tests appropriés sur les variables explicatives pour trouver celles qui sont les plus significatives.
+Nous pourrions tenter d'adapter un modèle linéaire généralisé pour prédire l'indice de force d'une éruption. Nous ferons les tests appropriés sur les variables explicatives pour trouver celles qui sont les plus significatives.
 
