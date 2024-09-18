@@ -24,7 +24,8 @@ Nous avons pris les données sur Kaggle et il s’agit d’une version de 2020. 
 
 ## 2. Données
 
-
+Les jeux de données sont dans le dossier 'data'.\
+Voir le fichier README du dossier data pour voir le détail sur les variables.
 
 ## 3. Plan de travail
 
@@ -35,7 +36,7 @@ L’objectif principal de notre application web en lien avec notre jeu de donné
 Si le temps le permet, nous aimerions aussi faire un volet cartographique. L’utilisateur pourrait indiquer un endroit pour que l’application lui retourne le volcan le plus près et ses probabilités d’activité volcanique. Il serait aussi possible de cartographier l’intensité de l’activité volcanique (par force et par fréquence) à l’aide d’un code de couleurs. L’utilisateur pourrait filtrer par années, par altitude, par longitude, etc... et voir cette carte se mettre à jour en fonction des critères sélectionnés. Il pourrait aussi être intéressant de faire une animation qui présente l’évolution de l’intensité d’activité volcanique dans le temps. 
 
 ### Statistiques descriptives et exploration de données
-Pour analyser les données de façon très préliminaire, nous pensons faire des diagrammes en boîte pour les variables numériques suivantes: Année d'éruption et indice de force. On pourrait aussi faire des diagrammes à barres qui présentent la fréquence de chaque type d'éruption. Des histogrammes de la fréquences des éruptions dans le temps pourrait aussi être pertinents. Toutes ces analyses pourraient être faites sur l'ensemble des données et marginalement par continent, par volcan ou selon une autre variable catégorielle.
+Pour analyser les données de façon très préliminaire, nous pensons faire des diagrammes en boîte pour les variables numériques suivantes: Année d'éruption et indice de force. On pourrait aussi faire des diagrammes à barres qui présentent la fréquence de chaque type d'éruption. Des histogrammes de la fréquences des éruptions dans le temps pourrait aussi être pertinents. Toutes ces analyses pourraient être faites sur l'ensemble des données et marginalement par continent, par volcan ou selon d'autres variable catégorielle.
 
 ### Calculs sur les données
 Il pourrait être pratique de créer une nouvelle variable qui calcule le temps écoulé entre 2 événements consécutifs pour chaque volcan (voir la section [Processus de dénombrement] à ce sujet). Il pourrait aussi être pratique de fusionner les variables année, mois et jour pour créer une variable de type date.

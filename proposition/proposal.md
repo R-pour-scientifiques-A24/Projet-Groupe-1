@@ -35,6 +35,10 @@ d’entre elles, soit:
 
 ## 2. Données
 
+Les jeux de données sont dans le dossier ‘data’.  
+Voir le fichier README du dossier data pour voir le détail sur les
+variables.
+
 ## 3. Plan de travail
 
 ### Objectif
