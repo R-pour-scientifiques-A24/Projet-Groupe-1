@@ -19,7 +19,6 @@ Nous avons pris les données sur Kaggle et il s’agit d’une version de 2020. 
 
 - eruption.csv : Recensement des éruptions volcaniques. 
 - event.csv : Recensement de chaque type d'événement par éruption. Par exemple, l'éruption 10011 contient 6 événements différents: Explosion, coulée de lave, etc...
-
 - volcanoes.csv : Information géographique et géologique sur les volcans. 
 
 ## 2. Données
@@ -39,9 +38,6 @@ Pour analyser les données de façon très préliminaire, nous pensons faire des
 
 ### Calculs sur les données
 Il pourrait être pratique de créer une nouvelle variable qui calcule le temps écoulé entre 2 événements consécutifs pour chaque volcan (voir la section [Processus de dénombrement] à ce sujet). Il pourrait aussi être pratique de fusionner les variables année, mois et jour pour créer une variable de type date.
-
-### Visualisations incluses dans l'application
-Pour visualiser les données, on pourrait regrouper les volcans en groupe selon différents facteurs à l’aide des k-moyennes. Il faudrait d’abord trouver le nombre de groupes favorables à nos données. Aussi, on pourrait les mettre sur une carte du monde en fonction de leur emplacement. Si nous faisons un processus de dénombrement, nous pourrions visualiser la loi d’un volcan donné à l’aide d’un graphique. 
 
 ### Méthodes anticipées pour la création d'un modèle prédictif
 Ce n’est pas encore clair pour nous qu’elle sera la meilleure méthode pour faire un modèle prédictif, mais voici ce à quoi nous avons pensé jusqu’à maintenant. 
@@ -71,8 +67,7 @@ plot(even~temps, type = "s", main = "Dénombrement des événements en fonction 
 
 Et finalement calculer des probabilités:
 
-Si T\~Exp(a), alors le nombre d'événement au temps t N(t)\~Poisson(at). \
-Ici, on aurait que T\~Exp(1).\
+Si T\~Exp(a), alors le nombre d'événement au temps t N(t)\~Poisson(at). Ici, on aurait que T\~Exp(1).\
 Quelle est la probabilité que le nombre d'événements entre les temps 100 et 150 > 60? \
 N(t)-N(s)\~Poisson(a(t-s)) -> N(150)-N(100)\~Poisson(50).\
 P(N(150)-N(100)) > 60) = 0.07216018 \
@@ -81,5 +76,6 @@ P(N(150)-N(100)) > 60) = 0.07216018 \
 ppois(60, lambda=50, lower = FALSE)
 ```
 
-#### Méthodes d'apprentissage supervisé (ou non-supervisé, je sais plus?!)
-Méthodes vues dans le cours d'analyse des données, à revoir.
+#### Modèle linéaire généralisé
+Nous pourrions tenter d'adapter un modèle linéaire généralisé pour prédire l'indice de force d'une éruption.Nous ferons les tests appropriés sur les variables explicatives pour trouver celles qui sont les plus significatives.
+
