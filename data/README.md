@@ -1,6 +1,6 @@
 # Les données
 
-Nous utiliserons 3 jeux de données.
+Nous utiliserons 3 jeux de données. 
 
 ## Eruption.csv
 
