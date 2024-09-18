@@ -105,7 +105,7 @@ choisie:
 
 Et finalement calculer des probabilités:
 
-Si $T\sim Exp(a)$, alors le nombre d’événement au temps t
+Si $T\sim Exp(a)$, alors le nombre d’événements au temps t
 $N(t)\sim Poisson(at)$. Ici, on aurait que $T\sim Exp(1)$.  
 Quelle est la probabilité que le nombre d’événements entre les temps 100
 et 150 \> 60?  

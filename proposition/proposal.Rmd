@@ -50,7 +50,7 @@ Il s’agirait ici de modéliser la loi que suit la variable T, soit le temps é
 ```{r loi T, echo=FALSE}
 set.seed(444444)
 randexp<-rexp(100, 1)
-hist(randexp, prob=TRUE, breaks = 20, main = "Distribution des temps écoulés entre 2 événements", xlab="Temps écoulé entre 2 événements", ylab="Proportion")
+hist(randexp, prob=TRUE, breaks = 20, main = "Distribution des temps écoulés entre 2 événements", xlab="Temps écoulé entre 2 événements", ylab="Proportion", col="skyblue")
 x<-seq(from=0, to=6, length=1000)
 lines(x,dexp(x,1), col = "red", lwd = 2)
 
@@ -68,7 +68,7 @@ plot(even~temps, type = "s", main = "Dénombrement des événements en fonction 
 
 Et finalement calculer des probabilités:
 
-Si $T\sim Exp(a)$, alors le nombre d'événement au temps t $N(t)\sim Poisson(at)$. Ici, on aurait que $T\sim Exp(1)$.\
+Si $T\sim Exp(a)$, alors le nombre d'événements au temps t $N(t)\sim Poisson(at)$. Ici, on aurait que $T\sim Exp(1)$.\
 Quelle est la probabilité que le nombre d'événements entre les temps 100 et 150 > 60? \
 $N(t)-N(s)\sim Poisson(a(t-s))$ -> $N(150)-N(100)\sim Poisson(50))$\
 P(N(150)-N(100)) > 60) = 0.07216018 \
@@ -79,4 +79,3 @@ ppois(60, lambda=50, lower = FALSE)
 
 #### Modèle linéaire généralisé
 Nous pourrions tenter d'adapter un modèle linéaire généralisé pour prédire l'indice de force d'une éruption. Nous ferons les tests appropriés sur les variables explicatives pour trouver celles qui sont les plus significatives.
-
