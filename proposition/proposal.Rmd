@@ -27,6 +27,7 @@ Les jeux de données sont dans le dossier 'data'.\
 Voir le fichier README du dossier data pour voir le détail sur les variables.
 
 ```{r Data import, echo=FALSE, message=FALSE}
+install.packages("skimr")
 library(readr)
 library(skimr)
 
