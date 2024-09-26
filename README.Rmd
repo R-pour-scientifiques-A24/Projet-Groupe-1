@@ -1,21 +1,32 @@
 ---
-title: Titre de votre projet
-author: Noms des membres de votre équipe
+title: Activité volcanique dans le monde au fil des ans
+author: Erika Audet, Anne-Marie Groulx, Allisson Picard
 output: github_document
 ---
 
 ## Résumé
 
-Vous indiquerez ici un résumé de votre projet
+Notre projet répondra à trois principaux objectifs:
+
+#### Objectif 1:
+
+Une carte interactive avec des punaises placées sur chaque volcan sera présentée dans l'application.
+
+L'utilisateur pourra, en cliquant sur la punaise voulue, recevoir plusieurs informations concernant le volcan (nom du volcan, pays, altitude, année de la dernière éruption).
+
+#### Objectif 2:
+
+Une carte temporelle sera présentée dans l'application.
+
+L'activité volcanique se défilera en direct en fonction du temps.
+
+#### Objectif 3: 
+
+Un modèle prédictif sera construit à partir des données pour prédire l'indice de force d'une activité volcanique.
+
+L'utilisateur pourra, dans l'application, attribuer certaines valeurs aux variables explicatives et une prédiction sera émise quant à la force de l'activité volcanique.
 
 
-Vous pouvez également charger vos données ici et présenter tous les résultats d'analyse / graphique, mais je vous invite fortement à limiter cela au minimum (peut-être uniquement le graphique le plus important, si vous en avez un, vous pouvez choisir).
-Et assurez-vous de masquer votre code avec `echo = FALSE` à moins que le point que vous essayez de faire valoir ne concerne le code lui-même.
-Vos résultats avec une sortie et des graphiques appropriés vont dans votre présentation, cet espace est destiné à un bref résumé de votre projet.
-
-```{r load-data, echo = FALSE}
-# load data here, if you like
-```
 
 # Présentation
 
@@ -23,11 +34,35 @@ Notre présentation est disponible [ici](presentation/presentation.html).
 
 ## Données
 
-Inclure une citation pour vos données ici.
-Voir http://libraryguides.vu.edu.au/c.php?g=386501&p=4347840 pour des conseils sur la citation appropriée des ensembles de données.
-Si vous avez obtenu vos données sur le Web, assurez-vous de noter la date de récupération.
+Les données proviennent du site web Kaggle et ont été récupérées le 11 septembre 2024.
+
+Voici le lien vers le site web : https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions
+
+Nous utiliserons 3 jeux de données parmi ceux proposés : eruptions.csv, events.csv et volcano.csv.
+
+Nous fusionnerons les jeux de données, car ceux-ci concernent les mêmes volcans, et nous nettoyerons ce jeu pour conserver les variables qui nous intéressent.
+
+Nous travaillerons donc sur ce jeu de donnée:
+```{r Chargement des données, message=FALSE, echo=FALSE}
+library(readr)
+#Chargement des tableaux
+eruptions <- read_csv("./data/eruptions.csv")
+events <- read_csv("./data/events.csv")
+volcano <- read_csv("./data/volcano.csv")
+#Création du jeu de donnée
+volcan1<-merge(eruptions,events, by="eruption_number")
+volcan<-merge(volcan1,volcano, by.x="volcano_number.x", by.y="volcano_number")
+volcan<-volcan[, -c(8,9,12,13,16,17,18,21,23,24,25,31,32,37:40,42:45)]
+colnames(volcan)[1] <- "volcano_number"
+colnames(volcan)[3] <- "volcano_name"
+colnames(volcan)[10] <- "latitude"
+colnames(volcan)[11] <- "longitude"
+str(volcan)
+
+```
+
 
 ## Références
 
-Indiquez ici toutes les références. Vous devez, au minimum, répertorier votre source de données.
+https://volcano.si.edu/?fbclid=IwY2xjawFiWu5leHRuA2FlbQIxMAABHRKpNUk4jOxSdEe_2xLkIL8s3WNks8B6c-n4moydFy0BknLFwJDxywzt_Q_aem_PTAk4_U37Xq17Zuu18X_7Q
 

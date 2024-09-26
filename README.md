@@ -1,19 +1,34 @@
-Titre de votre projet
+Activité volcanique dans le monde au fil des ans
 ================
-Noms des membres de votre équipe
+Erika Audet, Anne-Marie Groulx, Allisson Picard
 
 ## Résumé
 
-Vous indiquerez ici un résumé de votre projet
+Notre projet répondra à trois principaux objectifs:
 
-Vous pouvez également charger vos données ici et présenter tous les
-résultats d’analyse / graphique, mais je vous invite fortement à limiter
-cela au minimum (peut-être uniquement le graphique le plus important, si
-vous en avez un, vous pouvez choisir). Et assurez-vous de masquer votre
-code avec `echo = FALSE` à moins que le point que vous essayez de faire
-valoir ne concerne le code lui-même. Vos résultats avec une sortie et
-des graphiques appropriés vont dans votre présentation, cet espace est
-destiné à un bref résumé de votre projet.
+#### Objectif 1:
+
+Une carte interactive avec des punaises placées sur chaque volcan sera
+présentée dans l’application.
+
+L’utilisateur pourra, en cliquant sur la punaise voulue, recevoir
+plusieurs informations concernant le volcan (nom du volcan, pays,
+altitude, année de la dernière éruption).
+
+#### Objectif 2:
+
+Une carte temporelle sera présentée dans l’application.
+
+L’activité volcanique se défilera en direct en fonction du temps.
+
+#### Objectif 3:
+
+Un modèle prédictif sera construit à partir des données pour prédire
+l’indice de force d’une activité volcanique.
+
+L’utilisateur pourra, dans l’application, attribuer certaines valeurs
+aux variables explicatives et une prédiction sera émise quant à la force
+de l’activité volcanique.
 
 # Présentation
 
@@ -21,13 +36,53 @@ Notre présentation est disponible [ici](presentation/presentation.html).
 
 ## Données
 
-Inclure une citation pour vos données ici. Voir
-<http://libraryguides.vu.edu.au/c.php?g=386501&p=4347840> pour des
-conseils sur la citation appropriée des ensembles de données. Si vous
-avez obtenu vos données sur le Web, assurez-vous de noter la date de
-récupération.
+Les données proviennent du site web Kaggle et ont été récupérées le 11
+septembre 2024.
+
+Voici le lien vers le site web :
+<https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions>
+
+Nous utiliserons 3 jeux de données parmi ceux proposés : eruptions.csv,
+events.csv et volcano.csv.
+
+Nous fusionnerons les jeux de données, car ceux-ci concernent les mêmes
+volcans, et nous nettoyerons ce jeu pour conserver les variables qui
+nous intéressent.
+
+Nous travaillerons donc sur ce jeu de donnée:
+
+    ## Warning: le package 'readr' a été compilé avec la version R 4.2.3
+
+    ## 'data.frame':    36075 obs. of  28 variables:
+    ##  $ volcano_number          : num  210010 210010 210010 210010 210020 ...
+    ##  $ eruption_number         : num  10001 10002 10001 10002 10007 ...
+    ##  $ volcano_name            : chr  "West Eifel Volcanic Field" "West Eifel Volcanic Field" "West Eifel Volcanic Field" "West Eifel Volcanic Field" ...
+    ##  $ eruption_category       : chr  "Confirmed Eruption" "Confirmed Eruption" "Confirmed Eruption" "Confirmed Eruption" ...
+    ##  $ area_of_activity        : chr  "Ulmener Maar" "Strohn, Pulvermaar" "Ulmener Maar" "Strohn, Pulvermaar" ...
+    ##  $ vei                     : num  NA NA NA NA NA NA NA NA NA NA ...
+    ##  $ start_year              : num  -8740 -8300 -8740 -8300 -6250 -6550 -4040 -6250 -6250 -6020 ...
+    ##  $ evidence_method_dating  : chr  "Radiocarbon (corrected)" "Radiocarbon (uncorrected)" "Radiocarbon (corrected)" "Radiocarbon (uncorrected)" ...
+    ##  $ end_year                : num  NA NA NA NA NA NA NA NA NA NA ...
+    ##  $ latitude                : num  50.2 50.2 50.2 50.2 45.8 ...
+    ##  $ longitude               : num  6.85 6.85 6.85 6.85 2.97 2.97 2.97 2.97 2.97 2.97 ...
+    ##  $ event_number            : num  135032 135035 135031 135034 135050 ...
+    ##  $ event_type              : chr  "Tephra" "Tephra" "Explosion" "Explosion" ...
+    ##  $ event_date_year         : num  NA NA NA NA NA NA NA NA NA NA ...
+    ##  $ primary_volcano_type    : chr  "Maar(s)" "Maar(s)" "Maar(s)" "Maar(s)" ...
+    ##  $ last_eruption_year      : chr  "-8300" "-8300" "-8300" "-8300" ...
+    ##  $ country                 : chr  "Germany" "Germany" "Germany" "Germany" ...
+    ##  $ region                  : chr  "Mediterranean and Western Asia" "Mediterranean and Western Asia" "Mediterranean and Western Asia" "Mediterranean and Western Asia" ...
+    ##  $ subregion               : chr  "Western Europe" "Western Europe" "Western Europe" "Western Europe" ...
+    ##  $ elevation               : num  600 600 600 600 1464 ...
+    ##  $ tectonic_settings       : chr  "Rift zone / Continental crust (>25 km)" "Rift zone / Continental crust (>25 km)" "Rift zone / Continental crust (>25 km)" "Rift zone / Continental crust (>25 km)" ...
+    ##  $ evidence_category       : chr  "Eruption Dated" "Eruption Dated" "Eruption Dated" "Eruption Dated" ...
+    ##  $ major_rock_1            : chr  "Foidite" "Foidite" "Foidite" "Foidite" ...
+    ##  $ minor_rock_1            : chr  "Trachybasalt / Tephrite Basanite" "Trachybasalt / Tephrite Basanite" "Trachybasalt / Tephrite Basanite" "Trachybasalt / Tephrite Basanite" ...
+    ##  $ population_within_5_km  : num  94991 94991 94991 94991 323392 ...
+    ##  $ population_within_10_km : num  94991 94991 94991 94991 323392 ...
+    ##  $ population_within_30_km : num  232256 232256 232256 232256 427221 ...
+    ##  $ population_within_100_km: num  7945412 7945412 7945412 7945412 1577243 ...
 
 ## Références
 
-Indiquez ici toutes les références. Vous devez, au minimum, répertorier
-votre source de données.
+<https://volcano.si.edu/?fbclid=IwY2xjawFiWu5leHRuA2FlbQIxMAABHRKpNUk4jOxSdEe_2xLkIL8s3WNks8B6c-n4moydFy0BknLFwJDxywzt_Q_aem_PTAk4_U37Xq17Zuu18X_7Q>
