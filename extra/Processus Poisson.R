@@ -14,3 +14,7 @@ plot(even~temps, type = "s", main = "Dénombrement des événements en fonction 
 #P((Poisson(50))>60) = 0.07216018
 ppois(60, lambda=50, lower = FALSE)
 
+#Test d'ajustement de modèle
+ks.test(randexp,"pexp") #on ne rejette pas!
+qqplot(x=qexp(ppoints(100)), y=randexp)
+qqline(randexp, distribution=qexp)

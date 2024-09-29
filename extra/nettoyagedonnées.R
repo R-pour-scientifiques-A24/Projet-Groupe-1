@@ -1,3 +1,7 @@
+library(readr)
+eruptions <- read_csv("data/eruptions.csv")
+events <- read_csv("data/events.csv")
+volcano <- read_csv("data/volcano.csv")
  
 volcan1<-merge(eruptions,events, by="eruption_number")
 View(volcan1)

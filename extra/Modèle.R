@@ -102,3 +102,49 @@ plot(x=fitted.values(mod41), y=rstandard(mod41))
 #Données de notre modèle
 summary(mod41)
 anova(mod41)
+
+#Petits tests AMG: evidence_category n'est pas significatif
+modAM<-lm(vei~country+start_year+eruption_category+evidence_method_dating+end_year+end_year*start_year+major_rock_1*minor_rock_1
+          +event_type+primary_volcano_type+last_eruption_year+elevation+major_rock_1+minor_rock_1 
+          +end_year*last_eruption_year+evidence_method_dating*end_year+evidence_method_dating, data=volcan)
+summary(modAM)
+anova(modAM)
+
+install.packages("AICcmodavg")
+install.packages('pbapply')
+library(AICcmodavg)
+
+models<-list(modAM,mod41)
+modelnames<-c("modAM", "mod41")
+
+rbind("modAM"= round(c(R2=summary(modAM)$r.square, R2ajust=summary(modAM)$adj.r.squared, AIC=AIC(modAM), BIC=BIC(modAM)) , 2),
+      "mod41"= round(c(R2=summary(mod41)$r.square, R2ajust=summary(mod41)$adj.r.squared, AIC=AIC(mod41), BIC=BIC(mod41)) , 2))
+
+aictab(cand.set = models, modnames = modelnames)
+
+#mod41 est le meilleur modèle!
+
+#test de prédiction à 2 variables:
+newdata = data.frame(country=c("Peru", "Japan", "Iceland"),
+                     elevation=c(600, 1100, 1600),
+                     start_year=c(1980, -1000, 1870),
+                     eruption_category=c("Confirmed Eruption", "Uncertain Eruption", "Confirmed Eruption"),
+                     evidence_method_dating=c("Historical Observations", "Historical Observations", "Historical Observations"),
+                     end_year=c(1982, -998, 1874),
+                     event_type=c("Spine formation", "Thermal anomaly", "Volcanic smoke"),
+                     primary_volcano_type=c("Compound", "Complex", "Compound"),
+                     last_eruption_year=c("2010", "1910", "1910"), #MODIFIER NA ET TYPE!!
+                     evidence_category=c("Eruption Dated" , "Eruption Observed", "Eruption Observed"),
+                     major_rock_1=c("Foidite", "Trachyte / Trachydacite", "Rhyolite"),
+                     minor_rock_1 =c("Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite") #MODIFIER NA!!
+)
+predict(mod41, newdata)
+
+#On a un problème: Retourne des valeurs de VEI impossibles
+#Ne reconnaît pas beaucoup des facteurs que j'avais initialement mis dans new data
+#Les dates sont des facteurs
+#Certains NA sont des " ", ou "Unknown"
+#Si je mets des NA il ne fait pas de prédiction (ca prend des valeurs pour toutes
+#les variables du modèle - faire un tout petit modèle?)
+#faire un glm qui retourne un facteur (0:7) plutôt qu'une var. numérique continue?
+unique(volcan$vei)
