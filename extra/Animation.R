@@ -27,6 +27,7 @@ geoanim$popquant<-ifelse(geoanim$pop<=6,25,
 geoanim$popquant<-as.factor(geoanim$popquant)
 geoanim$popquant<-ordered(geoanim$popquant, c("25","50","75","100"))
 
+
 freqsiecle<-as.data.frame(table(geoanim$siecle, geoanim$nom))
 colnames(freqsiecle)<-c("Siecle","Volcan", "Freq_erup")
 sommevei<-as.data.frame(aggregate(vei~nom+siecle, data=geoanim, FUN=sum))
@@ -61,5 +62,3 @@ length(unique(data_anim$annee)) #1470 frames
 
 #Beaucoup de choses encore à peaufiner, mais ça marche!
 #animate(mp, fps = 20, duration = 25, end_pause = 95)
-
-sort(unique(geoanim$annee))
