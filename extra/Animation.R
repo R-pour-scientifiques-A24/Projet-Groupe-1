@@ -15,10 +15,10 @@ geoanim<-data.frame(nom=volcan$volcano_name,
 geoanim<-unique(geoanim)
 
 geoanim$siecle<-ifelse(nchar(geoanim$annee)>2,substr(geoanim$annee,1,nchar(geoanim$annee)-2), geoanim$annee)
-geoanim$siecle<-ifelse(substr(geoanim$siecle,1,1) !="-" & nchar(geoanim$siecle)>2, 1, geoanim$siecle)
+geoanim$siecle<-ifelse(substr(geoanim$siecle,1,1) !="-" & nchar(geoanim$siecle)>2, "1", geoanim$siecle)
 geoanim$siecle<-ifelse(geoanim$siecle=="-","-1",geoanim$siecle)
-geoanim$siecle<-as.numeric(geoanim$siecle)
-geoanim$annee<-as.numeric(geoanim$annee)
+geoanim$siecle<-as.integer(geoanim$siecle)
+geoanim$annee<-as.integer(geoanim$annee)
 
 quantile(geoanim$pop)
 geoanim$popquant<-ifelse(geoanim$pop<=6,25,
@@ -40,10 +40,7 @@ data_anim$Freq_erup<-as.factor(data_anim$Freq_erup)
 data_anim$Siecle<-as.integer(data_anim$Siecle)
 data_anim<-unique(data_anim)
 data_anim<-data_anim[order(data_anim$Siecle),]
-View(data_anim)
 #table avec aggrégations par siècle
-
-
 
 
 mapWorld <- borders("world", colour="limegreen", fill="limegreen")
@@ -53,12 +50,13 @@ mapWorld <- borders("world", colour="limegreen", fill="limegreen")
 #test par siècle - size = fréquence d'éruption dans le siècle
 
 mp2 <- ggplot(geoanim, aes(x=long, y=lati, colour = vei, size = popquant)) + theme(panel.background = element_rect(fill = 'skyblue', colour = 'gray90'))+
-  mapWorld + geom_point() + scale_color_gradient(low="yellow", high="red")+transition_time(annee)  
+  mapWorld + geom_point() + scale_color_gradient(low="yellow", high="red") + transition_time(annee)  
 mp2
+#refaire jouer cette animation quand on a: geoanim$annee<-as.integer(geoanim$vei) + afficher année... anime en ordre d'années et de vei??
 #test par année - size = population à 5km
 #On pourrait ajouter une shape aux points, autre catégorie pour disons les types de volcans, ou si c'est confirmé
 
-length(unique(data_anim$annee)) #1470 frames
+length(unique(geoanim$annee)) #1540 frames
 
 #Beaucoup de choses encore à peaufiner, mais ça marche!
 #animate(mp, fps = 20, duration = 25, end_pause = 95)
