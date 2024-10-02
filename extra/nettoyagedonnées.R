@@ -20,3 +20,16 @@ colnames(volcan)[1] <- "volcano_number"
 colnames(volcan)[3] <- "volcano_name"
 colnames(volcan)[10] <- "latitude"
 colnames(volcan)[11] <- "longitude"
+
+str(volcan)
+
+
+volcan$last_eruption_year<-as.numeric(volcan$last_eruption_year)
+volcan$minor_rock_1<-ifelse(volcan$minor_rock_1== unique(volcan$minor_rock_1)[3],NA,volcan$minor_rock_1)
+unique(volcan$minor_rock_1)
+
+
+ 
+
+
+

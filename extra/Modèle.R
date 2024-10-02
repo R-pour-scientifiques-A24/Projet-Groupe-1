@@ -91,6 +91,44 @@ mod41<-lm(vei~country+start_year+eruption_category+evidence_method_dating+end_ye
           +event_type+primary_volcano_type+last_eruption_year+elevation+evidence_category+major_rock_1+minor_rock_1 
           +end_year*last_eruption_year+evidence_method_dating*end_year+evidence_method_dating*evidence_category , data=volcan)
 
+#REGION plutôt que country
+mod41<-lm(vei~region+start_year+eruption_category+evidence_method_dating+end_year+end_year*start_year+major_rock_1*minor_rock_1
+          +event_type+primary_volcano_type+last_eruption_year+elevation+evidence_category+major_rock_1+minor_rock_1 
+          +end_year*last_eruption_year+evidence_method_dating*end_year+evidence_method_dating*evidence_category , data=volcan)
+
+#enlever minor_rock_1
+mod41<-lm(vei~region+start_year+eruption_category+evidence_method_dating+end_year+end_year*start_year
+          +event_type+primary_volcano_type+last_eruption_year+elevation+evidence_category+major_rock_1 
+          +end_year*last_eruption_year+evidence_method_dating*end_year+evidence_method_dating*evidence_category , data=volcan)
+#NON, ON LA GARDE!!!
+
+#Enlever end_year
+mod41<-lm(vei~region+start_year+eruption_category+evidence_method_dating+major_rock_1*minor_rock_1
+          +event_type+primary_volcano_type+last_eruption_year+elevation+evidence_category+major_rock_1+minor_rock_1 
+          +evidence_method_dating*evidence_category , data=volcan)
+
+#Enlever evidence_method_dating
+mod41<-lm(vei~region+start_year+eruption_category+major_rock_1*minor_rock_1
+          +event_type+primary_volcano_type+last_eruption_year+elevation+evidence_category+major_rock_1+minor_rock_1 
+           , data=volcan)
+
+#Enlever evidence_category
+mod41<-lm(vei~region+start_year+eruption_category+major_rock_1*minor_rock_1
+          +event_type+primary_volcano_type+last_eruption_year+elevation+major_rock_1+minor_rock_1 , data=volcan)
+
+
+round( c(R2=summary(mod41)$r.square, R2ajust=summary(mod41)$adj.r.squared, AIC=AIC(mod41), BIC=BIC(mod41)) , 2)
+
+
+
+
+#Modèle final :
+mod_final<-lm(vei~country+start_year+event_type+elevation+country*start_year+country*event_type+country*elevation
+              +start_year*event_type+start_year*elevation+event_type*elevation, data=volcan)
+round( c(R2=summary(mod_final)$r.square, R2ajust=summary(mod_final)$adj.r.squared, AIC=AIC(mod_final), BIC=BIC(mod_final)) , 2)
+anova(mod_final)
+
+
 
 #Observation de notre modèle
 qqnorm(rstandard(mod41))
@@ -125,7 +163,7 @@ aictab(cand.set = models, modnames = modelnames)
 #mod41 est le meilleur modèle!
 
 #test de prédiction à 2 variables:
-newdata = data.frame(country=c("Peru", "Japan", "Iceland"),
+newdata = data.frame(region=c("Antarctica","Alaska","West Indies"),
                      elevation=c(600, 1100, 1600),
                      start_year=c(1980, -1000, 1870),
                      eruption_category=c("Confirmed Eruption", "Uncertain Eruption", "Confirmed Eruption"),
@@ -133,12 +171,28 @@ newdata = data.frame(country=c("Peru", "Japan", "Iceland"),
                      end_year=c(1982, -998, 1874),
                      event_type=c("Spine formation", "Thermal anomaly", "Volcanic smoke"),
                      primary_volcano_type=c("Compound", "Complex", "Compound"),
-                     last_eruption_year=c("2010", "1910", "1910"), #MODIFIER NA ET TYPE!!
+                     last_eruption_year=c(2010, 1910, 1910),
                      evidence_category=c("Eruption Dated" , "Eruption Observed", "Eruption Observed"),
                      major_rock_1=c("Foidite", "Trachyte / Trachydacite", "Rhyolite"),
-                     minor_rock_1 =c("Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite") #MODIFIER NA!!
+                     minor_rock_1 =c("Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite")
 )
 predict(mod41, newdata)
+
+#test de prédiction à 2 variables:
+newdata = data.frame(region=c("Antarctica","Alaska","West Indies"),
+                     elevation=c(600, 1100, 1600),
+                     start_year=c(1980, -1000, 1870),
+                     eruption_category=c(unique(volcan$eruption_category)[1],unique(volcan$eruption_category)[2], 
+                                         unique(volcan$eruption_category)[3]),
+                     event_type=c("Spine formation", "Thermal anomaly", "Volcanic smoke"),
+                     primary_volcano_type=c("Compound", "Complex", "Compound"),
+                     last_eruption_year=c(2010, 1910, 1910),
+                     major_rock_1=c("Foidite", "Trachyte / Trachydacite", "Rhyolite"),
+                     minor_rock_1 =c("Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite")
+)
+predict(mod41, newdata)
+
+
 
 #On a un problème: Retourne des valeurs de VEI impossibles
 #Ne reconnaît pas beaucoup des facteurs que j'avais initialement mis dans new data
