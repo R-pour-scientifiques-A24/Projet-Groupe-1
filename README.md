@@ -51,8 +51,6 @@ nous intéressent.
 
 Nous travaillerons donc sur ce jeu de donnée:
 
-    ## Warning: le package 'readr' a été compilé avec la version R 4.2.3
-
     ## 'data.frame':    36075 obs. of  28 variables:
     ##  $ volcano_number          : num  210010 210010 210010 210010 210020 ...
     ##  $ eruption_number         : num  10001 10002 10001 10002 10007 ...
