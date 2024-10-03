@@ -23,8 +23,8 @@ library(knitr)
 library(xaringanthemer)
 
 #update.packages(ask = FALSE, checkBuilt = TRUE) - pour résoudre bug xaringan
-#...from personnal libray? Yes
-#...install from... ? No
+#Would you like to use a personal library instead?? Yes
+#Do you want to install from sources the packages which need compilation? No
 
 ```
 

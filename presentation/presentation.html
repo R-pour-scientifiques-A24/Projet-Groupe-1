@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Titre de la présentation</title>
+    <title>Activité volcanique dans le monde au fil des ans</title>
     <meta charset="utf-8" />
-    <meta name="author" content="Nom des membres de l’équipe" />
-    <meta name="date" content="2024-09-11" />
+    <meta name="author" content="Erika Audet, Anne-Marie Groulx, Allisson Picard" />
+    <meta name="date" content="2024-10-03" />
     <script src="libs/header-attrs-2.28/header-attrs.js"></script>
+    <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+    <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -13,19 +15,16 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# Titre de la présentation
-]
-.subtitle[
-## Sous-titre
+# Activité volcanique dans le monde au fil des ans
 ]
 .author[
-### Nom des membres de l’équipe
+### Erika Audet, Anne-Marie Groulx, Allisson Picard
 ]
 .institute[
 ### Université Laval
 ]
 .date[
-### 2024-09-11
+### 2024-10-03
 ]
 
 ---
@@ -41,7 +40,150 @@ class: center, middle, inverse, title-slide
 
 class: center, middle
 
-## Un énoncé de l'objectif général / de la question de recherche
+## Objectif : 
+Aider l'utilisateur à se renseigner sur les volcans et les activités volcaniques dans le monde et lui permettre de prédire l'indice d'activité volcanique pour des caractéristiques choisies.
+
+---
+
+## Aperçu des données (choisir les variables + intéressantes ou celles du mod. prédictif):
+&lt;div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; "&gt;&lt;table class="table table-hover" style="margin-left: auto; margin-right: auto;"&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; volcano_number &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; eruption_number &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; volcano_name &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; eruption_category &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; area_of_activity &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; vei &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; start_year &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; evidence_method_dating &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; end_year &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; latitude &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10001 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ulmener Maar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8740 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (corrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10002 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Strohn, Pulvermaar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10001 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ulmener Maar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8740 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (corrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10002 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Strohn, Pulvermaar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10007 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Puy de Pariou &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6250 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Thermoluminescence &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10006 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Puys Chopine, Vasset, Cratère Kilian &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6550 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10011 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Montcineyre, Estivadoux, Pavin &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4040 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10007 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Puy de Pariou &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6250 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Thermoluminescence &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10007 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Puy de Pariou &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6250 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Thermoluminescence &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10009 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Puy de Lassolas, Puy de la Vache &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6020 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;&lt;/div&gt;
 
 ---
 
@@ -144,55 +286,216 @@ Si vous souhaitez générer un tableau, assurez-vous qu'il est au format HTML (a
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:right;"&gt; Sepal.Length &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Sepal.Width &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Petal.Length &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; Petal.Width &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; Species &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; volcano_number &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; eruption_number &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; volcano_name &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; eruption_category &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; area_of_activity &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; vei &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; start_year &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; evidence_method_dating &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; end_year &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; latitude &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; longitude &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; event_number &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; event_type &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; event_date_year &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; primary_volcano_type &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; last_eruption_year &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; region &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; subregion &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; elevation &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; tectonic_settings &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; evidence_category &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; major_rock_1 &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; minor_rock_1 &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; population_within_5_km &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; population_within_10_km &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; population_within_30_km &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; population_within_100_km &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10001 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ulmener Maar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8740 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (corrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 135032 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Tephra &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maar(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Germany &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 600 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Rift zone / Continental crust (&amp;gt;25 km) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Eruption Dated &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Foidite &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trachybasalt / Tephrite Basanite &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 232256 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7945412 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10002 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Strohn, Pulvermaar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 135035 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Tephra &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maar(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Germany &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 600 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Rift zone / Continental crust (&amp;gt;25 km) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Eruption Dated &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Foidite &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trachybasalt / Tephrite Basanite &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 232256 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7945412 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.2 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.3 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10001 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ulmener Maar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8740 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (corrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 135031 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Explosion &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maar(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Germany &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 600 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Rift zone / Continental crust (&amp;gt;25 km) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Eruption Dated &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Foidite &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trachybasalt / Tephrite Basanite &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 232256 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7945412 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 4.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.1 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.5 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10002 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Strohn, Pulvermaar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 6.85 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 135034 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Explosion &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maar(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Germany &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 600 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Rift zone / Continental crust (&amp;gt;25 km) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Eruption Dated &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Foidite &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trachybasalt / Tephrite Basanite &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 232256 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7945412 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.6 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.2 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10007 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Puy de Pariou &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6250 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Thermoluminescence &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.97 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 135050 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lapilli &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lava dome(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4040 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; France &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1464 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Rift zone / Continental crust (&amp;gt;25 km) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Eruption Dated &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Basalt / Picro-Basalt &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trachyandesite / Basaltic Trachyandesite &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 323392 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 323392 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 427221 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1577243 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 5.4 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 3.9 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1.7 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0.4 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; setosa &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 10006 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Puys Chopine, Vasset, Cratère Kilian &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6550 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.97 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 135046 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pyroclastic flow &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lava dome(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4040 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; France &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1464 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Rift zone / Continental crust (&amp;gt;25 km) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Eruption Dated &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Basalt / Picro-Basalt &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Trachyandesite / Basaltic Trachyandesite &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 323392 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 323392 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 427221 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1577243 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;

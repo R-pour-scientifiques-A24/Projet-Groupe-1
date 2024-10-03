@@ -4,7 +4,7 @@ author: "Erika Audet, Anne-Marie Groulx, Allisson Picard"
 institute: "Université Laval"
 date: "`r Sys.Date()`"
 output:
-    xaringan::moon_reader:
+  xaringan::moon_reader:
     css: xaringan-themer.css
     lib_dir: libs
     nature:
@@ -12,19 +12,17 @@ output:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
-
-
 ---
 
 ```{r load-packages, include = FALSE}
 # Ajoutez tous les packages supplémentaires dont vous avez besoin à ce chunk
-
-install.packages("xaringanthemer")
+#install.packages("xaringanthemer", repos = "http://cran.us.r-project.org")
 library(tidyverse)
 library(palmerpenguins)
 library(knitr)
 library(xaringanthemer)
-
+library(kableExtra)
+library(readr)
 
 ```
 
@@ -34,12 +32,11 @@ knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618,
 style_xaringan(
   title_slide_background_image = "img/confetti.jpg"
 )
-
 ```
 
 ```{r load-data, include=FALSE}
 # Charger vos données ici
-library(readr)
+
 #Chargement des tableaux
 eruptions <- read_csv("../data/eruptions.csv")
 events <- read_csv("../data/events.csv")
@@ -60,7 +57,19 @@ volcan$minor_rock_1<-ifelse(volcan$minor_rock_1== unique(volcan$minor_rock_1)[3]
 
 class: center, middle
 
-## Objectif : aider l'utilisateur à se renseigner sur les volcans et les activités volcaniques dans le monde et lui permettre de prédire l'indice d'activité volcanique pour des caractéristiques choisies.
+## Objectif : 
+Aider l'utilisateur à se renseigner sur les volcans et les activités volcaniques dans le monde et lui permettre de prédire l'indice d'activité volcanique pour des caractéristiques choisies.
+
+---
+
+## Aperçu des données (choisir les variables + intéressantes ou celles du mod. prédictif):
+```{r volcan-table, echo = FALSE}
+
+kable(volcan[c(1:10),c(1:10)], "html", row.names = FALSE) %>%
+ kable_styling(bootstrap_options = "hover") %>%
+ scroll_box(width = "100%", height = "400px")
+
+```
 
 ---
 
@@ -168,7 +177,7 @@ ggplot(penguins, aes(x = bill_length_mm, y = species, color = species)) +
 Si vous souhaitez générer un tableau, assurez-vous qu'il est au format HTML (au lieu de Markdown ou d'autres formats), par exemple,
 
 ```{r iris-table, echo = FALSE}
-kable(head(iris), format = "html")
+kable(head(volcan), format = "html")
 ```
 
 ---
