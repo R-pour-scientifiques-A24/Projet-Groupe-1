@@ -182,8 +182,7 @@ predict(mod41, newdata)
 newdata = data.frame(region=c("Antarctica","Alaska","West Indies"),
                      elevation=c(600, 1100, 1600),
                      start_year=c(1980, -1000, 1870),
-                     eruption_category=c(unique(volcan$eruption_category)[1],unique(volcan$eruption_category)[2], 
-                                         unique(volcan$eruption_category)[3]),
+                     eruption_category=c("Confirmed Eruption", "Uncertain Eruption", "Confirmed Eruption"),
                      event_type=c("Spine formation", "Thermal anomaly", "Volcanic smoke"),
                      primary_volcano_type=c("Compound", "Complex", "Compound"),
                      last_eruption_year=c(2010, 1910, 1910),
@@ -202,3 +201,63 @@ predict(mod41, newdata)
 #les variables du modèle - faire un tout petit modèle?)
 #faire un glm qui retourne un facteur (0:7) plutôt qu'une var. numérique continue?
 unique(volcan$vei)
+
+
+
+#test de prédiction à 2 variables:
+newdata = data.frame(region=c("Antarctica","Alaska","West Indies"),
+                     elevation=c(600, 1100, 1600),
+                     start_year=c(1980, -1000, 1870),
+                     eruption_category=c("Confirmed Eruption", "Uncertain Eruption", "Confirmed Eruption"),
+                     event_type=c("Spine formation", "Thermal anomaly", "Volcanic smoke"),
+                     primary_volcano_type=c("Compound", "Complex", "Compound"),
+                     last_eruption_year=c(2010, 1910, 1910),
+                     major_rock_1=c("Foidite", "Trachyte / Trachydacite", "Rhyolite"),
+                     minor_rock_1 =c("Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite")
+)
+prediction<-predict(mod41, newdata)
+
+#test de prédiction à 2 variables:
+newdata2 = data.frame(region=c("Hawaii and Pacific Ocean","Kuril Islands","West Indies"),
+                      elevation=c(550, 752, -107),
+                      start_year=c(1568, -3420, 870),
+                      eruption_category=c("Confirmed Eruption", "Uncertain Eruption", "Confirmed Eruption"),
+                      event_type=c("Lava lake", "Property damage", "Lapilli"),
+                      primary_volcano_type=c(unique(volcan$primary_volcano_type)[3],"Compound","Compound"), 
+                      last_eruption_year=c(1944, 1911, -6550),                                         
+                      major_rock_1=c("Basalt / Picro-Basalt", "Phonolite", "Andesite / Basaltic Andesite"),
+                      minor_rock_1 =c("Dacite","Rhyolite","Phonolite"))
+                      
+prediction<-predict(mod41, newdata2)
+
+
+#troisième test de prédiction à 2 variables:
+newdata3 = data.frame(region=c("Hawaii and Pacific Ocean","Kuril Islands","West Indies"),
+                     elevation=c(550, 752, -107),
+                     start_year=c(1568, -3420, 870),
+                     eruption_category=c("Confirmed Eruption", "Uncertain Eruption", "Confirmed Eruption"),
+                     event_type=c("Lava lake", "Property damage", "Lapilli"),
+                     primary_volcano_type=c(unique(volcan$primary_volcano_type)[3],unique(volcan$primary_volcano_type)[15],unique(volcan$primary_volcano_type)[7]), 
+                     last_eruption_year=c(1944, 1911, -6550),                                         
+                     major_rock_1=c("Basalt / Picro-Basalt", "Phonolite", "Andesite / Basaltic Andesite"),
+                     minor_rock_1 =c("Dacite","Rhyolite","Phonolite")
+)
+prediction<-predict(mod41, newdata3)
+
+# Question pour Aurélien: unique(volcan$primary_volcano_type)[15]=="Tuff cone(s)", Pourquoi on reçoit une erreur lorsqu'on veut le mettre dans le newdata?
+# Erreur dans model.frame.default(Terms, newdata, na.action = na.action, xlev = object$xlevels) : 
+ #  le facteur primary_volcano_type a des nouveaux niveaux Tuff cone(s)
+
+
+
+
+#Conditions à imposer pour que la prédiction nous donne des valeurs de vei comprises parmi : 0,1,2,3,4,5,6,7.
+result_predict <- ifelse(prediction<0.5, 0, 
+                         ifelse(prediction>=0.5 & prediction<1.5, 1, 
+                                ifelse(prediction>=1.5 & prediction<2.5, 2,
+                                       ifelse(prediction>=2.5 & prediction<3.5, 3,
+                                              ifelse(prediction>=3.5 & prediction<4.5, 4,
+                                                     ifelse(prediction>=4.5 & prediction<5.5, 5, 
+                                                            ifelse(prediction>=5.5 & prediction<6.5, 6, 7)))))) )
+as.numeric(result_predict)
+
