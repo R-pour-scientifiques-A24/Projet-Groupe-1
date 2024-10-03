@@ -176,4 +176,3 @@ Nous travaillerons donc sur ce jeu de donnée:
 ## Références
 
 <https://volcano.si.edu/?fbclid=IwY2xjawFiWu5leHRuA2FlbQIxMAABHRKpNUk4jOxSdEe_2xLkIL8s3WNks8B6c-n4moydFy0BknLFwJDxywzt_Q_aem_PTAk4_U37Xq17Zuu18X_7Q>
->>>>>>> 9f540bfefca4b3d699d690857fb4b294a4a7412b

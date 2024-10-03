@@ -17,11 +17,15 @@ output:
 
 ```{r load-packages, include = FALSE}
 # Ajoutez tous les packages supplémentaires dont vous avez besoin à ce chunk
-install.packages("xaringan")
 library(tidyverse)
 library(palmerpenguins)
 library(knitr)
 library(xaringanthemer)
+
+#update.packages(ask = FALSE, checkBuilt = TRUE) - pour résoudre bug xaringan
+#...from personnal libray? Yes
+#...install from... ? No
+
 ```
 
 ```{r setup, include=FALSE}
