@@ -261,3 +261,26 @@ result_predict <- ifelse(prediction<0.5, 0,
                                                             ifelse(prediction>=5.5 & prediction<6.5, 6, 7)))))) )
 as.numeric(result_predict)
 
+
+mod41<-lm(vei~region+start_year+eruption_category+major_rock_1*minor_rock_1
+          +event_type+primary_volcano_type+last_eruption_year+elevation+major_rock_1+minor_rock_1 , data=volcan)
+
+
+#Option avec polr:
+library(MASS)
+?polr
+
+freq_vei<-table(volcan$vei)
+vei_factor<-as.factor(volcan$vei)
+
+data_polr<-polr(vei_factor~region+start_year+eruption_category+event_type+primary_volcano_type+last_eruption_year
+     +elevation+major_rock_1+minor_rock_1 , data=volcan , 
+     contrasts = NULL, Hess = TRUE, model = TRUE, method = c("logistic", "probit", "loglog", "cloglog", "cauchit"))
+
+polr.predict (mod41, values=0:7, sim.count=1000, conf.int=0.95, sigma=NULL, set.seed=NULL) 
+# the values of the case as vector in the order how they appear in the summary (model) estimate OPTIONAL numbers 
+# of simulations to be done by the function. default: 1000 OPTIONAL the confidence interval used by the function. default: 0.95
+
+#Impossible de trouver la fonction "polr.predict" ...
+
+prediction<-predict(mod41, data_polr)
