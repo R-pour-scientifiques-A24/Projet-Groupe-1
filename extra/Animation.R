@@ -30,72 +30,87 @@ geoanim$popquant<-as.factor(geoanim$popquant)
 geoanim$popquant<-ordered(geoanim$popquant, c("25","50","75","100"))
 
 
-freqsiecle<-as.data.frame(table(geoanim$siecle, geoanim$nom))
-colnames(freqsiecle)<-c("Siecle","Volcan", "Freq_erup")
-sommevei<-as.data.frame(aggregate(vei~nom+siecle, data=geoanim, FUN=sum))
-colnames(sommevei)<-c("Volcan", "Siecle", "Somme_vei")
-
-
-data_anim<-merge(freqsiecle, sommevei)
-data_anim<-merge(data_anim, geoanim[,c(1:3)], by.y = "nom", by.x="Volcan")
-data_anim$Freq_erup<-as.factor(data_anim$Freq_erup)
-data_anim$Siecle<-as.integer(data_anim$Siecle)
-data_anim<-unique(data_anim)
-data_anim<-data_anim[order(data_anim$Siecle),]
-#table avec aggrégations par siècle
-
+cols<-colorRampPalette(c("yellow", "red"))
+colsvei<-cols(8)
 
 mapWorld <- borders("world", colour="palegreen3", fill="palegreen3")
 
-#Plot pas animé:
-mp1 <- ggplot(geoanim[geoanim$annee==2016,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant, fill=vei),alpha=0.7) + 
+#Plot pas animé, essais sur les styles:
+mp1 <- ggplot(geoanim[geoanim$annee>2010,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
   mapWorld + 
-  geom_point()+
+  geom_point(alpha=0.7)+
   scale_colour_manual(name="vei", values=colsvei)+
   theme(aspect.ratio=3/4)
   #facet_wrap(~vei)+
   #labs(title = 'Année: {frame_time}') + 
   #transition_time(annee)
-print(mp1)
+mp1
 
-#Erreur dans animation + facet
+#Avec facet
+mp2 <- ggplot(geoanim[geoanim$annee>2010,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  facet_wrap(~vei)
+  #labs(title = 'Année: {frame_time}') + 
+  #transition_time(annee)
+mp2
 
-#Pas d'erreur dans facet
+mp3 <- ggplot(geoanim[geoanim$annee>2010,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  facet_wrap(~popquant)
+#labs(title = 'Année: {frame_time}') + 
+#transition_time(annee)
+mp3
 
-
-#Pas d'erreur dans anim sans facet
+#Animation
 
 quantile(geoanim$annee)
 
-#nframes détermine le nombre de frames. Par défaut, 100, équidistants.
+#nframes détermine le nombre de frames. Par défaut: 100 équidistants.
 #On fait 2 gif de 100 frames sur quartiles 0-50 et sur 50-100
 #Ça fait une bonne représentation des données. Coller les 2 gif ensemble ensuite.
 
-cols<-colorRampPalette(c("yellow", "red"))
-colsvei<-cols(8)
 
-mp4 <- ggplot(geoanim[geoanim$annee<=1830,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant, fill=vei),alpha=0.7) + 
+mp4 <- ggplot(geoanim[geoanim$annee<=1830,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90')) +
-  mapWorld + geom_point() + 
+  mapWorld + geom_point(alpha=0.7) + 
   scale_colour_manual(name="vei", values=colsvei)+
   #facet_wrap(~vei)+
   labs(title = 'Année: {frame_time}') + 
   transition_time(annee)
-gif1<-animate(mp4,fps=3, width=900, height=500, nframes=100) #100 frames pour 1ère moitié du jeu de données
+gif1<-animate(mp4,fps=3, width=900, height=600, nframes=100) #100 frames pour 1ère moitié du jeu de données
 anim_save(filename="min-1830.gif", gif1)
 
-mp5 <- ggplot(geoanim[geoanim$annee>1830,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant),alpha=0.7) + 
+mp5 <- ggplot(geoanim[geoanim$annee>1830,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90')) +
-  mapWorld + geom_point() + 
+  mapWorld + geom_point(alpha=0.7) + 
   scale_colour_manual(name="vei", values=colsvei)+
   #facet_wrap(~vei)+
   labs(title = 'Année: {frame_time}') + 
   transition_time(annee)
-
-gif2<-animate(mp5,fps=3, width=900, height=500, nframes=100) #100 frames pour 2e moitié du jeu de données
+gif2<-animate(mp5,fps=3, width=900, height=600, nframes=100) #100 frames pour 2e moitié du jeu de données
 anim_save(filename="1830-2020.gif", gif2)
-
 
 #nframes=length(unique(geoanim$annee)) : 1540 frames pour avoir toutes les années
 #valeur par défaut de nframes = 100
+
+  
+#Animation + facet
+
+mp6 <- ggplot(geoanim[geoanim$annee>1900,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90')) +
+  mapWorld + geom_point(alpha=0.7) + 
+  scale_colour_manual(name="vei", values=colsvei)+
+  facet_wrap(~popquant)+
+  labs(title = 'Année: {frame_time}') + 
+  transition_time(annee)
+gif3<-animate(mp6,fps=3, width=900, height=600, nframes=20)
+anim_save(filename="2000-2020_vei.gif", gif3)
