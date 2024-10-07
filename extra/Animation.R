@@ -37,7 +37,7 @@ geoanim$famous<-ifelse(grepl("Nevado",geoanim$nom) & geoanim$annee==1985,1,
                                             ifelse(grepl("Vesuv",geoanim$nom) & geoanim$annee==79,1,0)
                           ))))
 geoanim$famous<-as.factor(geoanim$famous)
-geoanim$popquant<-ordered(geoanim$famous, c("0","1"))
+geoanim$famous<-ordered(geoanim$famous, c("0","1"))
 
 
 cols<-colorRampPalette(c("yellow", "red"))
@@ -112,13 +112,20 @@ anim_save(filename="1830-2020.gif", gif2)
 #nframes=length(unique(geoanim$annee)) : 1540 frames pour avoir toutes les années
 #valeur par défaut de nframes = 100
 
-mp7 <- ggplot(geoanim[geoanim$vei>=5 & geoanim$popquant=="100",], aes(x=long, y=lati, colour=as.factor(vei))) + 
+
+#Éruptions fortes avec population proche:
+
+geoanim2<-geoanim[!is.na(geoanim$vei),]
+geoanim2<-geoanim2[geoanim2$vei>=5 & geoanim2$popquant=="100",]
+
+mp7 <- ggplot(geoanim2, aes(x=long, y=lati, colour=as.factor(vei), size=famous)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90')) +
   mapWorld + geom_point(alpha=0.7) + 
   scale_colour_manual(name="vei", values=colsvei[c(4,6,8)])+
   labs(title = 'Année: {frame_time}') + 
   transition_time(annee)
-gif4<-animate(mp7,fps=3, width=900, height=600, nframes = 100) #100 frames pour 2e moitié du jeu de données
+
+gif4<-animate(mp7,fps=2, width=900, height=600) 
 anim_save(filename="DangerZone.gif", gif4)
 print(mp7)
 
