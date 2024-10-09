@@ -12,10 +12,14 @@ icone <- icons(iconUrl = "https://raw.githubusercontent.com/R-CoderDotCom/chinch
                iconWidth = 50, iconHeight = 50)
 
 #Création de la carte                    
-map <- leaflet() %>% addTiles() %>% 
+map <- leaflet(options=leafletOptions(minZoom = 2, maxZoom = 18))%>% addTiles() %>% 
   addMarkers(data = data.frame(lng = tab_point$long, lat = tab_point$lati),
              popup = paste0("Nom du volcan: ",tab_point$nom, "<br>", "Pays: ",tab_point$pays, "<br>",
                             "Altitude: ",tab_point$altitude,"<br>","Année de la dernière activité volcanique: ",tab_point$derniere_erup),
              icon = icone)
 map
 
+
+#leaflet(options=leafletOptions(minZoom = 2.25, maxZoom = 18))
+#%>% setMaxBounds(lng1=-100,lat1=-90,lng2=100,lat2=90)
+#worldCopyJump??

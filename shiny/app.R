@@ -97,7 +97,7 @@ ui <- fluidPage(
         tabPanel(
           title = "Carte interactive",
          
-            leafletOutput("carte_interac")
+            leafletOutput("carte_interac",width = "100%", height = 800)
           
         )
         )
@@ -144,7 +144,7 @@ server <- function(input, output) {
     
     
     output$carte_interac <- renderLeaflet({
-      leaflet() %>% addTiles() %>% 
+      leaflet(options=leafletOptions(minZoom = 2, maxZoom = 18))%>% addTiles() %>% 
         addMarkers(data = data.frame(lng = tab_point$long, lat = tab_point$lati),
                    popup = paste0("Nom du volcan: ",tab_point$nom, "<br>", "Pays: ",tab_point$pays, "<br>",
                                   "Altitude: ",tab_point$altitude,"<br>","Année de la dernière activité volcanique: ",tab_point$derniere_erup),
