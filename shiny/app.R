@@ -8,6 +8,7 @@ library(DT)
 library(skimr)
 library(ggplot2)
 library(readr)
+library(leaflet)
 
 #Chargement des tableaux
 eruptions <- read_csv("../data/eruptions.csv")
@@ -24,6 +25,12 @@ colnames(volcan)[11] <- "longitude"
 volcan$last_eruption_year<-as.numeric(volcan$last_eruption_year)
 volcan$minor_rock_1<-ifelse(volcan$minor_rock_1== unique(volcan$minor_rock_1)[3],NA,volcan$minor_rock_1)
 remove(volcan1)#retrait du jeu intermédiaire
+#Création du jeu de donnée pour la carte interactive
+tab_point <- data.frame(nom=volcan$volcano_name,long=volcan$longitude,lati=volcan$latitude, pays=volcan$country, derniere_erup=volcan$last_eruption_year, altitude=volcan$elevation)
+tab_point <- unique(tab_point)
+#Création de l'icône que l'on souhaite afficher
+icone <- icons(iconUrl = "https://raw.githubusercontent.com/R-CoderDotCom/chinchet/main/inst/red.png",
+               iconWidth = 50, iconHeight = 50)
 
 
 noms_var_num <- c(
@@ -63,6 +70,7 @@ ui <- fluidPage(
           img(src = "ToutesAnnées.gif", width = "100%")
         ),
         
+        #Statistiques descriptives
         tabPanel(
             title = "Statistiques descriptives",
             p("Structure de l'objet R contenant les données :"),
@@ -82,47 +90,23 @@ ui <- fluidPage(
                 )
             )
         ),
+        
+        #Carte interactive
         tabPanel(
-            title = "Graphiques",
-            sidebarLayout(
-                sidebarPanel = sidebarPanel(
-                    selectInput(
-                        inputId = "x",
-                        label = "Variable sur l'axe des abcisses (x) :",
-                        choices = noms_var_num
-                    ),
-                    selectInput(
-                        inputId = "y",
-                        label = "Variable sur l'axe des ordonnées (y) :",
-                        choices = noms_var_num,
-                        selected = "bill_depth_mm"
-                    ),
-                    radioButtons(
-                        inputId = "color",
-                        label = "Variable déterminant la couleur des points :",
-                        choices = c("species", "island", "sex", "year")
-                    ),
-                    img(src = 'bill_depth.png', width = "100%"),
-                    p("Illustration de @allison_horst ", tags$a(
-                        href = "https://github.com/allisonhorst/palmerpenguins", 
-                        "https://github.com/allisonhorst/palmerpenguins"
-                    ))
-                ),
-                mainPanel = mainPanel(
-                    plotOutput("scatterplot", height = 600)   
-                )
-            )
+          title = "Carte interactive",
+         
+            leafletOutput("carte_interac")
+          
         )
-    )
-)
+        )
+     )
+       
+
 
 
 # Define server logic
 server <- function(input, output) {
     
-    output$table_donnees <- DT::renderDataTable({
-        penguins     # penguins est un jeu de donnees du package palmerpenguins
-    })
     
     #Nos données:
     output$volcan <- DT::renderDataTable({
@@ -144,32 +128,23 @@ server <- function(input, output) {
     output$sortie_stat_desc <- renderTable({
         if (as.character(input$variable) %in% c("volcano_name", "region")) {
             table=as.data.frame(table(volcan[[input$variable]], useNA = "ifany"))
-#            names(table)=c(volcan$variable,"Fréquence")
+#            names(table)=c(input$variable,"Fréquence")
         } else if (as.character(input$variable) %in% c("elevation", "vei")) {
             t(as.matrix(summary(volcan[[input$variable]])))
         }
     })
     
-    output$scatterplot <- renderPlot({
-        ggplot(data = penguins) +
-            geom_point(
-                mapping = aes(
-                    x = .data[[input$x]],
-                    y = .data[[input$y]],
-                    color = factor(.data[[input$color]])
-                ),
-                size = 2
-            ) +
-            theme_minimal(base_size = 15) +
-            scale_color_manual(values = c("darkorange","purple","cyan4")) +
-            labs(
-                title = "Relation entre deux variables numériques en fonction d'une variable catégorique :",
-                x = names(noms_var_num)[noms_var_num == input$x],
-                y = names(noms_var_num)[noms_var_num == input$y],
-                color = input$color
-            )
-        
+    
+    
+    output$carte_interac <- renderLeaflet({
+      leaflet() %>% addTiles() %>% 
+        addMarkers(data = data.frame(lng = tab_point$long, lat = tab_point$lati),
+                   popup = paste0("Nom du volcan: ",tab_point$nom, "<br>", "Pays: ",tab_point$pays, "<br>",
+                                  "Altitude: ",tab_point$altitude,"<br>","Année de la dernière activité volcanique: ",tab_point$derniere_erup),
+                   icon = icone)
     })
+      
+    
     
 }
 
