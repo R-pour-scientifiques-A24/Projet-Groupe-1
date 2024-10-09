@@ -68,9 +68,10 @@ ui <- fluidPage(
         
         #Onglet pour les prédictions:
         tabPanel(
-          title = "Prédictions des intencités volcaniques", 
+          title = "Prédictions des intensités volcaniques", 
           img(src = "VEIfigure_en.svg.png", width = "70%"),
-          
+          p("Prédiction de l'intensité du volcan :"),
+          verbatimTextOutput("sortie_predict")
         ),
     
         #Volet carte animée:
@@ -129,6 +130,10 @@ server <- function(input, output) {
 
     output$sortie_str <- renderPrint({
         str(volcan)
+    })
+    
+    output$sortie_predict <- renderText({
+      paste("Prédiction de l'intensité du volcan", input$variable, ":")
     })
     
     output$type_var <- renderText({
