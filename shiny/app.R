@@ -33,7 +33,6 @@ icone <- icons(iconUrl = "https://raw.githubusercontent.com/R-CoderDotCom/chinch
                iconWidth = 50, iconHeight = 50)
 
 volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
-View(volcan_resume)
 
 noms_var_num <- c(
     "bill length" = "bill_length_mm",
@@ -91,7 +90,7 @@ ui <- fluidPage(
                     varSelectInput(
                         inputId = "variable",
                         label = "Choix de la variable :",
-                        data = volcan
+                        data = volcan_resume,
                     )
                 ),
                 mainPanel = mainPanel(
@@ -116,7 +115,12 @@ ui <- fluidPage(
 
 # Define server logic
 server <- function(input, output) {
-    
+
+  
+    output$table_donnees <- DT::renderDataTable({
+        penguins     # penguins est un jeu de donnees du package palmerpenguins
+    })
+
     
     #Nos données complètes:
     output$volcan <- DT::renderDataTable({
@@ -129,7 +133,7 @@ server <- function(input, output) {
     })
 
     output$sortie_str <- renderPrint({
-        str(volcan)
+        str(volcan_resume)
     })
     
     output$sortie_predict <- renderText({
@@ -137,19 +141,21 @@ server <- function(input, output) {
     })
     
     output$type_var <- renderText({
-        if (as.character(input$variable) %in% c("volcano_name", "region")) {
+        if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region", 
+                                                "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
             paste("Fréquences des modalités observées de la variable catégorique", input$variable, ":")
-        } else if (as.character(input$variable) %in% c("elevation", "vei")) {
+        } else {
             paste("Mesures de position et de tendance centrale pour les observations de la variable numérique", input$variable, ":")
         }
     })
     
     output$sortie_stat_desc <- renderTable({
-        if (as.character(input$variable) %in% c("volcano_name", "region")) {
-            table=as.data.frame(table(volcan[[input$variable]], useNA = "ifany"))
+        if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region", 
+                                                "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
+            table=as.data.frame(table(volcan_resume[[input$variable]], useNA = "ifany"))
 #            names(table)=c(input$variable,"Fréquence")
-        } else if (as.character(input$variable) %in% c("elevation", "vei")) {
-            t(as.matrix(summary(volcan[[input$variable]])))
+        } else {
+            t(as.matrix(summary(volcan_resume[[input$variable]])))
         }
     })
     
