@@ -16,7 +16,7 @@ output:
 
 ```{r load-packages, include = FALSE}
 # Ajoutez tous les packages supplémentaires dont vous avez besoin à ce chunk
-#install.packages("xaringanthemer", repos = "http://cran.us.r-project.org")
+install.packages("xaringanthemer", repos = "http://cran.us.r-project.org", dependencies = TRUE)
 library(tidyverse)
 library(palmerpenguins)
 library(knitr)
