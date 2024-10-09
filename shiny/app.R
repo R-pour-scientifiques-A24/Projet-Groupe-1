@@ -68,7 +68,9 @@ ui <- fluidPage(
         
         #Onglet pour les prédictions:
         tabPanel(
-          title = "Prédictions des intencité volcaniques"
+          title = "Prédictions des intencités volcaniques", 
+          img(src = "VEIfigure_en.svg.png", width = "70%"),
+          
         ),
     
         #Volet carte animée:
