@@ -38,7 +38,7 @@ ui <- fluidPage(
     
     theme = shinytheme("flatly"),
     
-    titlePanel("Exploration du jeu de données des pingouins de Palmer"),
+    titlePanel("Exploration du jeu de données des volcans"),
     
     navbarPage(
         title = "Choix de visualisation :",
@@ -49,10 +49,6 @@ ui <- fluidPage(
                 href = "https://github.com/allisonhorst/palmerpenguins", 
                 "https://github.com/allisonhorst/palmerpenguins"
             ))
-        ),
-        tabPanel(
-            title = "Données brutes",
-            DT::dataTableOutput("table_donnees")
         ),
         
         #Données brutes sur les volcans:
@@ -77,7 +73,7 @@ ui <- fluidPage(
                     varSelectInput(
                         inputId = "variable",
                         label = "Choix de la variable :",
-                        data = penguins
+                        data = volcan
                     )
                 ),
                 mainPanel = mainPanel(
@@ -134,22 +130,23 @@ server <- function(input, output) {
     })
 
     output$sortie_str <- renderPrint({
-        str(penguins)
+        str(volcan)
     })
     
     output$type_var <- renderText({
-        if (as.character(input$variable) %in% c("species", "island", "sex", "year")) {
+        if (as.character(input$variable) %in% c("volcano_name", "region")) {
             paste("Fréquences des modalités observées de la variable catégorique", input$variable, ":")
-        } else {
+        } else if (as.character(input$variable) %in% c("elevation", "vei")) {
             paste("Mesures de position et de tendance centrale pour les observations de la variable numérique", input$variable, ":")
         }
     })
     
     output$sortie_stat_desc <- renderTable({
-        if (as.character(input$variable) %in% c("species", "island", "sex", "year")) {
-            t(as.matrix(table(penguins[[input$variable]], useNA = "ifany")))
-        } else {
-            t(as.matrix(summary(penguins[[input$variable]])))
+        if (as.character(input$variable) %in% c("volcano_name", "region")) {
+            table=as.data.frame(table(volcan[[input$variable]], useNA = "ifany"))
+#            names(table)=c(volcan$variable,"Fréquence")
+        } else if (as.character(input$variable) %in% c("elevation", "vei")) {
+            t(as.matrix(summary(volcan[[input$variable]])))
         }
     })
     
