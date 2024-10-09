@@ -113,8 +113,8 @@ mod41<-lm(vei~region+start_year+eruption_category+major_rock_1*minor_rock_1
            , data=volcan)
 
 #Enlever evidence_category
-mod41<-lm(vei~region+start_year+eruption_category+major_rock_1*minor_rock_1
-          +event_type+primary_volcano_type+last_eruption_year+elevation+major_rock_1+minor_rock_1 , data=volcan)
+mod41<-lm(vei~region+start_year+eruption_category +major_rock_1+minor_rock_1
+          +event_type+primary_volcano_type+last_eruption_year+elevation+major_rock_1+minor_rock_1, data=volcan)
 
 
 round( c(R2=summary(mod41)$r.square, R2ajust=summary(mod41)$adj.r.squared, AIC=AIC(mod41), BIC=BIC(mod41)) , 2)
@@ -162,6 +162,13 @@ aictab(cand.set = models, modnames = modelnames)
 
 #mod41 est le meilleur modèle!
 
+
+mod41<-lm(vei~region+start_year+event_type+primary_volcano_type+elevation, data=volcan)
+
+round( c(R2=summary(mod41)$r.square, R2ajust=summary(mod41)$adj.r.squared, AIC=AIC(mod41), BIC=BIC(mod41)) , 2)
+
+
+
 #test de prédiction à 2 variables:
 newdata = data.frame(region=c("Antarctica","Alaska","West Indies"),
                      elevation=c(600, 1100, 1600),
@@ -176,7 +183,7 @@ newdata = data.frame(region=c("Antarctica","Alaska","West Indies"),
                      major_rock_1=c("Foidite", "Trachyte / Trachydacite", "Rhyolite"),
                      minor_rock_1 =c("Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite")
 )
-predict(mod41, newdata)
+predict(mod_final, newdata)
 
 #test de prédiction à 2 variables:
 newdata = data.frame(region=c("Antarctica","Alaska","West Indies"),
@@ -189,7 +196,7 @@ newdata = data.frame(region=c("Antarctica","Alaska","West Indies"),
                      major_rock_1=c("Foidite", "Trachyte / Trachydacite", "Rhyolite"),
                      minor_rock_1 =c("Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite")
 )
-predict(mod41, newdata)
+predict(mod_final, newdata)
 
 
 
@@ -215,7 +222,7 @@ newdata = data.frame(region=c("Antarctica","Alaska","West Indies"),
                      major_rock_1=c("Foidite", "Trachyte / Trachydacite", "Rhyolite"),
                      minor_rock_1 =c("Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite","Trachybasalt / Tephrite Basanite")
 )
-prediction<-predict(mod41, newdata)
+prediction<-predict(mod_final, newdata)
 
 #test de prédiction à 2 variables:
 newdata2 = data.frame(region=c("Hawaii and Pacific Ocean","Kuril Islands","West Indies"),
@@ -228,7 +235,7 @@ newdata2 = data.frame(region=c("Hawaii and Pacific Ocean","Kuril Islands","West 
                       major_rock_1=c("Basalt / Picro-Basalt", "Phonolite", "Andesite / Basaltic Andesite"),
                       minor_rock_1 =c("Dacite","Rhyolite","Phonolite"))
                       
-prediction<-predict(mod41, newdata2)
+prediction<-predict(mod_final, newdata2)
 
 
 #troisième test de prédiction à 2 variables:
@@ -237,12 +244,12 @@ newdata3 = data.frame(region=c("Hawaii and Pacific Ocean","Kuril Islands","West 
                      start_year=c(1568, -3420, 870),
                      eruption_category=c("Confirmed Eruption", "Uncertain Eruption", "Confirmed Eruption"),
                      event_type=c("Lava lake", "Property damage", "Lapilli"),
-                     primary_volcano_type=c(unique(volcan$primary_volcano_type)[3],unique(volcan$primary_volcano_type)[15],unique(volcan$primary_volcano_type)[7]), 
+                     primary_volcano_type=as.character(c(unique(volcan$primary_volcano_type)[3],unique(volcan$primary_volcano_type)[15],unique(volcan$primary_volcano_type)[7])), 
                      last_eruption_year=c(1944, 1911, -6550),                                         
                      major_rock_1=c("Basalt / Picro-Basalt", "Phonolite", "Andesite / Basaltic Andesite"),
                      minor_rock_1 =c("Dacite","Rhyolite","Phonolite")
 )
-prediction<-predict(mod41, newdata3)
+prediction<-predict(mod_final, newdata3)
 
 # Question pour Aurélien: unique(volcan$primary_volcano_type)[15]=="Tuff cone(s)", Pourquoi on reçoit une erreur lorsqu'on veut le mettre dans le newdata?
 # Erreur dans model.frame.default(Terms, newdata, na.action = na.action, xlev = object$xlevels) : 
@@ -264,7 +271,7 @@ as.numeric(result_predict)
 
 mod41<-lm(vei~region+start_year+eruption_category+major_rock_1*minor_rock_1
           +event_type+primary_volcano_type+last_eruption_year+elevation+major_rock_1+minor_rock_1 , data=volcan)
-
+summary(mod41)
 
 #Option avec polr:
 library(MASS)
@@ -274,13 +281,39 @@ freq_vei<-table(volcan$vei)
 vei_factor<-as.factor(volcan$vei)
 
 data_polr<-polr(vei_factor~region+start_year+eruption_category+event_type+primary_volcano_type+last_eruption_year
-     +elevation+major_rock_1+minor_rock_1 , data=volcan , 
-     contrasts = NULL, Hess = TRUE, model = TRUE, method = c("logistic", "probit", "loglog", "cloglog", "cauchit"))
+                +elevation+major_rock_1+minor_rock_1 +major_rock_1*minor_rock_1, data=volcan ,
+                contrasts = NULL, Hess = TRUE, model = TRUE, method = c("logistic"))
 
+#Impossible de trouver la fonction "polr.predict" ...?
 polr.predict (mod41, values=0:7, sim.count=1000, conf.int=0.95, sigma=NULL, set.seed=NULL) 
 # the values of the case as vector in the order how they appear in the summary (model) estimate OPTIONAL numbers 
 # of simulations to be done by the function. default: 1000 OPTIONAL the confidence interval used by the function. default: 0.95
 
-#Impossible de trouver la fonction "polr.predict" ...
-
 prediction<-predict(mod41, data_polr)
+
+
+
+
+
+############################################################################################
+
+# VRAI MODELE : 
+mod_final<-lm(vei~region+start_year+event_type+primary_volcano_type+elevation, data=volcan)
+
+#test de prédiction à 2 variables:
+newdata = data.frame(region=c("Antarctica","Alaska","West Indies"),
+                     elevation=c(600, 1100, 1600),
+                     start_year=c(1980, -1000, 1870),
+                     event_type=c("Spine formation", "Thermal anomaly", "Volcanic smoke"),
+                     primary_volcano_type=c("Compound", "Complex", "Compound"))
+prediction<-predict(mod_final, newdata)
+
+#Conditions à imposer pour que la prédiction nous donne des valeurs de vei comprises parmi : 0,1,2,3,4,5,6,7.
+result_predict <- ifelse(prediction<0.5, 0, 
+                         ifelse(prediction>=0.5 & prediction<1.5, 1, 
+                                ifelse(prediction>=1.5 & prediction<2.5, 2,
+                                       ifelse(prediction>=2.5 & prediction<3.5, 3,
+                                              ifelse(prediction>=3.5 & prediction<4.5, 4,
+                                                     ifelse(prediction>=4.5 & prediction<5.5, 5, 
+                                                            ifelse(prediction>=5.5 & prediction<6.5, 6, 7)))))) )
+as.numeric(result_predict)

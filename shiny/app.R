@@ -1,13 +1,29 @@
 # Exemple d'application web Shiny
 
 
-
 library(shiny)
 library(shinythemes)
 library(palmerpenguins)
 library(DT)
 library(skimr)
 library(ggplot2)
+library(readr)
+
+#Chargement des tableaux
+eruptions <- read_csv("../data/eruptions.csv")
+events <- read_csv("../data/events.csv")
+volcano <- read_csv("../data/volcano.csv")
+#Création du jeu de donnée
+volcan1<-merge(eruptions,events, by="eruption_number") #Jeu intermédiaire pour 1er merge
+volcan<-merge(volcan1,volcano, by.x="volcano_number.x", by.y="volcano_number")
+volcan<-volcan[, -c(8,9,12,13,16,17,18,21,23,24,25,31,32,37:40,42:45)]
+colnames(volcan)[1] <- "volcano_number"
+colnames(volcan)[3] <- "volcano_name"
+colnames(volcan)[10] <- "latitude"
+colnames(volcan)[11] <- "longitude"
+volcan$last_eruption_year<-as.numeric(volcan$last_eruption_year)
+volcan$minor_rock_1<-ifelse(volcan$minor_rock_1== unique(volcan$minor_rock_1)[3],NA,volcan$minor_rock_1)
+remove(volcan1)#retrait du jeu intermédiaire
 
 
 noms_var_num <- c(
@@ -38,6 +54,19 @@ ui <- fluidPage(
             title = "Données brutes",
             DT::dataTableOutput("table_donnees")
         ),
+        
+        #Données brutes sur les volcans:
+        tabPanel(
+        title = "Données brutes volcan",
+        DT::dataTableOutput("volcan")
+        ),
+        
+        #Volet carte animée:
+        tabPanel(
+          title = "Carte animée",
+          img(src = "ToutesAnnées.gif", width = "100%")
+        ),
+        
         tabPanel(
             title = "Statistiques descriptives",
             p("Structure de l'objet R contenant les données :"),
@@ -84,7 +113,7 @@ ui <- fluidPage(
                     ))
                 ),
                 mainPanel = mainPanel(
-                    plotOutput("scatterplot", height = 600)                    
+                    plotOutput("scatterplot", height = 600)   
                 )
             )
         )
@@ -99,6 +128,11 @@ server <- function(input, output) {
         penguins     # penguins est un jeu de donnees du package palmerpenguins
     })
     
+    #Nos données:
+    output$volcan <- DT::renderDataTable({
+      volcan
+    })
+
     output$sortie_str <- renderPrint({
         str(penguins)
     })
