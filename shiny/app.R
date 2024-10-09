@@ -25,8 +25,8 @@ volcan$last_eruption_year<-as.numeric(volcan$last_eruption_year)
 volcan$minor_rock_1<-ifelse(volcan$minor_rock_1== unique(volcan$minor_rock_1)[3],NA,volcan$minor_rock_1)
 remove(volcan1)#retrait du jeu intermédiaire
 
-volcan_resume<-volcan[,c()]
-
+volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
+View(volcan_resume)
 
 noms_var_num <- c(
     "bill length" = "bill_length_mm",
@@ -56,7 +56,7 @@ ui <- fluidPage(
         #Données brutes sur les volcans:
         tabPanel(
         title = "Données brutes volcan",
-        DT::dataTableOutput("volcan")
+        DT::dataTableOutput("volcan_resume")
         ),
         
         #Volet carte animée:
@@ -126,9 +126,14 @@ server <- function(input, output) {
         penguins     # penguins est un jeu de donnees du package palmerpenguins
     })
     
-    #Nos données:
+    #Nos données complètes:
     output$volcan <- DT::renderDataTable({
       volcan
+    })
+    
+    #Nos données partielles:
+    output$volcan_resume  <- DT::renderDataTable({
+      volcan_resume
     })
 
     output$sortie_str <- renderPrint({
@@ -146,7 +151,7 @@ server <- function(input, output) {
     output$sortie_stat_desc <- renderTable({
         if (as.character(input$variable) %in% c("volcano_name", "region")) {
             table=as.data.frame(table(volcan[[input$variable]], useNA = "ifany"))
-#            names(table)=c(volcan$variable,"Fréquence")
+#            names(table)=c(input$variable,"Fréquence")
         } else if (as.character(input$variable) %in% c("elevation", "vei")) {
             t(as.matrix(summary(volcan[[input$variable]])))
         }
