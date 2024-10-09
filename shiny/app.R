@@ -32,6 +32,8 @@ tab_point <- unique(tab_point)
 icone <- icons(iconUrl = "https://raw.githubusercontent.com/R-CoderDotCom/chinchet/main/inst/red.png",
                iconWidth = 50, iconHeight = 50)
 
+volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
+View(volcan_resume)
 
 noms_var_num <- c(
     "bill length" = "bill_length_mm",
@@ -61,7 +63,7 @@ ui <- fluidPage(
         #Données brutes sur les volcans:
         tabPanel(
         title = "Données brutes volcan",
-        DT::dataTableOutput("volcan")
+        DT::dataTableOutput("volcan_resume")
         ),
         
         #Volet carte animée:
@@ -108,9 +110,14 @@ ui <- fluidPage(
 server <- function(input, output) {
     
     
-    #Nos données:
+    #Nos données complètes:
     output$volcan <- DT::renderDataTable({
       volcan
+    })
+    
+    #Nos données partielles:
+    output$volcan_resume  <- DT::renderDataTable({
+      volcan_resume
     })
 
     output$sortie_str <- renderPrint({
