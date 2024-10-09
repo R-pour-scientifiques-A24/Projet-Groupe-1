@@ -25,6 +25,8 @@ volcan$last_eruption_year<-as.numeric(volcan$last_eruption_year)
 volcan$minor_rock_1<-ifelse(volcan$minor_rock_1== unique(volcan$minor_rock_1)[3],NA,volcan$minor_rock_1)
 remove(volcan1)#retrait du jeu intermédiaire
 
+volcan_resume<-volcan[,c()]
+
 
 noms_var_num <- c(
     "bill length" = "bill_length_mm",
