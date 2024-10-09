@@ -5,6 +5,7 @@ library(gganimate)
 library(ggmap)
 library(gapminder)
 
+
 geoanim<-data.frame(nom=volcan$volcano_name,
                     long=volcan$longitude,
                     lati=volcan$latitude, 
