@@ -292,7 +292,17 @@ polr.predict (mod41, values=0:7, sim.count=1000, conf.int=0.95, sigma=NULL, set.
 prediction<-predict(mod41, data_polr)
 
 
+plot(volcan$vei~volcan$start_year+volcan$elevation)
 
+#Boxplot des vei en fonction de l'élévation
+boxplot(volcan$elevation~volcan$vei)
+
+#Boxplot des vei en fonction de start_years
+boxplot(volcan$start_year~volcan$vei)
+
+
+
+?boxplot
 
 
 ############################################################################################
