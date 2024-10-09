@@ -57,6 +57,11 @@ ui <- fluidPage(
         DT::dataTableOutput("volcan")
         ),
         
+        #Onglet pour les prédictions:
+        tabPanel(
+          title = "Prédictions des intencité volcaniques"
+        ),
+    
         #Volet carte animée:
         tabPanel(
           title = "Carte animée",
