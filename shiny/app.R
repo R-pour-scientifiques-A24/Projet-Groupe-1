@@ -34,6 +34,7 @@ icone <- icons(iconUrl = "https://raw.githubusercontent.com/R-CoderDotCom/chinch
 
 volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
 
+
 noms_var_num <- c(
     "bill length" = "bill_length_mm",
     "bill depth" = "bill_depth_mm",
@@ -70,7 +71,21 @@ ui <- fluidPage(
           title = "Prédictions des intensités volcaniques", 
           img(src = "VEIfigure_en.svg.png", width = "70%"),
           p("Prédiction de l'intensité du volcan :"),
-          verbatimTextOutput("sortie_predict")
+          verbatimTextOutput("sortie_predict"),
+          
+          sidebarLayout(     
+            sidebarPanel = sidebarPanel(
+              SelectInput(
+                inputId = "nom du volcan",                  # manque library
+                label = "Choix de la variable :",
+                choices = unique(volcan$volcano_name)
+              )
+            ),
+            mainPanel = mainPanel(
+              textOutput("type_var"),
+              tableOutput("sortie_stat_desc")
+            )
+          )
         ),
     
         #Volet carte animée:
@@ -90,7 +105,7 @@ ui <- fluidPage(
                     varSelectInput(
                         inputId = "variable",
                         label = "Choix de la variable :",
-                        data = volcan_resume,
+                        data = volcan
                     )
                 ),
                 mainPanel = mainPanel(
@@ -115,12 +130,7 @@ ui <- fluidPage(
 
 # Define server logic
 server <- function(input, output) {
-
-  
-    output$table_donnees <- DT::renderDataTable({
-        penguins     # penguins est un jeu de donnees du package palmerpenguins
-    })
-
+    
     
     #Nos données complètes:
     output$volcan <- DT::renderDataTable({
@@ -133,7 +143,7 @@ server <- function(input, output) {
     })
 
     output$sortie_str <- renderPrint({
-        str(volcan_resume)
+        str(volcan)
     })
     
     output$sortie_predict <- renderText({
@@ -141,21 +151,19 @@ server <- function(input, output) {
     })
     
     output$type_var <- renderText({
-        if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region", 
-                                                "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
+        if (as.character(input$variable) %in% c("volcano_name", "region")) {
             paste("Fréquences des modalités observées de la variable catégorique", input$variable, ":")
-        } else {
+        } else if (as.character(input$variable) %in% c("elevation", "vei")) {
             paste("Mesures de position et de tendance centrale pour les observations de la variable numérique", input$variable, ":")
         }
     })
     
     output$sortie_stat_desc <- renderTable({
-        if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region", 
-                                                "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
-            table=as.data.frame(table(volcan_resume[[input$variable]], useNA = "ifany"))
+        if (as.character(input$variable) %in% c("volcano_name", "region")) {
+            table=as.data.frame(table(volcan[[input$variable]], useNA = "ifany"))
 #            names(table)=c(input$variable,"Fréquence")
-        } else {
-            t(as.matrix(summary(volcan_resume[[input$variable]])))
+        } else if (as.character(input$variable) %in% c("elevation", "vei")) {
+            t(as.matrix(summary(volcan[[input$variable]])))
         }
     })
     
