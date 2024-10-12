@@ -34,9 +34,14 @@ icone <- icons(iconUrl = "https://raw.githubusercontent.com/R-CoderDotCom/chinch
 volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
 
 
+#Choix des variables catégoriques pour la prédiction
 noms_regions <- unique(volcan$region)
 event_type <- unique(volcan$event_type)
 volcan_type <- unique(volcan$primary_volcano_type)
+#Modèle de prédiction
+mod_final<-lm(vei~region+start_year+event_type+primary_volcano_type+elevation, data=volcan)
+
+
 
 # Define UI (User Interface) for application
 ui <- fluidPage(
@@ -171,6 +176,11 @@ server <- function(input, output) {
 #    output$sortie_predict <- renderText({
 #      paste("Prédiction de l'intensité du volcan", input$variable, ":")
 #    })
+    
+#    output$sortie_predict <- renderText({
+#      
+#    })
+    
     
     output$type_var <- renderText({
         if (as.character(input$variable) %in% c("volcano_name", "region")) {

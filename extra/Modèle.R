@@ -330,3 +330,6 @@ result_predict <- ifelse(prediction<0.5, 0,
                                                      ifelse(prediction>=4.5 & prediction<5.5, 5, 
                                                             ifelse(prediction>=5.5 & prediction<6.5, 6, 7)))))) )
 as.numeric(result_predict)
+
+#Autre option
+ifelse(prediction<0.5, 0, ifelse(prediction>=6.5, 7, round(prediction))) #mais round(2.5) reste 2 et devient pas 3...
