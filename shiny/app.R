@@ -38,9 +38,6 @@ volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
 noms_regions <- unique(volcan$region)
 event_type <- unique(volcan$event_type)
 volcan_type <- unique(volcan$primary_volcano_type)
-#Modèle de prédiction
-mod_final<-lm(vei~region+start_year+event_type+primary_volcano_type+elevation, data=volcan)
-
 
 
 # Define UI (User Interface) for application
@@ -74,7 +71,6 @@ ui <- fluidPage(
           p("Index de force des éruptions volcaniques"), 
           p("Source :", tags$a(href = "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions", 
                                "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions")),
-          p("Prédiction de l'intensité du volcan :"),
           verbatimTextOutput("sortie_predict"),
           
           sidebarLayout(     
@@ -177,9 +173,18 @@ server <- function(input, output) {
 #      paste("Prédiction de l'intensité du volcan", input$variable, ":")
 #    })
     
-#    output$sortie_predict <- renderText({
-#      
-#    })
+    modpred <- reactive({
+      mod <- lm(vei~region+start_year+event_type+primary_volcano_type+elevation, data=volcan)
+      predict(mod, newdata = data.frame(region=input$var1,
+                                        elevation=input$var2,
+                                        start_year=input$var3,
+                                        event_type=input$var4,
+                                        primary_volcano_type=input$var5))
+    })
+    output$sortie_predict <- renderText({
+      paste("Prédiction de l'intensité d'un volcan avec les caractéristiques choisies", 
+            ":", round(modpred(), digits = 5))
+    })
     
     
     output$type_var <- renderText({
