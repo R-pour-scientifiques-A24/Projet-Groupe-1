@@ -105,10 +105,8 @@ ui <- fluidPage(
               img(src = "VEIfigure_en.svg.png", width = "45%"),
               p("Index de force des éruptions volcaniques"), 
               p("Source :", tags$a(href = "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions", 
-                                   "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions"))  #,
- #             textOutput("sortie_predict")
+                                   "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions"))
             ),
-            position = "right"
           ),
           verbatimTextOutput("sortie_predict"),
         ),
