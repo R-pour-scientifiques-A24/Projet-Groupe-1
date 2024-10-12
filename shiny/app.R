@@ -34,12 +34,9 @@ icone <- icons(iconUrl = "https://raw.githubusercontent.com/R-CoderDotCom/chinch
 volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
 
 
-noms_var_num <- c(
-    "bill length" = "bill_length_mm",
-    "bill depth" = "bill_depth_mm",
-    "flipper length" = "flipper_length_mm",
-    "body mass" = "body_mass_g"
-)
+noms_regions <- unique(volcan$region)
+event_type <- unique(volcan$event_type)
+volcan_type <- unique(volcan$primary_volcano_type)
 
 # Define UI (User Interface) for application
 ui <- fluidPage(
@@ -68,35 +65,37 @@ ui <- fluidPage(
         #Onglet pour les prédictions:
         tabPanel(
           title = "Prédictions des intensités volcaniques", 
-          img(src = "VEIfigure_en.svg.png", width = "50%"),
+          img(src = "VEIfigure_en.svg.png", width = "30%"),
+          p("Index de force des éruptions volcaniques"), 
+          p("Source :", tags$a(href = "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions")),
           p("Prédiction de l'intensité du volcan :"),
           verbatimTextOutput("sortie_predict"),
           
           sidebarLayout(     
             sidebarPanel = sidebarPanel(
-              varSelectInput(
-                inputId = "région",                         # SelectInput : library "selectize.js"
+              selectInput(
+                inputId = "var1",                         # SelectInput : library "selectize.js"
                 label = "Choix de la région du volcan :",     # choices = unique(volcan$volcano_name)
-                data = volcan
+                choices = noms_regions
               ),
-              varSelectInput(
-                inputId = "event_type",                 
+              selectInput(
+                inputId = "var4",                 
                 label = "Choix du type d'événement :",           
-                data = volcan
+                choices = event_type
               ),
-              varSelectInput(
-                inputId = "primary_volcano_type",                 
+              selectInput(
+                inputId = "var5",                 
                 label = "Choix du type de volcan :",           
-                data = volcan
+                choices = volcan_type
               ),
-              sliderInput(inputId = "année",
+              sliderInput(inputId = "var3",
                           label = "Choix de l'année où l'événement a débuté :",
                           min=min(volcan$start_year, na.rm=TRUE),
                           max=max(volcan$start_year, na.rm=TRUE), 
                           value = -5000
               ),
               sliderInput(
-                inputId = "élévation",
+                inputId = "var2",
                 label = "Choix de l'élévation du volcan :",
                 min=min(volcan$elevation,na.rm=TRUE),
                 max=max(volcan$elevation,na.rm=TRUE),
@@ -168,9 +167,9 @@ server <- function(input, output) {
         str(volcan)
     })
     
-    output$sortie_predict <- renderText({
-      paste("Prédiction de l'intensité du volcan", input$variable, ":")
-    })
+#    output$sortie_predict <- renderText({
+#      paste("Prédiction de l'intensité du volcan", input$variable, ":")
+#    })
     
     output$type_var <- renderText({
         if (as.character(input$variable) %in% c("volcano_name", "region")) {

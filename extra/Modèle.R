@@ -302,8 +302,11 @@ boxplot(volcan$start_year~volcan$vei)
 
 
 
-?boxplot
-
+newdata = data.frame(region=input$var1,
+                     elevation=input$var2,
+                     start_year=input$var3,
+                     event_type=input$var4,
+                     primary_volcano_type=input$var5)
 
 ############################################################################################
 
