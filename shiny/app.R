@@ -67,15 +67,16 @@ ui <- fluidPage(
           title = "Prédictions des intensités volcaniques", 
           img(src = "VEIfigure_en.svg.png", width = "30%"),
           p("Index de force des éruptions volcaniques"), 
-          p("Source :", tags$a(href = "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions")),
+          p("Source :", tags$a(href = "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions", 
+                               "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions")),
           p("Prédiction de l'intensité du volcan :"),
           verbatimTextOutput("sortie_predict"),
           
           sidebarLayout(     
             sidebarPanel = sidebarPanel(
               selectInput(
-                inputId = "var1",                         # SelectInput : library "selectize.js"
-                label = "Choix de la région du volcan :",     # choices = unique(volcan$volcano_name)
+                inputId = "var1",                        
+                label = "Choix de la région du volcan :",    
                 choices = noms_regions
               ),
               selectInput(
