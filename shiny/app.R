@@ -51,10 +51,10 @@ ui <- fluidPage(
         title = "Choix de visualisation :",
         tabPanel(
             title = icon("home"),
-            img(src = 'lter_penguins.png', width = "100%"),
-            p("Illustration de @allison_horst ", tags$a(
-                href = "https://github.com/allisonhorst/palmerpenguins", 
-                "https://github.com/allisonhorst/palmerpenguins"
+            img(src = 'magma_lave.avif', width = "100%"),
+            p("Source :", tags$a(
+                href = "https://www.futura-sciences.com/planete/questions-reponses/volcan-volcan-difference-lave-magma-6988/", 
+                "https://www.futura-sciences.com/planete/questions-reponses/volcan-volcan-difference-lave-magma-6988/"
             ))
         ),
         
@@ -168,10 +168,7 @@ server <- function(input, output) {
     output$sortie_str <- renderPrint({
         str(volcan)
     })
-    
-#    output$sortie_predict <- renderText({
-#      paste("Prédiction de l'intensité du volcan", input$variable, ":")
-#    })
+
     
     modpred <- reactive({
       mod <- lm(vei~region+start_year+event_type+primary_volcano_type+elevation, data=volcan)
