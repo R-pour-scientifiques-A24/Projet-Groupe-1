@@ -1,6 +1,5 @@
 # Exemple d'application web Shiny
 
-
 library(shiny)
 library(shinythemes)
 library(palmerpenguins)
@@ -69,21 +68,44 @@ ui <- fluidPage(
         #Onglet pour les prédictions:
         tabPanel(
           title = "Prédictions des intensités volcaniques", 
-          img(src = "VEIfigure_en.svg.png", width = "70%"),
+          img(src = "VEIfigure_en.svg.png", width = "50%"),
           p("Prédiction de l'intensité du volcan :"),
           verbatimTextOutput("sortie_predict"),
           
           sidebarLayout(     
             sidebarPanel = sidebarPanel(
-              SelectInput(
-                inputId = "nom du volcan",                  # manque library
-                label = "Choix de la variable :",
-                choices = unique(volcan$volcano_name)
+              varSelectInput(
+                inputId = "région",                         # SelectInput : library "selectize.js"
+                label = "Choix de la région du volcan :",     # choices = unique(volcan$volcano_name)
+                data = volcan
+              ),
+              varSelectInput(
+                inputId = "event_type",                 
+                label = "Choix du type d'événement :",           
+                data = volcan
+              ),
+              varSelectInput(
+                inputId = "primary_volcano_type",                 
+                label = "Choix du type de volcan :",           
+                data = volcan
+              ),
+              sliderInput(inputId = "année",
+                          label = "Choix de l'année où l'événement a débuté :",
+                          min=min(volcan$start_year, na.rm=TRUE),
+                          max=max(volcan$start_year, na.rm=TRUE), 
+                          value = -5000
+              ),
+              sliderInput(
+                inputId = "élévation",
+                label = "Choix de l'élévation du volcan :",
+                min=min(volcan$elevation,na.rm=TRUE),
+                max=max(volcan$elevation,na.rm=TRUE),
+                value=2200
               )
             ),
             mainPanel = mainPanel(
-              textOutput("type_var"),
-              tableOutput("sortie_stat_desc")
+              textOutput("XXXXXX"),
+              tableOutput("YYYYYY")
             )
           )
         ),

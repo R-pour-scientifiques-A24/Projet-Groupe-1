@@ -1,6 +1,5 @@
 # Exemple d'application web Shiny
 
-
 library(shiny)
 library(shinythemes)
 library(palmerpenguins)
@@ -8,7 +7,6 @@ library(DT)
 library(skimr)
 library(ggplot2)
 library(readr)
-
 
 noms_var_num <- c(
   "bill length" = "bill_length_mm",
