@@ -67,11 +67,7 @@ ui <- fluidPage(
         #Onglet pour les prédictions:
         tabPanel(
           title = "Prédictions des intensités volcaniques", 
-          img(src = "VEIfigure_en.svg.png", width = "30%"),
-          p("Index de force des éruptions volcaniques"), 
-          p("Source :", tags$a(href = "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions", 
-                               "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions")),
-          verbatimTextOutput("sortie_predict"),
+          
           
           sidebarLayout(     
             sidebarPanel = sidebarPanel(
@@ -102,13 +98,19 @@ ui <- fluidPage(
                 min=min(volcan$elevation,na.rm=TRUE),
                 max=max(volcan$elevation,na.rm=TRUE),
                 value=2200
-              )
+              ),
+              
             ),
             mainPanel = mainPanel(
-              textOutput("XXXXXX"),
-              tableOutput("YYYYYY")
-            )
-          )
+              img(src = "VEIfigure_en.svg.png", width = "45%"),
+              p("Index de force des éruptions volcaniques"), 
+              p("Source :", tags$a(href = "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions", 
+                                   "https://www.kaggle.com/datasets/jessemostipak/volcano-eruptions"))  #,
+ #             textOutput("sortie_predict")
+            ),
+            position = "right"
+          ),
+          verbatimTextOutput("sortie_predict"),
         ),
     
         #Volet carte animée:
@@ -178,10 +180,10 @@ server <- function(input, output) {
                                         event_type=input$var4,
                                         primary_volcano_type=input$var5))
     })
-    output$sortie_predict <- renderText({
+    output$sortie_predict <- renderText(
       paste("Prédiction de l'intensité d'un volcan avec les caractéristiques choisies", 
             ":", round(modpred(), digits = 5))
-    })
+    )
     
     
     output$type_var <- renderText({
@@ -211,7 +213,6 @@ server <- function(input, output) {
                    icon = icone)
     })
       
-    
     
 }
 
