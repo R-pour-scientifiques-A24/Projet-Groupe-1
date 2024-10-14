@@ -27,3 +27,6 @@ volcan$last_eruption_year<-as.numeric(volcan$last_eruption_year)
 volcan$minor_rock_1<-ifelse(volcan$minor_rock_1== unique(volcan$minor_rock_1)[3],NA,volcan$minor_rock_1)
 unique(volcan$minor_rock_1)
 
+
+tab<-table((eruptions$start_year))
+tab<-tab[order(tab, decreasing=TRUE)]

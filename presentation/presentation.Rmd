@@ -24,6 +24,10 @@ library(knitr)
 library(xaringanthemer)
 library(kableExtra)
 library(readr)
+library(ggplot2)
+library(gganimate)
+library(ggmap)
+library(gapminder)
 
 ```
 
@@ -53,6 +57,34 @@ colnames(volcan)[11] <- "longitude"
 volcan$last_eruption_year<-as.numeric(volcan$last_eruption_year)
 volcan$minor_rock_1<-ifelse(volcan$minor_rock_1== unique(volcan$minor_rock_1)[3],NA,volcan$minor_rock_1)
 remove(volcan1)#retarit du jeu intermédiaire
+
+volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
+
+#Animation:
+geoanim<-data.frame(nom=volcan$volcano_name,
+                    long=volcan$longitude,
+                    lati=volcan$latitude, 
+                    pays=volcan$country,
+                    vei=volcan$vei,
+                    pop=volcan$population_within_5_km,
+                    annee=as.character(volcan$start_year))
+
+geoanim<-unique(geoanim)
+
+geoanim$siecle<-ifelse(nchar(geoanim$annee)>2,substr(geoanim$annee,1,nchar(geoanim$annee)-2), geoanim$annee)
+geoanim$siecle<-ifelse(substr(geoanim$siecle,1,1) !="-" & nchar(geoanim$siecle)>2, "1", geoanim$siecle)
+geoanim$siecle<-ifelse(geoanim$siecle=="-","-1",geoanim$siecle)
+geoanim$siecle<-as.integer(geoanim$siecle)
+geoanim$annee<-as.integer(geoanim$annee)
+
+
+quantile(geoanim$pop)
+geoanim$popquant<-ifelse(geoanim$pop<=6,25,
+                         ifelse(geoanim$pop>=7&geoanim$pop<=328, 50,
+                                ifelse(geoanim$pop>=329&geoanim$pop<=3006,75,100)))
+geoanim$popquant<-as.factor(geoanim$popquant)
+geoanim$popquant<-ordered(geoanim$popquant, c("25","50","75","100"))
+
 ```
 
 
@@ -67,7 +99,7 @@ Aider l'utilisateur à se renseigner sur les volcans et les activités volcaniqu
 ## Aperçu des données (choisir les variables + intéressantes ou celles du mod. prédictif):
 ```{r volcan-table, echo = FALSE}
 
-kable(volcan[c(1:10),c(1:10)], "html", row.names = FALSE) %>%
+kable(volcan_resume[c(1:10),], "html", row.names = FALSE) %>%
  kable_styling(bootstrap_options = "hover") %>%
  scroll_box(width = "100%", height = "400px")
 
@@ -77,17 +109,68 @@ kable(volcan[c(1:10),c(1:10)], "html", row.names = FALSE) %>%
 
 class: inverse, center, middle
 
-# Titre de section
+# Éléments de l'application shiny
 
 ---
 
-# Hello World
+# Carte animée
+.pull-left[
+Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utiliser la variable *année d'éruption* pour animer les lieux d'éruption dans le temps. On a donc un *frame* d'animation pour représenter les éruptions sur environ 2 années. Voici un exemple d'un graphique statique pour l'année qui recense le plus d'érutions, soit 2004.
+]
 
-- Cliquez sur le bouton "Knit" pour compiler votre présentation
+.pull-right[
+```{r ggplot2004, echo = FALSE}
+cols<-colorRampPalette(c("yellow", "red"))
+colsvei<-cols(8)
 
-- Assurez-vous de valider et de pousser tous les fichiers résultants vers votre référentiel GitHub
+mapWorld <- borders("world", colour="palegreen3", fill="palegreen3")
+
+mp1 <- ggplot(geoanim[geoanim$annee==2004,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)
+
+mp1
+
+```
+]
+---
+
+
+# Carte animée 2
+
+Voici maintenant un graphique statique qui regroupe toutes les éruptions de 1812 classées par indice de force:
+
+```{r ggplot2004vei, echo = TRUE, eval=FALSE}
+mp2 <- ggplot(geoanim[geoanim$anne==1812,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  facet_wrap(~vei)
+
+mp2
+
+#Ajouter une image à la place, c'est long!!!
+
+```
 
 ---
+# Carte animée 3
+
+Mettre un video à la place? trouver comment looper le gif?
+Voici le gif résulant quand on anime par année (fonctionne juste dans un browser):
+
+.center[![Carte animée](../ToutesAnnées.gif)]
+
+
+---
+
+
+
 
 class: inverse, middle, center
 

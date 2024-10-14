@@ -4,11 +4,7 @@
     <title>Activité volcanique dans le monde au fil des ans</title>
     <meta charset="utf-8" />
     <meta name="author" content="Erika Audet, Anne-Marie Groulx, Allisson Picard" />
-<<<<<<< HEAD
-    <meta name="date" content="2024-10-09" />
-=======
-    <meta name="date" content="2024-10-06" />
->>>>>>> 4bd4ef6aaeceae823792dd20e86a100f22e67502
+    <meta name="date" content="2024-10-14" />
     <script src="libs/header-attrs-2.28/header-attrs.js"></script>
     <script src="libs/kePrint-0.0.1/kePrint.js"></script>
     <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
@@ -28,11 +24,7 @@ class: center, middle, inverse, title-slide
 ### Université Laval
 ]
 .date[
-<<<<<<< HEAD
-### 2024-10-09
-=======
-### 2024-10-06
->>>>>>> 4bd4ef6aaeceae823792dd20e86a100f22e67502
+### 2024-10-14
 ]
 
 ---
@@ -57,138 +49,204 @@ Aider l'utilisateur à se renseigner sur les volcans et les activités volcaniqu
 &lt;div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; "&gt;&lt;table class="table table-hover" style="margin-left: auto; margin-right: auto;"&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; volcano_number &lt;/th&gt;
-   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; eruption_number &lt;/th&gt;
    &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; volcano_name &lt;/th&gt;
-   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; eruption_category &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; primary_volcano_type &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; elevation &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; last_eruption_year &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; population_within_5_km &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; country &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; region &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; subregion &lt;/th&gt;
    &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; area_of_activity &lt;/th&gt;
-   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; vei &lt;/th&gt;
    &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; start_year &lt;/th&gt;
-   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; evidence_method_dating &lt;/th&gt;
    &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; end_year &lt;/th&gt;
-   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; latitude &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; eruption_category &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; vei &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; evidence_method_dating &lt;/th&gt;
+   &lt;th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;"&gt; event_type &lt;/th&gt;
+   &lt;th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;"&gt; event_date_year &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10001 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Ulmener Maar &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -8740 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Radiocarbon (corrected) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10002 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Strohn, Pulvermaar &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maar(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 600 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10001 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Germany &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Ulmener Maar &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -8740 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Radiocarbon (corrected) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Tephra &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 210010 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10002 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Strohn, Pulvermaar &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maar(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 600 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Germany &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Strohn, Pulvermaar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Tephra &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 50.170 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10007 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maar(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 600 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Germany &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ulmener Maar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8740 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Puy de Pariou &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -6250 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Thermoluminescence &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (corrected) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Explosion &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10006 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Puys Chopine, Vasset, Cratère Kilian &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; West Eifel Volcanic Field &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Maar(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 600 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 94991 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Germany &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Strohn, Pulvermaar &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -8300 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; -6550 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Explosion &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10011 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Montcineyre, Estivadoux, Pavin &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lava dome(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1464 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -4040 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 323392 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; France &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Puy de Pariou &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6250 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Thermoluminescence &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lapilli &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lava dome(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1464 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4040 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 323392 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; France &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Puys Chopine, Vasset, Cratère Kilian &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -6550 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pyroclastic flow &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10007 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lava dome(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1464 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4040 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 323392 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; France &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Montcineyre, Estivadoux, Pavin &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4040 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Pyroclastic flow &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lava dome(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1464 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4040 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 323392 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; France &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Puy de Pariou &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -6250 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Thermoluminescence &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Thermoluminescence &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Cinder cone formation &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10007 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lava dome(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1464 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4040 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 323392 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; France &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Puy de Pariou &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -6250 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Thermoluminescence &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Thermoluminescence &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Ash &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:right;"&gt; 210020 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 10009 &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Chaine des Puys &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lava dome(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1464 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; -4040 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 323392 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; France &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Mediterranean and Western Asia &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Western Europe &lt;/td&gt;
    &lt;td style="text-align:left;"&gt; Puy de Lassolas, Puy de la Vache &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; -6020 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 45.775 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Confirmed Eruption &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Radiocarbon (uncorrected) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Lava flow(s) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; NA &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;&lt;/div&gt;
@@ -197,17 +255,52 @@ Aider l'utilisateur à se renseigner sur les volcans et les activités volcaniqu
 
 class: inverse, center, middle
 
-# Titre de section
+# Éléments de l'application shiny
 
 ---
 
-# Hello World
+# Carte animée
+.pull-left[
+Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utiliser la variable *année d'éruption* pour animer les lieux d'éruption dans le temps. On a donc un *frame* d'animation pour représenter les éruptions sur environ 2 années. Voici un exemple d'un graphique statique pour l'année qui recense le plus d'érutions, soit 2004.
+]
 
-- Cliquez sur le bouton "Knit" pour compiler votre présentation
+.pull-right[
+&lt;img src="presentation_files/figure-html/ggplot2004-1.png" width="80%" /&gt;
+]
+---
 
-- Assurez-vous de valider et de pousser tous les fichiers résultants vers votre référentiel GitHub
+
+# Carte animée 2
+
+Voici maintenant un graphique statique qui regroupe toutes les éruptions de 1812 classées par indice de force:
+
+
+``` r
+mp2 &lt;- ggplot(geoanim[geoanim$anne==1812,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  facet_wrap(~vei)
+
+mp2
+
+#Ajouter une image à la place, c'est long!!!
+```
 
 ---
+# Carte animée 3
+
+Voici le gif résulant quand on anime par année (fonctionne juste dans un browser):
+
+.center[![Carte animée](../ToutesAnnées.gif)]
+
+
+---
+
+
+
 
 class: inverse, middle, center
 

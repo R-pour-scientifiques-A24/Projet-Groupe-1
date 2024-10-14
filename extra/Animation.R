@@ -47,7 +47,7 @@ colsvei<-cols(8)
 mapWorld <- borders("world", colour="palegreen3", fill="palegreen3")
 
 #Plot pas animé, essais sur les styles:
-mp1 <- ggplot(geoanim[geoanim$annee>2010,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+mp1 <- ggplot(geoanim[geoanim$annee==2004,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
   mapWorld + 
   geom_point(alpha=0.7)+

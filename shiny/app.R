@@ -26,6 +26,10 @@ colnames(volcan)[11] <- "longitude"
 volcan$last_eruption_year<-as.numeric(volcan$last_eruption_year)
 volcan$minor_rock_1<-ifelse(volcan$minor_rock_1== unique(volcan$minor_rock_1)[3],NA,volcan$minor_rock_1)
 remove(volcan1)#retrait du jeu intermédiaire
+
+volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
+
+
 #Création du jeu de donnée pour la carte interactive
 tab_point <- data.frame(nom=volcan$volcano_name,long=volcan$longitude,lati=volcan$latitude, pays=volcan$country, derniere_erup=volcan$last_eruption_year, altitude=volcan$elevation)
 tab_point <- unique(tab_point)
@@ -33,7 +37,6 @@ tab_point <- unique(tab_point)
 icone <- icons(iconUrl = "https://raw.githubusercontent.com/R-CoderDotCom/chinchet/main/inst/red.png",
                iconWidth = 50, iconHeight = 50)
 
-volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
 
 
 #Choix des variables catégoriques pour la prédiction
