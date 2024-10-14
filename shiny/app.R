@@ -8,6 +8,8 @@ library(skimr)
 library(ggplot2)
 library(readr)
 library(leaflet)
+#library(plotly)
+
 
 #Chargement des tableaux
 eruptions <- read_csv("../data/eruptions.csv")
@@ -133,7 +135,7 @@ ui <- fluidPage(
                 ),
                 mainPanel = mainPanel(
                     textOutput("type_var"),
-                    plotOutput("graphDesc")
+                    plotOutput("graphDesc"),
                     tableOutput("sortie_stat_desc")
                     
                 )
@@ -206,6 +208,7 @@ server <- function(input, output) {
     output$sortie_stat_desc <- renderTable({
         if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region",  "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
           table=as.data.frame(table(volcan_resume[[input$variable]], useNA = "ifany"))
+          table=table[order(table$Freq, decreasing = TRUE),]
             # names(table)=c(input$variable,"Fréquence")
         } else {
           t(as.matrix(summary(volcan_resume[[input$variable]])))
@@ -213,8 +216,18 @@ server <- function(input, output) {
     })
     
     output$graphDesc<- renderPlot({
+      #Faire un plotly pour avoir des données quand on passe la souris)? Ou juste 
+      #faire une meilleure sélection de graphiques ou ggplot plus beau? Ajuster titres.
+      
+      tbvolfreq=table(volcan_resume[[input$variable]], useNA = "ifany")
+      
       if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region",  "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
-        barplot(table(volcan_resume[[input$variable]], useNA = "ifany"))
+        barplot(tbvolfreq)
+        
+        #p<-ggplot(data=volcan_resume, aes(x=volcan_resume[[input$variable]])) +
+        #  geom_bar()
+        #p
+        
       } else {
         hist(volcan_resume[[input$variable]], useNA = "ifany")
       }
