@@ -128,12 +128,14 @@ ui <- fluidPage(
                     varSelectInput(
                         inputId = "variable",
                         label = "Choix de la variable :",
-                        data = volcan
+                        data = volcan_resume
                     )
                 ),
                 mainPanel = mainPanel(
                     textOutput("type_var"),
+                    plotOutput("graphDesc")
                     tableOutput("sortie_stat_desc")
+                    
                 )
             )
         ),
@@ -166,7 +168,7 @@ server <- function(input, output) {
     })
 
     output$sortie_str <- renderPrint({
-        str(volcan)
+        str(volcan_resume)
     })
 
     
@@ -192,16 +194,32 @@ server <- function(input, output) {
         }
     })
     
+    
+    output$type_var <- renderText({
+      if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region",  "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
+                                              paste("Fréquences des modalités observées de la variable catégorique", input$variable, ":")
+      } else {
+        paste("Mesures de position et de tendance centrale pour les observations de la variable numérique", input$variable, ":")
+      }
+    })
+        
     output$sortie_stat_desc <- renderTable({
-        if (as.character(input$variable) %in% c("volcano_name", "region")) {
-            table=as.data.frame(table(volcan[[input$variable]], useNA = "ifany"))
-#            names(table)=c(input$variable,"Fréquence")
-        } else if (as.character(input$variable) %in% c("elevation", "vei")) {
-            t(as.matrix(summary(volcan[[input$variable]])))
+        if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region",  "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
+          table=as.data.frame(table(volcan_resume[[input$variable]], useNA = "ifany"))
+            # names(table)=c(input$variable,"Fréquence")
+        } else {
+          t(as.matrix(summary(volcan_resume[[input$variable]])))
         }
     })
     
-    
+    output$graphDesc<- renderPlot({
+      if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region",  "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
+        barplot(table(volcan_resume[[input$variable]], useNA = "ifany"))
+      } else {
+        hist(volcan_resume[[input$variable]], useNA = "ifany")
+      }
+    })
+
     
     output$carte_interac <- renderLeaflet({
       leaflet(options=leafletOptions(minZoom = 2, maxZoom = 18))%>% addTiles() %>% 
