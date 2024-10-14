@@ -217,7 +217,7 @@ server <- function(input, output) {
     
     output$graphDesc<- renderPlot({
       #Faire un plotly pour avoir des données quand on passe la souris)? Ou juste 
-      #faire une meilleure sélection de graphiques ou ggplot plus beau? Ajuster titres.
+      #faire une meilleure sélection de graphiques ou ggplot plus beau? Ajuster titres et axes.
       
       tbvolfreq=table(volcan_resume[[input$variable]], useNA = "ifany")
       
