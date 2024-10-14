@@ -118,7 +118,25 @@ ui <- fluidPage(
           title = "Carte animée",
           img(src = "ToutesAnnées.gif", width = "100%")
         ),
-        
+  
+  
+        #Test vidéo:
+        tabPanel(title = "Test video",
+            mainPanel(
+              p("Video Below"),
+              tags$video(
+                src = "hirondellebic_M_vidéo_480px320px.mp4",
+                type = "video/mp4",
+                autoplay=TRUE,
+                muted=TRUE,
+                playsinline=TRUE,
+                loop=TRUE,
+                controls=TRUE),
+              p("Video above")
+              
+            )
+        ),
+
         #Statistiques descriptives
         tabPanel(
             title = "Statistiques descriptives",
@@ -149,9 +167,8 @@ ui <- fluidPage(
             leafletOutput("carte_interac",width = "100%", height = 800)
           
         )
-        )
-     )
-       
+    )
+)
 
 
 
@@ -164,6 +181,7 @@ server <- function(input, output) {
       volcan
     })
     
+
     #Nos données partielles:
     output$volcan_resume  <- DT::renderDataTable({
       volcan_resume
@@ -182,11 +200,12 @@ server <- function(input, output) {
                                         event_type=input$var4,
                                         primary_volcano_type=input$var5))
     })
+    
     output$sortie_predict <- renderText(
       paste("Prédiction de l'intensité d'un volcan avec les caractéristiques choisies", 
             ":", round(modpred(), digits = 5))
     )
-    
+  
     
     output$type_var <- renderText({
         if (as.character(input$variable) %in% c("volcano_name", "region")) {
@@ -216,20 +235,23 @@ server <- function(input, output) {
     })
     
     output$graphDesc<- renderPlot({
-      #Faire un plotly pour avoir des données quand on passe la souris)? Ou juste 
+      #Faire un plotly pour avoir des données quand on passe la souris? Ou juste 
       #faire une meilleure sélection de graphiques ou ggplot plus beau? Ajuster titres et axes.
       
-      tbvolfreq=table(volcan_resume[[input$variable]], useNA = "ifany")
+      tabvolfreq<-table(volcan_resume[[input$variable]], useNA = "ifany")
+      tabvolfreqord<-tabvolfreq[order(tabvolfreq,decreasing=TRUE)]
+      tabvolfreqord10<-tabvolfreqord[1:10]
+
       
       if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region",  "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
-        barplot(tbvolfreq)
+        barplot(tabvolfreqord10, las=2)
         
         #p<-ggplot(data=volcan_resume, aes(x=volcan_resume[[input$variable]])) +
         #  geom_bar()
         #p
         
       } else {
-        hist(volcan_resume[[input$variable]], useNA = "ifany")
+        hist(na.omit(volcan_resume[[input$variable]]))
       }
     })
 
