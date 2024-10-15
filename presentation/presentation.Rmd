@@ -148,7 +148,7 @@ mp1 <- ggplot(geoanim[geoanim$annee==2004,],
 
 ---
 # Résultat:
-```{r imageplot2004, echo=FALSE, out.width="70%"}
+```{r imageplot2004, echo=FALSE, out.width="70%", fig.align = 'center'}
 include_graphics("img/plot_2004.png")
 ```
 
@@ -169,7 +169,7 @@ mp2 <- ggplot(geoanim[geoanim$anne==1812,],
 
 ---
 # Résultat:
-```{r imageplot1812, echo=FALSE, out.width="75%"}
+```{r imageplot1812, echo=FALSE, out.width="75%",fig.align = 'center'}
 include_graphics("img/plot_1812.png")
 ```
 
@@ -179,7 +179,7 @@ Sur la prochaine diapositive on trouve l'animation finale, basée sur le graphiq
 
 ---
 # Résultat:
-```{r gif, echo=FALSE, out.width="75%"}
+```{r gif, echo=FALSE, out.width="75%", fig.align = 'center'}
 include_graphics("img/ToutesAnnées.gif")
 #(ne loop pas... mettre en video comme sur l'app?)  
 ```
@@ -195,12 +195,7 @@ leaflet(options=leafletOptions(minZoom = 1, maxZoom = 18))%>% addTiles() %>%
              popup = paste0("Nom du volcan: ",tab_point$nom, "<br>", "Pays: ",tab_point$pays, "<br>",
                             "Altitude: ",tab_point$altitude,"<br>","Année de la dernière activité volcanique: ",tab_point$derniere_erup),
              icon = icone)
-
-
 ```
-
-
-
 
 ---
 
