@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Activité volcanique dans le monde au fil des ans</title>
+    <title>Activités volcaniques mondiales au fil des ans</title>
     <meta charset="utf-8" />
     <meta name="author" content="Erika Audet, Anne-Marie Groulx, Allisson Picard" />
-    <meta name="date" content="2024-10-14" />
+    <meta name="date" content="2024-10-15" />
     <script src="libs/header-attrs-2.28/header-attrs.js"></script>
     <script src="libs/kePrint-0.0.1/kePrint.js"></script>
     <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
@@ -15,7 +15,7 @@
 class: center, middle, inverse, title-slide
 
 .title[
-# Activité volcanique dans le monde au fil des ans
+# Activités volcaniques mondiales au fil des ans
 ]
 .author[
 ### Erika Audet, Anne-Marie Groulx, Allisson Picard
@@ -24,7 +24,7 @@ class: center, middle, inverse, title-slide
 ### Université Laval
 ]
 .date[
-### 2024-10-14
+### 2024-10-15
 ]
 
 ---
@@ -261,11 +261,11 @@ class: inverse, center, middle
 
 # Carte animée
 .pull-left[
-Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utiliser la variable *année d'éruption* pour animer les lieux d'éruption dans le temps. On a donc un *frame* d'animation pour représenter les éruptions sur environ 2 années. Voici un exemple d'un graphique statique pour l'année qui recense le plus d'érutions, soit 2004.
+Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utiliser la variable *année d'éruption* pour animer les lieux d'éruption dans le temps. On a donc un *frame* d'animation pour représenter les éruptions sur environ 2 années. Voici un exemple d'un graphique statique pour l'année qui recense le plus d'éruptions, soit 2004.
 ]
 
 .pull-right[
-&lt;img src="presentation_files/figure-html/ggplot2004-1.png" width="80%" /&gt;
+
 ]
 ---
 
@@ -292,15 +292,27 @@ mp2
 ---
 # Carte animée 3
 
+Mettre un video à la place? trouver comment looper le gif?
 Voici le gif résulant quand on anime par année (fonctionne juste dans un browser):
 
 .center[![Carte animée](../ToutesAnnées.gif)]
 
 
 ---
+# Carte interactive
+.pull-left[
+Nous avons d'abord créer un jeu de données contenant les informations qui nous intéressent (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude), tout en retirant les doublons. Avec le package leaflet, nous avons créer une carte du monde sur laquelle des punaises pour chaque volcan ont été placées. Sur l'application, l'utilisateur peut se déplacer sur la carte et cliquer sur une punaise pour avoir les informations correspondant au volcan sélectionné, soit son nom, le pays où il se trouve, son altitude et l'année de sa dernière éruption.
+]
+.pull-right[
+&lt;div class="figure" style="text-align: bottom"&gt;
+&lt;img src="./carteinterac.png" alt="Une image représentant notre carte interactive et les informations qui sont affichées." width="100%" /&gt;
+&lt;p class="caption"&gt;Une image représentant notre carte interactive et les informations qui sont affichées.&lt;/p&gt;
+&lt;/div&gt;
+]
 
 
 
+---
 
 class: inverse, middle, center
 
@@ -364,7 +376,7 @@ model
 
 
 
-&lt;img src="presentation_files/figure-html/plot-iris-1.png" width="80%" /&gt;
+&lt;img src="presentation_files/figure-html/plot-iris-1.png" width="10%" /&gt;
 
 ---
 

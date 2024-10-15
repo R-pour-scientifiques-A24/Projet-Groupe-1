@@ -206,7 +206,7 @@ server <- function(input, output) {
     
     output$sortie_predict <- renderText(
       paste("Prédiction de l'intensité d'un volcan avec les caractéristiques choisies", 
-            ":", round(modpred(), digits = 5))
+            ":", round(modpred()))
     )
   
     

@@ -1,5 +1,5 @@
 ---
-title: "Activité volcanique dans le monde au fil des ans"
+title: "Activités volcaniques mondiales au fil des ans"
 author: "Erika Audet, Anne-Marie Groulx, Allisson Picard"
 institute: "Université Laval"
 date: "`r Sys.Date()`"
@@ -17,6 +17,7 @@ output:
 ```{r load-packages, include = FALSE}
 # Ajoutez tous les packages supplémentaires dont vous avez besoin à ce chunk
 install.packages("xaringanthemer", repos = "http://cran.us.r-project.org", dependencies = TRUE)
+#install.packages("gganimate")
 #install.packages("xaringanthemer", repos = "http://cran.us.r-project.org") - J'ai juste eu besoin de faire rouler ça une première fois, on peut retirer la ligne quand ça fonctionne pour toutes.
 library(tidyverse)
 library(palmerpenguins)
@@ -35,7 +36,7 @@ library(gapminder)
 # Pour une meilleure résolution de figure
 knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "80%", warning = FALSE, message = FALSE)
 style_xaringan(
-  title_slide_background_image = "img/confetti.jpg"
+  title_slide_background_image = "img/volcan.png"
 )
 ```
 
@@ -115,7 +116,7 @@ class: inverse, center, middle
 
 # Carte animée
 .pull-left[
-Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utiliser la variable *année d'éruption* pour animer les lieux d'éruption dans le temps. On a donc un *frame* d'animation pour représenter les éruptions sur environ 2 années. Voici un exemple d'un graphique statique pour l'année qui recense le plus d'érutions, soit 2004.
+Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utiliser la variable *année d'éruption* pour animer les lieux d'éruption dans le temps. On a donc un *frame* d'animation pour représenter les éruptions sur environ 2 années. Voici un exemple d'un graphique statique pour l'année qui recense le plus d'éruptions, soit 2004.
 ]
 
 .pull-right[
@@ -168,9 +169,20 @@ Voici le gif résulant quand on anime par année (fonctionne juste dans un brows
 
 
 ---
+# Carte interactive
+.pull-left[
+Nous avons d'abord créer un jeu de données contenant les informations qui nous intéressent (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude), tout en retirant les doublons. Avec le package leaflet, nous avons créer une carte du monde sur laquelle des punaises pour chaque volcan ont été placées. Sur l'application, l'utilisateur peut se déplacer sur la carte et cliquer sur une punaise pour avoir les informations correspondant au volcan sélectionné, soit son nom, le pays où il se trouve, son altitude et l'année de sa dernière éruption.
+]
+.pull-right[
+```{r carte interactive, echo = FALSE, out.width = "100%", fig.align = "bottom", fig.cap = "Une image représentant notre carte interactive et les informations qui sont affichées."}
+include_graphics("./carteinterac.png")
+
+```
+]
 
 
 
+---
 
 class: inverse, middle, center
 
