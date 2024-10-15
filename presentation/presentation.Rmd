@@ -29,6 +29,7 @@ library(ggplot2)
 library(gganimate)
 library(ggmap)
 library(gapminder)
+library(leaflet)
 
 ```
 
@@ -87,6 +88,17 @@ geoanim$Population_5km<-ifelse(geoanim$pop<100,"<100",
 geoanim$Population_5km<-as.factor(geoanim$Population_5km)
 geoanim$Population_5km<-ordered(geoanim$Population_5km, c("<100","100-500","500-1000","1000-5000","5000-10 000","10 000-50 000","50 000-100 000","100 000-500 000","500 000-1 000 000", ">1M"))
 
+
+#Pour la carte interactive
+#Création d'un tableau contenant les infos que l'on veut afficher
+tab_point <- data.frame(nom=volcan$volcano_name,long=volcan$longitude,lati=volcan$latitude, pays=volcan$country, derniere_erup=volcan$last_eruption_year, altitude=volcan$elevation)
+
+#Retrait des doublons
+tab_point <- unique(tab_point)
+
+#Création de l'icône que l'on souhaite afficher
+icone <- icons(iconUrl = "https://raw.githubusercontent.com/R-CoderDotCom/chinchet/main/inst/red.png",
+               iconWidth = 50, iconHeight = 50)
 
 ```
 
@@ -174,15 +186,28 @@ include_graphics("img/ToutesAnnées.gif")
 
 ---
 # Carte interactive
+<<<<<<< HEAD
 .pull-left[
 Nous avons d'abord créé un jeu de données contenant les informations qui nous intéressent (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude), tout en retirant les doublons. Avec le package leaflet, nous avons créer une carte du monde sur laquelle des punaises pour chaque volcan ont été placées. Sur l'application, l'utilisateur peut se déplacer sur la carte et cliquer sur une punaise pour avoir les informations correspondant au volcan sélectionné, soit son nom, le pays où il se trouve, son altitude et l'année de sa dernière éruption.
 ]
 .pull-right[
 ```{r carte interactive, echo = FALSE, out.width = "100%", fig.align = "bottom", fig.cap = "Une image représentant notre carte interactive et les informations qui sont affichées."}
 include_graphics("./img/carteinterac.png")
+=======
+
+Nous avons créer un jeu de données contenant les informations qui nous intéressent (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude), tout en retirant les doublons. Avec le package leaflet, nous avons créer une carte du monde sur laquelle des punaises pour chaque volcan ont été placées. Sur l'application, l'utilisateur peut se déplacer sur la carte et cliquer sur une punaise pour avoir les informations correspondant au volcan sélectionné, soit son nom, le pays où il se trouve, son altitude et l'année de sa dernière éruption.
+
+```{r out.width="100%",out.height="50%", echo=FALSE}
+leaflet(options=leafletOptions(minZoom = 1, maxZoom = 18))%>% addTiles() %>% 
+  addMarkers(data = data.frame(lng = tab_point$long, lat = tab_point$lati),
+             popup = paste0("Nom du volcan: ",tab_point$nom, "<br>", "Pays: ",tab_point$pays, "<br>",
+                            "Altitude: ",tab_point$altitude,"<br>","Année de la dernière activité volcanique: ",tab_point$derniere_erup),
+             icon = icone)
+
+>>>>>>> 72f2671144019c1cd06579db23ddd94561e63b81
 
 ```
-]
+
 
 
 
