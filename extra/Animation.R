@@ -24,21 +24,19 @@ geoanim$annee<-as.integer(geoanim$annee)
 
 
 quantile(geoanim$pop)
-geoanim$popquant<-ifelse(geoanim$pop<=6,25,
-                         ifelse(geoanim$pop>=7&geoanim$pop<=328, 50,
-                                ifelse(geoanim$pop>=329&geoanim$pop<=3006,75,100)))
-geoanim$popquant<-as.factor(geoanim$popquant)
-geoanim$popquant<-ordered(geoanim$popquant, c("25","50","75","100"))
+geoanim$Population_5km<-ifelse(geoanim$pop<100,"<100",
+                          ifelse(geoanim$pop>=100&geoanim$pop<=500, "100-500",
+                            ifelse(geoanim$pop>500&geoanim$pop<=1000, "500-1000",
+                              ifelse(geoanim$pop>1000&geoanim$pop<=5000, "1000-5000",
+                                ifelse(geoanim$pop>5000&geoanim$pop<=10000, "5000-10 000",
+                                  ifelse(geoanim$pop>10000&geoanim$pop<=50000, "10 000-50 000",
+                                    ifelse(geoanim$pop>50000&geoanim$pop<=100000, "50 000-100 000",
+                                      ifelse(geoanim$pop>100000&geoanim$pop<=500000, "100 000-500 000",
+                                        ifelse(geoanim$pop>500000&geoanim$pop<=1000000, "500 000-1 000 000",
+                                          ">1M")))))))))
 
-
-geoanim$famous<-ifelse(grepl("Nevado",geoanim$nom) & geoanim$annee==1985,1,
-                       ifelse(grepl("Pelee",geoanim$nom) & geoanim$annee==1902,1,
-                              ifelse(grepl("Krakatau",geoanim$nom) & geoanim$annee==1883,1,
-                                     ifelse(grepl("Unzendake",geoanim$nom) & geoanim$annee==1792,1,
-                                            ifelse(grepl("Vesuv",geoanim$nom) & geoanim$annee==79,1,0)
-                          ))))
-geoanim$famous<-as.factor(geoanim$famous)
-geoanim$famous<-ordered(geoanim$famous, c("0","1"))
+geoanim$Population_5km<-as.factor(geoanim$Population_5km)
+geoanim$Population_5km<-ordered(geoanim$Population_5km, c("<100","100-500","500-1000","1000-5000","5000-10 000","10 000-50 000","50 000-100 000","100 000-500 000","500 000-1 000 000", ">1M"))
 
 
 cols<-colorRampPalette(c("yellow", "red"))
@@ -47,28 +45,27 @@ colsvei<-cols(8)
 mapWorld <- borders("world", colour="palegreen3", fill="palegreen3")
 
 #Plot pas animé, essais sur les styles:
-mp1 <- ggplot(geoanim[geoanim$annee==2004,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
-  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
-  mapWorld + 
-  geom_point(alpha=0.7)+
-  scale_colour_manual(name="vei", values=colsvei)+
-  theme(aspect.ratio=3/4)
-  #facet_wrap(~vei)+
-  #labs(title = 'Année: {frame_time}') + 
-  #transition_time(annee)
-mp1
-
-#Avec facet
-mp2 <- ggplot(geoanim[geoanim$annee>2010,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+mp1 <- ggplot(geoanim[geoanim$annee==2004,], aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
   mapWorld + 
   geom_point(alpha=0.7)+
   scale_colour_manual(name="vei", values=colsvei)+
   theme(aspect.ratio=3/4)+
-  facet_wrap(~vei)
-  #labs(title = 'Année: {frame_time}') + 
-  #transition_time(annee)
+  labs(title="Éruptions volcaniques de 2004", x="longitude", y="latitude" )
+mp1
+ggsave("plot.tiff")
+
+#Avec facet
+mp2 <- ggplot(geoanim[geoanim$annee==1812,], aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  facet_wrap(~vei)+
+  labs(title="Éruptions volcaniques de 1812", x="longitude", y="latitude" )
 mp2
+ggsave("plot.tiff")
 
 mp3 <- ggplot(geoanim[geoanim$annee>2010,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+

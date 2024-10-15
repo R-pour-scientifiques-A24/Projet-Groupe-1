@@ -71,15 +71,7 @@ geoanim<-data.frame(nom=volcan$volcano_name,
                     annee=as.character(volcan$start_year))
 
 geoanim<-unique(geoanim)
-
-geoanim$siecle<-ifelse(nchar(geoanim$annee)>2,substr(geoanim$annee,1,nchar(geoanim$annee)-2), geoanim$annee)
-geoanim$siecle<-ifelse(substr(geoanim$siecle,1,1) !="-" & nchar(geoanim$siecle)>2, "1", geoanim$siecle)
-geoanim$siecle<-ifelse(geoanim$siecle=="-","-1",geoanim$siecle)
-geoanim$siecle<-as.integer(geoanim$siecle)
 geoanim$annee<-as.integer(geoanim$annee)
-
-
-quantile(geoanim$pop)
 geoanim$popquant<-ifelse(geoanim$pop<=6,25,
                          ifelse(geoanim$pop>=7&geoanim$pop<=328, 50,
                                 ifelse(geoanim$pop>=329&geoanim$pop<=3006,75,100)))
