@@ -186,16 +186,8 @@ include_graphics("img/ToutesAnnées.gif")
 
 ---
 # Carte interactive
-<<<<<<< HEAD
-.pull-left[
-Nous avons d'abord créé un jeu de données contenant les informations qui nous intéressent (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude), tout en retirant les doublons. Avec le package leaflet, nous avons créer une carte du monde sur laquelle des punaises pour chaque volcan ont été placées. Sur l'application, l'utilisateur peut se déplacer sur la carte et cliquer sur une punaise pour avoir les informations correspondant au volcan sélectionné, soit son nom, le pays où il se trouve, son altitude et l'année de sa dernière éruption.
-]
-.pull-right[
-```{r carte interactive, echo = FALSE, out.width = "100%", fig.align = "bottom", fig.cap = "Une image représentant notre carte interactive et les informations qui sont affichées."}
-include_graphics("./img/carteinterac.png")
-=======
-
 Nous avons créer un jeu de données contenant les informations qui nous intéressent (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude), tout en retirant les doublons. Avec le package leaflet, nous avons créer une carte du monde sur laquelle des punaises pour chaque volcan ont été placées. Sur l'application, l'utilisateur peut se déplacer sur la carte et cliquer sur une punaise pour avoir les informations correspondant au volcan sélectionné, soit son nom, le pays où il se trouve, son altitude et l'année de sa dernière éruption.
+
 
 ```{r out.width="100%",out.height="50%", echo=FALSE}
 leaflet(options=leafletOptions(minZoom = 1, maxZoom = 18))%>% addTiles() %>% 
@@ -204,7 +196,6 @@ leaflet(options=leafletOptions(minZoom = 1, maxZoom = 18))%>% addTiles() %>%
                             "Altitude: ",tab_point$altitude,"<br>","Année de la dernière activité volcanique: ",tab_point$derniere_erup),
              icon = icone)
 
->>>>>>> 72f2671144019c1cd06579db23ddd94561e63b81
 
 ```
 
