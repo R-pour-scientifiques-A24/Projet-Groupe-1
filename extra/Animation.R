@@ -53,7 +53,7 @@ mp1 <- ggplot(geoanim[geoanim$annee==2004,], aes(x=long, y=lati, colour=as.facto
   theme(aspect.ratio=3/4)+
   labs(title="Éruptions volcaniques de 2004", x="longitude", y="latitude" )
 mp1
-ggsave("plot.tiff")
+ggsave("plot.png")
 
 #Avec facet
 mp2 <- ggplot(geoanim[geoanim$annee==1812,], aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
@@ -65,7 +65,7 @@ mp2 <- ggplot(geoanim[geoanim$annee==1812,], aes(x=long, y=lati, colour=as.facto
   facet_wrap(~vei)+
   labs(title="Éruptions volcaniques de 1812", x="longitude", y="latitude" )
 mp2
-ggsave("plot.tiff")
+ggsave("plot.png")
 
 mp3 <- ggplot(geoanim[geoanim$annee>2010,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+

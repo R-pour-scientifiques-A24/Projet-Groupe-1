@@ -72,11 +72,21 @@ geoanim<-data.frame(nom=volcan$volcano_name,
 
 geoanim<-unique(geoanim)
 geoanim$annee<-as.integer(geoanim$annee)
-geoanim$popquant<-ifelse(geoanim$pop<=6,25,
-                         ifelse(geoanim$pop>=7&geoanim$pop<=328, 50,
-                                ifelse(geoanim$pop>=329&geoanim$pop<=3006,75,100)))
-geoanim$popquant<-as.factor(geoanim$popquant)
-geoanim$popquant<-ordered(geoanim$popquant, c("25","50","75","100"))
+
+geoanim$Population_5km<-ifelse(geoanim$pop<100,"<100",
+                          ifelse(geoanim$pop>=100&geoanim$pop<=500, "100-500",
+                            ifelse(geoanim$pop>500&geoanim$pop<=1000, "500-1000",
+                              ifelse(geoanim$pop>1000&geoanim$pop<=5000, "1000-5000",
+                                ifelse(geoanim$pop>5000&geoanim$pop<=10000, "5000-10 000",
+                                  ifelse(geoanim$pop>10000&geoanim$pop<=50000, "10 000-50 000",
+                                    ifelse(geoanim$pop>50000&geoanim$pop<=100000, "50 000-100 000",
+                                      ifelse(geoanim$pop>100000&geoanim$pop<=500000, "100 000-500 000",
+                                        ifelse(geoanim$pop>500000&geoanim$pop<=1000000, "500 000-1 000 000",
+                                          ">1M")))))))))
+
+geoanim$Population_5km<-as.factor(geoanim$Population_5km)
+geoanim$Population_5km<-ordered(geoanim$Population_5km, c("<100","100-500","500-1000","1000-5000","5000-10 000","10 000-50 000","50 000-100 000","100 000-500 000","500 000-1 000 000", ">1M"))
+
 
 ```
 
@@ -89,7 +99,7 @@ Aider l'utilisateur à se renseigner sur les volcans et les activités volcaniqu
 
 ---
 
-## Aperçu des données (choisir les variables + intéressantes ou celles du mod. prédictif):
+## Aperçu des données :
 ```{r volcan-table, echo = FALSE}
 
 kable(volcan_resume[c(1:10),], "html", row.names = FALSE) %>%
@@ -105,69 +115,71 @@ class: inverse, center, middle
 # Éléments de l'application shiny
 
 ---
+# Carte animée - Première étape
+Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utilisé la variable *année d'éruption* pour animer les éruptions dans le temps. Nous avons donc un *frame* d'animation pour représenter les éruptions sur environ 2 années. Voici un exemple d'un graphique statique pour l'année qui recense le plus d'éruptions, soit 2004.
 
-# Carte animée
-.pull-left[
-Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utiliser la variable *année d'éruption* pour animer les lieux d'éruption dans le temps. On a donc un *frame* d'animation pour représenter les éruptions sur environ 2 années. Voici un exemple d'un graphique statique pour l'année qui recense le plus d'éruptions, soit 2004.
-]
-
-.pull-right[
-```{r ggplot2004, echo = FALSE}
+```{r ggplot2004, echo = TRUE, eval=FALSE}
 cols<-colorRampPalette(c("yellow", "red"))
 colsvei<-cols(8)
 
 mapWorld <- borders("world", colour="palegreen3", fill="palegreen3")
 
-mp1 <- ggplot(geoanim[geoanim$annee==2004,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+mp1 <- ggplot(geoanim[geoanim$annee==2004,], 
+              aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
   mapWorld + 
   geom_point(alpha=0.7)+
   scale_colour_manual(name="vei", values=colsvei)+
-  theme(aspect.ratio=3/4)
-
-mp1
-
+  theme(aspect.ratio=3/4)+
+  labs(title="Éruptions volcaniques de 2004", x="longitude", y="latitude" )
 ```
-]
+
 ---
+# Résultat:
+```{r imageplot2004, echo=FALSE, out.width="70%"}
+include_graphics("img/plot_2004.png")
+```
 
-
-# Carte animée 2
-
-Voici maintenant un graphique statique qui regroupe toutes les éruptions de 1812 classées par indice de force:
+---
+# Carte animée - Exploration
+Voici maintenant le code pour générer un graphique statique qui regroupe toutes les éruptions de 1812 séparées par indice de force. Cette approche a été testée en animation, mais elle avait pour désavantage d'avoir un temps d'exportation très long et c'était aussi difficile d'interpréter 7 animations à la fois!
 
 ```{r ggplot2004vei, echo = TRUE, eval=FALSE}
-mp2 <- ggplot(geoanim[geoanim$anne==1812,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+mp2 <- ggplot(geoanim[geoanim$anne==1812,], 
+              aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
   mapWorld + 
   geom_point(alpha=0.7)+
   scale_colour_manual(name="vei", values=colsvei)+
   theme(aspect.ratio=3/4)+
   facet_wrap(~vei)
-
-mp2
-
-#Ajouter une image à la place, c'est long!!!
-
 ```
 
 ---
-# Carte animée 3
+# Résultat:
+```{r imageplot1812, echo=FALSE, out.width="75%"}
+include_graphics("img/plot_1812.png")
+```
 
-Mettre un video à la place? trouver comment looper le gif?
-Voici le gif résulant quand on anime par année (fonctionne juste dans un browser):
+---
+# Carte animée finale
+Sur la prochaine diapositive on trouve l'animation finale, basée sur le graphique statique de 2004. L'année d'éruption médiane dans le jeu de données est 1830. Nous avons donc généré un premier gif de 100 *frames* pour la première moitié du jeu de données (jusqu'à 1830) et un 2e gif de 100 *frames* pour l'autre moitié du jeu de données. Ces deux gifs ont ensuite été mis un à la suite de l'autre. Générer un seul gif de 200 frames avait pour désavantage d'avoir un temps d'exportation très long.
 
-.center[![Carte animée](../ToutesAnnées.gif)]
-
+---
+# Résultat:
+```{r gif, echo=FALSE, out.width="75%"}
+include_graphics("img/ToutesAnnées.gif")
+#(ne loop pas... mettre en video comme sur l'app?)  
+```
 
 ---
 # Carte interactive
 .pull-left[
-Nous avons d'abord créer un jeu de données contenant les informations qui nous intéressent (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude), tout en retirant les doublons. Avec le package leaflet, nous avons créer une carte du monde sur laquelle des punaises pour chaque volcan ont été placées. Sur l'application, l'utilisateur peut se déplacer sur la carte et cliquer sur une punaise pour avoir les informations correspondant au volcan sélectionné, soit son nom, le pays où il se trouve, son altitude et l'année de sa dernière éruption.
+Nous avons d'abord créé un jeu de données contenant les informations qui nous intéressent (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude), tout en retirant les doublons. Avec le package leaflet, nous avons créer une carte du monde sur laquelle des punaises pour chaque volcan ont été placées. Sur l'application, l'utilisateur peut se déplacer sur la carte et cliquer sur une punaise pour avoir les informations correspondant au volcan sélectionné, soit son nom, le pays où il se trouve, son altitude et l'année de sa dernière éruption.
 ]
 .pull-right[
 ```{r carte interactive, echo = FALSE, out.width = "100%", fig.align = "bottom", fig.cap = "Une image représentant notre carte interactive et les informations qui sont affichées."}
-include_graphics("./carteinterac.png")
+include_graphics("./img/carteinterac.png")
 
 ```
 ]
