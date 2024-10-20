@@ -126,17 +126,11 @@ ui <- fluidPage(
         #Test vidéo:
         tabPanel(title = "Test video",
             mainPanel(
-              p("Video Below"),
+              p("Éruptions volcaniques par années"),
               tags$video(
                 src = "hirondellebic_M_vidéo_480px320px.mp4",
                 type = "video/mp4",
-                autoplay=TRUE,
-                muted=TRUE,
-                playsinline=TRUE,
-                loop=TRUE,
-                controls=TRUE),
-              p("Video above")
-              
+                controls=TRUE, autoplay=TRUE),
             )
         ),
 
