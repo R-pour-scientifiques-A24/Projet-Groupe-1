@@ -3,7 +3,7 @@
 library(ggplot2)
 library(gganimate)
 library(ggmap)
-library(gapminder)
+library(dplyr)
 
 
 geoanim<-data.frame(nom=volcan$volcano_name,
@@ -37,6 +37,14 @@ geoanim$Population_5km<-ifelse(geoanim$pop<100,"<100",
 
 geoanim$Population_5km<-as.factor(geoanim$Population_5km)
 geoanim$Population_5km<-ordered(geoanim$Population_5km, c("<100","100-500","500-1000","1000-5000","5000-10 000","10 000-50 000","50 000-100 000","100 000-500 000","500 000-1 000 000", ">1M"))
+
+
+quantile(geoanim$annee)
+geoanim<-geoanim %>% mutate(grpannee = cut(annee, breaks=unique(round(c(-11350, quantile(annee, seq(from=0, to =1, by=0.0025))),0))))
+geoanim$grpannee<-as.factor(geoanim$grpannee)
+geoanim$grpannee<-ordered(geoanim$grpannee)
+
+
 
 
 cols<-colorRampPalette(c("yellow", "red"))
@@ -87,13 +95,42 @@ quantile(geoanim$annee)
 #Ça fait une bonne représentation des données. Coller les 2 gif ensemble ensuite.
 
 
-mp4 <- ggplot(geoanim[geoanim$annee<=1830,], aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+mp6 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  labs(title = 'Siècle: {current_frame}', x="longitude", y="latitude") + 
+  transition_manual(siecle)
+
+gifsiecle<-animate(mp6,fps=2, width=900, height=600, nframes=134)
+anim_save(filename="Siecle.gif", gifsiecle)
+
+length(unique(geoanim$siecle))
+
+mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  labs(title = 'Année: {current_frame}', x="longitude", y="latitude") + 
+  transition_manual(grpannee)
+
+gifannees<-animate(mp7,fps=2,width=900, height=600, nframes=373)
+anim_save(filename="ToutesAnnées.gif", gifannees)
+
+
+
+
+mp4 <- ggplot(geoanim[geoanim$annee<=1830,], aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90')) +
   mapWorld + geom_point(alpha=0.7) + 
   scale_colour_manual(name="vei", values=colsvei)+
-  #facet_wrap(~vei)+
-  labs(title = 'Année: {frame_time}') + 
+  labs(title = 'Année: {frame_time}', x="longitude", y="latitude") + 
   transition_time(annee)
+
 gif1<-animate(mp4,fps=3, width=900, height=600, nframes=100) #100 frames pour 1ère moitié du jeu de données
 anim_save(filename="min-1830.gif", gif1)
 

@@ -28,7 +28,6 @@ library(readr)
 library(ggplot2)
 library(gganimate)
 library(ggmap)
-library(gapminder)
 library(leaflet)
 
 ```
@@ -63,10 +62,8 @@ remove(volcan1)#retarit du jeu intermédiaire
 volcan_resume<-volcan[,c(3,15,20,16,25,17,18,19,5,7,9,4,6,8,13,14)]
 
 #Animation:
-geoanim<-data.frame(nom=volcan$volcano_name,
-                    long=volcan$longitude,
+geoanim<-data.frame(long=volcan$longitude,
                     lati=volcan$latitude, 
-                    pays=volcan$country,
                     vei=volcan$vei,
                     pop=volcan$population_within_5_km,
                     annee=as.character(volcan$start_year))
@@ -87,6 +84,10 @@ geoanim$Population_5km<-ifelse(geoanim$pop<100,"<100",
 
 geoanim$Population_5km<-as.factor(geoanim$Population_5km)
 geoanim$Population_5km<-ordered(geoanim$Population_5km, c("<100","100-500","500-1000","1000-5000","5000-10 000","10 000-50 000","50 000-100 000","100 000-500 000","500 000-1 000 000", ">1M"))
+
+geoanim<-geoanim %>% mutate(grpannee = cut(annee, breaks=unique(round(c(-11350, quantile(annee, seq(from=0, to =1, by=0.0025))),0))))
+geoanim$grpannee<-as.factor(geoanim$grpannee)
+geoanim$grpannee<-ordered(geoanim$grpannee)
 
 
 #Pour la carte interactive
@@ -214,9 +215,12 @@ class: inverse, center, middle
 
 ---
 # Carte animée - Première étape
-Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utilisé la variable *année d'éruption* pour animer les éruptions dans le temps. Nous avons donc un *frame* d'animation pour représenter les éruptions sur environ 2 années. Voici un exemple d'un graphique statique pour l'année qui recense le plus d'éruptions, soit 2004.
+Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utilisé la variable *année d'éruption* pour animer les éruptions dans le temps. Voici le graphique de base pour une seule année:
 
 ```{r ggplot2004, echo = TRUE, eval=FALSE}
+library(ggplot2)
+library(ggmap)
+
 cols<-colorRampPalette(c("yellow", "red"))
 colsvei<-cols(8)
 
@@ -261,7 +265,37 @@ include_graphics("img/plot_1812.png")
 
 ---
 # Carte animée finale
-Sur la prochaine diapositive on trouve l'animation finale, basée sur le graphique statique de 2004. L'année d'éruption médiane dans le jeu de données est 1830. Nous avons donc généré un premier gif de 100 *frames* pour la première moitié du jeu de données (jusqu'à 1830) et un 2e gif de 100 *frames* pour l'autre moitié du jeu de données. Ces deux gifs ont ensuite été mis un à la suite de l'autre. Générer un seul gif de 200 frames avait pour désavantage d'avoir un temps d'exportation très long.
+
+L'animation finale est basée sur les paramètres du graphique statique de 2004, mais ici l'année a été utilisée comme variable d'animation. Nous avons eu quelques difficultées pour trouver comment bien représenter les données dans l'animation:
+- transition_time() utilise fait des saut équidistants et fait abstraction des années manquantes dans le jeu de données
+- transition_manual() ne cible que les données présentes, mais si on ne veut pas une image par année (1540 images dans notre cas), alors le bond dans le temps est calculé automatiquement en fonction de *nframes* et de *fps* et certaines années sont simplement exclues de l'animation.
+
+Solution: Créer une nouvelle colonne avec la fonction *bins* et utiliser transition_manual(). Ainsi, toutes les éruptions sont représentés. Nous avons utilisé la distribution des années pour créer les catégories. Chaque image présente environ 0.00333% des éruptions du jeu de données. Plus le temps avance, plus nous avons des données et on peut donc voir la longueur des catégories rapetisser dans le temps.
+
+---
+# Carte animée finale suite
+
+Voici le code qui a permis de généré le gif à la page suivante. 
+
+L'option transition_time() a été testée, mais cette option fait des bonds équidistants dans le temps en fonction du nombre d'images et du fps. Or, nous avons beaucoup d'années absentes du jeu de données. Nous avons donc utilisé l'option transition_manual() pour animer seulement sur les années présentes dans le jeu de données.
+
+
+```{r ggplotanim, echo = TRUE, eval=FALSE, message=FALSE}
+library(gganimate)
+
+mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  labs(title = 'Année: {current_frame}', x="longitude", y="latitude") + 
+  transition_manual(grpannee)
+
+gifannees<-animate(mp7,fps=2,width=900, height=600, nframes=308)
+# Dans l'application, nous avons utilisé *fps=1* et nous avons exporté le gif en vidéo. Cela donne plus de contrôle à l'utilisateur pour aller voir des années ciblées. L'animation plus lente est aussi plus facile à interpréter. 
+anim_save(filename="ToutesAnnées.gif", gifannees)
+```
 
 ---
 # Résultat:
