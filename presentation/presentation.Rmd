@@ -113,11 +113,97 @@ Aider l'utilisateur à se renseigner sur les volcans et les activités volcaniqu
 
 ## Aperçu des données :
 ```{r volcan-table, echo = FALSE}
-
 kable(volcan_resume[c(1:10),], "html", row.names = FALSE) %>%
  kable_styling(bootstrap_options = "hover") %>%
  scroll_box(width = "100%", height = "400px")
 
+```
+
+---
+
+class: inverse, center, middle
+
+# Statistiques descriptives
+
+---
+
+```{r stats desc, echo = FALSE, out.width="110%", out.height="120%"}
+boxplot(
+  elevation ~ vei, data = volcan, 
+  lwd = 1.5,
+  main = "Élévation d'un volcan selon sa valeur d'intensité de force",
+  xlab = "Indice de force",
+  ylab = "Élévation"
+)
+```
+
+---
+```{r, echo = FALSE, out.width="90%", out.height="120%"}
+ggplot(
+  volcan, mapping=aes(x=vei, y=region)
+) +
+  geom_count(
+    aes(color=after_stat(prop), size=after_stat(prop))
+  ) +
+  guides(color="legend") +
+  scale_size_area(max_size = 10) +
+  theme_classic() +
+  labs(
+    title="Proportion de volcans par région selon \nl'indice de force de ses éruptions",
+    x="Indice de force", y="Région"
+  ) +
+  theme(
+    plot.title=element_text(hjust=0.5)
+  )
+```
+---
+
+```{r, echo = FALSE, out.width="110%", out.height="120%"}
+boxplot(
+  start_year ~ vei, data = volcan, 
+  lwd = 1.5,
+  main = "Année où un événement à débuté \npar indice de force de ses éruptions",
+  xlab = "Indice de force",
+  ylab = "Année"
+)
+```
+
+---
+```{r, echo = FALSE, out.width="90%", out.height="120%"}
+ggplot(
+  volcan, mapping=aes(x=vei, y=event_type)
+) +
+  geom_count(
+    aes(color=after_stat(prop), size=after_stat(prop))
+  ) +
+  guides(color="legend") +
+  theme_classic() +
+  labs(
+    title="Proportion de volcans par type d'événement \nselon l'indice de force de ses éruptions",
+    x="Indice de force", y="Type d'événement"
+  ) +
+  theme(
+    plot.title=element_text(hjust=0.5)
+  )
+```
+
+---
+```{r, echo = FALSE, out.width="90%", out.height="120%"}
+ggplot(
+  volcan, mapping=aes(x=vei, y=primary_volcano_type)
+) +
+  geom_count(
+    aes(color=after_stat(prop), size=after_stat(prop))
+  ) +
+  guides(color="legend") +
+  theme_classic() +
+  labs(
+    title="Proportion de volcans par type de volcan \nselon l'indice de force de ses éruptions",
+    x="Indice de force", y="Type de volcan"
+  ) +
+  theme(
+    plot.title=element_text(hjust=0.5)
+  )
 ```
 
 ---
