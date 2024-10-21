@@ -214,59 +214,32 @@ class: inverse, center, middle
 
 ---
 # Carte animée - Première étape
-Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utilisé la variable *année d'éruption* pour animer les éruptions dans le temps. Voici le graphique de base pour une seule année:
 
-```{r ggplot2004, echo = TRUE, eval=FALSE}
-cols<-colorRampPalette(c("yellow", "red"))
-colsvei<-cols(8)
+Avec le package ggmap, on peut positionner une carte du monde sur une grille où les axes sont des longitudes et des latitudes. Ici, on représente l'année pour laquelle il y a le plus d'éruptions enregistrée.
 
-mapWorld <- borders("world", colour="palegreen3", fill="palegreen3") #Package ggmap
+.pull-left[
+- aes: x = longitudes, y=latitudes
+- cols: En fonction d'un facteur ordonné: Indice de force d'éruption
+- size: Population vivant dans un rayon de 5km
+]
 
-mp1 <- ggplot(geoanim[geoanim$annee==2004,], 
-              aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
-  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
-  mapWorld + 
-  geom_point(alpha=0.7)+
-  scale_colour_manual(name="vei", values=colsvei)+
-  theme(aspect.ratio=3/4)+
-  labs(title="Éruptions volcaniques de 2004", x="longitude", y="latitude" )
-```
-
----
-# Résultat:
-```{r imageplot2004, echo=FALSE, out.width="70%", fig.align = 'center'}
+.pull-right[
+```{r imageplot2004, echo=FALSE, out.width="100%", fig.align = 'center'}
 include_graphics("img/plot_2004.png")
 ```
 
----
-# Carte animée - Exploration
-Voici maintenant le code pour générer un graphique statique qui regroupe toutes les éruptions de 1812 séparées par indice de force. Cette approche a été testée en animation, mais elle avait pour désavantage d'avoir un temps d'exportation très long et c'était aussi difficile d'interpréter 7 animations à la fois!
-
-```{r ggplot2004vei, echo = TRUE, eval=FALSE}
-mp2 <- ggplot(geoanim[geoanim$anne==1812,], 
-              aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
-  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
-  mapWorld + 
-  geom_point(alpha=0.7)+
-  scale_colour_manual(name="vei", values=colsvei)+
-  theme(aspect.ratio=3/4)+
-  facet_wrap(~vei)
-```
-
----
-# Résultat:
-```{r imageplot1812, echo=FALSE, out.width="75%",fig.align = 'center'}
-include_graphics("img/plot_1812.png")
-```
+]
 
 ---
 # Carte animée - Problèmes et solutions
 
-L'animation finale est basée sur les paramètres du graphique statique de 2004, mais ici l'année a été utilisée comme variable d'animation. Nous avons eu quelques difficultées pour trouver comment bien représenter les données dans l'animation:
-- transition_time() utilise fait des saut équidistants et fait abstraction des années manquantes dans le jeu de données
-- transition_manual() ne cible que les données présentes, mais si on ne veut pas une image par année (1540 images dans notre cas), alors le bond dans le temps est calculé automatiquement en fonction de *nframes* et de *fps* et certaines années sont simplement exclues de l'animation.
+Objectif: Utiliser la variable année d'éruption pour animer des cartes géographiques. 
 
-Solution: Créer une nouvelle colonne avec la fonction *cut* et utiliser transition_manual(). Ainsi, toutes les éruptions sont représentés. Nous avons utilisé la distribution des années pour créer les catégories. Chaque image présente environ 0.0025% des éruptions du jeu de données. Plus le temps avance, plus nous avons des données et on peut voir la longueur des catégories rapetisser dans le temps.
+Problème:
+- transition_time() fait des saut équidistants et fait abstraction des années manquantes dans le jeu de données
+- transition_manual() ne cible que les données présentes, mais si on ne veut pas une image par année (1540 images dans notre cas), alors le bond dans le temps est calculé automatiquement en fonction de *nframes* et de *fps* et certaines années sont exclues de l'animation.
+
+Solution: Créer une nouvelle colonne avec la fonction *cut* et utiliser transition_manual().
 
 ```{r colonnebin, echo = TRUE, eval=FALSE, message=FALSE}
 geoanim<-geoanim %>% 
@@ -336,43 +309,58 @@ leaflet(options=leafletOptions(minZoom = 1, maxZoom = 18))%>% addTiles() %>%
 
 ---
 
-# xaringan
 
-- La présentation est créée à l'aide du package `xaringan`
+class: inverse, center, middle
 
-- Utilisez `---` pour séparer les diapositives et `--` pour les versions incrémentielles
-
---
-
-- Comme ça
+# Annexe
 
 ---
 
-# Dispositions
+# Code 1
 
-Vous pouvez utiliser du texte brut
+Comme ce sont des images et des gifs exportés qui ont été utilisés dans la présentation, voici les éléments de code qui ont servis à la création de ces fichiers.
 
-- ou des listes
+Code pour la carte des érutpions de 2004:
 
-.pull-left[
-ou texte sur deux colonnes $^*$
-]
-.pull-right[
-- Comme
-- ca
-]
+```{r ggplot2004, echo = TRUE, eval=FALSE}
+cols<-colorRampPalette(c("yellow", "red"))
+colsvei<-cols(8)
 
-.footnote[
-[*] Et ajouter des notes de bas de page
-]
+mapWorld <- borders("world", colour="palegreen3", fill="palegreen3") #Package ggmap
+
+mp1 <- ggplot(geoanim[geoanim$annee==2004,], 
+              aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  labs(title="Éruptions volcaniques de 2004", x="longitude", y="latitude" )
+```
+
 ---
 
-# Code
+# Code 2
 
-```{r boring-regression}
-# une régression ennuyeuse
-model <- lm(dist ~ speed, data = cars)
-model
+Deuxième option de ggplot pour la représentation des éruptions en fonction de l'indice de force. C'est très beau, mais très long à exporter en animation, et aussi très dur à interpréter!
+
+```{r ggplot2004vei, echo = TRUE, eval=FALSE}
+mp2 <- ggplot(geoanim[geoanim$anne==1812,], 
+              aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  facet_wrap(~vei)
+```
+
+---
+
+# Code 2 - Sortie
+
+```{r imageplot1812, echo=FALSE, out.width="75%",fig.align = 'center'}
+include_graphics("img/plot_1812.png")
 ```
 
 ---
