@@ -196,9 +196,8 @@ gifannees<-animate(mp7,fps=2,width=900, height=600, nframes=368)
 #nframes = nombre de modalités de grpannee
 
 anim_save(filename="ToutesAnnées.gif", gifannees)
-# Dans l'application, nous avons exporté le gif en vidéo. 
-# Cela donne plus de contrôle à l'utilisateur pour aller voir des années ciblées et 
-# pour ralentir la vitesse de lecture
+# Dans l'application, nous avons exporté le gif en vidéo. Cela donne plus de contrôle à
+# l'utilisateur pour aller voir des années ciblées et pour ralentir la vitesse de lecture
 ```
 
 ---
@@ -335,3 +334,4 @@ ggplot(
 
 # Lien vers l'application:
 
+Application: .link-style2[[Shiny app](https://en.wikipedia.org/wiki/Main_Page)]
