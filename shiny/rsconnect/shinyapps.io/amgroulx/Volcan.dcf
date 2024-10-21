@@ -5,11 +5,7 @@ account: amgroulx
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 13081215
-<<<<<<< HEAD
 bundleId: 9250698
-=======
-bundleId:
->>>>>>> 467f22cb4a929c3de215f4d5457f838ac2a87f41
 url: https://amgroulx.shinyapps.io/Volcan/
 version: 1
 asMultiple: FALSE
