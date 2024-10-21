@@ -306,7 +306,11 @@ include_graphics("img/ToutesAnnées.gif")
 
 ---
 # Carte interactive
-Nous avons créer un jeu de données contenant les informations qui nous intéressent (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude), tout en retirant les doublons. Avec le package leaflet, nous avons créer une carte du monde sur laquelle des punaises pour chaque volcan ont été placées. Sur l'application, l'utilisateur peut se déplacer sur la carte et cliquer sur une punaise pour avoir les informations correspondant au volcan sélectionné, soit son nom, le pays où il se trouve, son altitude et l'année de sa dernière éruption.
+- Créer un jeu de données contenant les informations qui nous intéressent sans les doublons (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude).
+
+- Package leaflet pour la carte du monde avec punaises.
+
+- L'utilisateur choisit une punaise pour avoir les informations sur le volcan : nom, pays, altitude et année de sa dernière éruption.
 
 
 ```{r out.width="100%",out.height="50%", echo=FALSE}
