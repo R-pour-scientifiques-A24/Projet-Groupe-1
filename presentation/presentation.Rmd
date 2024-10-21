@@ -254,7 +254,7 @@ ggplot(
   scale_size_area(max_size = 10) +
   theme_classic() +
   labs(
-    title="Proportion des régions de volcans par \nvaleur d'indice de force",
+    title="Proportion d'événements par région par \nvaleur d'indice de force",
     x="Indice de force", y="Région"
   ) +
   theme(
@@ -290,7 +290,7 @@ ggplot(
   guides(color="legend") +
   theme_classic() +
   labs(
-    title="Proportion des types d'événement \npar valeur d'indice de force",
+    title="Proportion des événements selon leurs types \npar valeur d'indice de force",
     x="Indice de force", y="Type d'événement"
   ) +
   theme(
@@ -309,7 +309,7 @@ ggplot(
   guides(color="legend") +
   theme_classic() +
   labs(
-    title="Proportion des types de volcans \npar valeur d'indice de force",
+    title="Proportion des événements par types de volcans \npar valeur d'indice de force",
     x="Indice de force", y="Type de volcan"
   ) +
   theme(
