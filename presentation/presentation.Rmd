@@ -123,7 +123,7 @@ kable(volcan_resume[c(1:10),], "html", row.names = FALSE) %>%
 
 class: inverse, center, middle
 
-# Statistiques descriptives
+# Statistiques descriptives bivariées
 
 ---
 
@@ -131,7 +131,7 @@ class: inverse, center, middle
 boxplot(
   elevation ~ vei, data = volcan, 
   lwd = 1.5,
-  main = "Élévation d'un volcan selon sa valeur d'intensité de force",
+  main = "Élévation d'un volcan par valeur d'indice de force",
   xlab = "Indice de force",
   ylab = "Élévation"
 )
@@ -149,7 +149,7 @@ ggplot(
   scale_size_area(max_size = 10) +
   theme_classic() +
   labs(
-    title="Proportion de volcans par région selon \nl'indice de force de ses éruptions",
+    title="Proportion des régions de volcans par \nvaleur d'indice de force",
     x="Indice de force", y="Région"
   ) +
   theme(
@@ -162,7 +162,7 @@ ggplot(
 boxplot(
   start_year ~ vei, data = volcan, 
   lwd = 1.5,
-  main = "Année où un événement à débuté \npar indice de force de ses éruptions",
+  main = "Année où un événement à débuté \npar valeur d'indice de force",
   xlab = "Indice de force",
   ylab = "Année"
 )
@@ -170,8 +170,14 @@ boxplot(
 
 ---
 ```{r, echo = FALSE, out.width="90%", out.height="120%"}
+freq_event_type<-table(volcan_resume$event_type)
+freq_event_typeord<-freq_event_type[order(freq_event_type, decreasing = TRUE)]
+freq_event_typeord15<-names(freq_event_typeord[2:16])
+
+volcan_event_type <-volcan_resume[volcan_resume$event_type %in% freq_event_typeord15, ]
+
 ggplot(
-  volcan, mapping=aes(x=vei, y=event_type)
+  volcan_event_type, mapping=aes(x=vei, y=event_type)
 ) +
   geom_count(
     aes(color=after_stat(prop), size=after_stat(prop))
@@ -179,7 +185,7 @@ ggplot(
   guides(color="legend") +
   theme_classic() +
   labs(
-    title="Proportion de volcans par type d'événement \nselon l'indice de force de ses éruptions",
+    title="Proportion des types d'événement \npar valeur d'indice de force",
     x="Indice de force", y="Type d'événement"
   ) +
   theme(
@@ -198,7 +204,7 @@ ggplot(
   guides(color="legend") +
   theme_classic() +
   labs(
-    title="Proportion de volcans par type de volcan \nselon l'indice de force de ses éruptions",
+    title="Proportion des types de volcans \npar valeur d'indice de force",
     x="Indice de force", y="Type de volcan"
   ) +
   theme(
