@@ -16,7 +16,7 @@ output:
 
 ```{r load-packages, include = FALSE}
 # Ajoutez tous les packages supplémentaires dont vous avez besoin à ce chunk
-install.packages("xaringanthemer", repos = "http://cran.us.r-project.org", dependencies = TRUE)
+#install.packages("xaringanthemer", repos = "http://cran.us.r-project.org", dependencies = TRUE)
 #install.packages("gganimate")
 #install.packages("xaringanthemer", repos = "http://cran.us.r-project.org") - J'ai juste eu besoin de faire rouler ça une première fois, on peut retirer la ligne quand ça fonctionne pour toutes.
 library(tidyverse)
@@ -128,7 +128,7 @@ Aider l'utilisateur à se renseigner sur les volcans et les activités volcaniqu
 ```{r volcan-table, echo = FALSE}
 kable(volcan_resume[c(1:10),], "html", row.names = FALSE) %>%
  kable_styling(bootstrap_options = "hover") %>%
-  scroll_box(width = "100%", height = "400px")
+    kable_styling(font_size = 8)
 ```
 
 ---
