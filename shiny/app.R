@@ -237,14 +237,24 @@ server <- function(input, output) {
 
       
       if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region",  "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
-        barplot(tabvolfreqord10, las=2)
+        barplot(tabvolfreqord10, las=2, ylab="Fréquence")
         
-        #p<-ggplot(data=volcan_resume, aes(x=volcan_resume[[input$variable]])) +
-        #  geom_bar()
-        #p
+       
         
-      } else {
-        hist(na.omit(volcan_resume[[input$variable]]))
+      } else if (as.character(input$variable) %in% "population_within_5_km"){
+          volcan_pop <- volcan_resume[volcan_resume$population_within_5_km<=449,]
+          hist(na.omit(volcan_pop[[input$variable]]), , main= " ", xlab= input$variable, ylab= "Fréquence")
+          
+      }
+      
+      else if (as.character(input$variable) %in% c("start_year", "end_year", "last_eruption_year", "event_date_year")){
+        volcan_date <- volcan_resume[volcan_resume[[input$variable]] %in% c(1820:2020),]
+        hist(na.omit(volcan_date[[input$variable]]), main= " ", xlab= input$variable, ylab= "Fréquence")
+      }
+      
+      
+      else {
+        hist(na.omit(volcan_resume[[input$variable]]), main= " ", xlab= input$variable, ylab= "Fréquence")
       }
     })
 
