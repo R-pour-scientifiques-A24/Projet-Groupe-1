@@ -243,7 +243,7 @@ Objectif: Utiliser la variable année d'éruption pour animer des cartes géogra
 
 Problème:
 - transition_time() fait des saut équidistants et fait abstraction des années manquantes dans le jeu de données
-- transition_manual() ne cible que les données présentes, mais si on ne veut pas une image par année (1540 images dans notre cas), alors le bond dans le temps est calculé automatiquement en fonction de *nframes* et de *fps* et certaines années sont exclues de l'animation.
+- transition_manual() ne cible que les données présentes, mais si on ne veut pas une image par année (1540 images dans notre cas), alors certaines années sont exclues de l'animation.
 
 Solution: Créer une nouvelle colonne avec la fonction *cut* et utiliser transition_manual().
 
@@ -269,10 +269,12 @@ mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Populatio
   transition_manual(grpannee) #Package gganimate
 
 gifannees<-animate(mp7,fps=2,width=900, height=600, nframes=368) 
+#nframes = nombre de modalités de grpannee
+
 anim_save(filename="ToutesAnnées.gif", gifannees)
-# Dans l'application, nous avons utilisé fps=1 et nous avons exporté le gif en vidéo. 
-# Cela donne plus de contrôle à l'utilisateur pour aller voir des années ciblées. 
-# L'animation plus lente est aussi plus facile à interpréter. 
+# Dans l'application, nous avons exporté le gif en vidéo. 
+# Cela donne plus de contrôle à l'utilisateur pour aller voir des années ciblées et 
+# pour ralentir la vitesse de lecture
 ```
 
 ---
@@ -368,98 +370,3 @@ mp2 <- ggplot(geoanim[geoanim$anne==1812,],
 ```{r imageplot1812, echo=FALSE, out.width="75%",fig.align = 'center'}
 include_graphics("img/plot_1812.png")
 ```
-
----
-
-# Plots
-
-```{r recode-species, echo = FALSE}
-# Dans ce chunk, je fais un tas d'analyses que je ne veux pas présenter
-# dans mes diapositives. Mais j'ai besoin du jeu de données résultant pour un tracé que je veux présenter.
-iris_modified <- iris %>%
-  mutate(Species = fct_other(Species, keep = "setosa"))
-```
-
-```{r plot-iris, echo = FALSE}
-# Code caché avec echo = FALSE
-# Utilise l'ensemble de données d'iris modifié du bloc précédent
-# Jouez avec la hauteur et la largeur jusqu'à ce que vous soyez satisfait du look
-ggplot(data = iris_modified, mapping = aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
-  geom_point() + 
-  theme_minimal() # theme options: https://ggplot2.tidyverse.org/reference/ggtheme.html
-```
-
----
-
-## Plot et texte
-
-.pull-left[
-- Du texte
-- ici
-]
-.pull-right[
-```{r warning=FALSE, out.width="100%", fig.width=4, echo=FALSE}
-# voyez comment j'ai changé out.width et fig.width par défaut
-# pour agrandir la figure
-ggplot(penguins, aes(x = bill_length_mm, y = species, color = species)) +
-  geom_boxplot() +
-  theme_minimal()
-```
-]
-
----
-
-# Les tables
-
-Si vous souhaitez générer un tableau, assurez-vous qu'il est au format HTML (au lieu de Markdown ou d'autres formats), par exemple,
-
-```{r iris-table, echo = FALSE}
-kable(head(volcan), format = "html")
-```
-
----
-
-# Images
-
-```{r castle, echo = FALSE, out.width = "60%", fig.align = "center", fig.cap = "Image credit: Photo by Jörg Angeli on Unsplash."}
-include_graphics("https://images.unsplash.com/photo-1535448033526-c0e85c9e6968?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80")
-```
-
-Ou vous pouvez également inclure une image pleine page. Voir la diapositive suivante.
-
----
-
-background-image: url(https://images.unsplash.com/photo-1535448033526-c0e85c9e6968?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1650&q=80)
-
----
-
-# Expressions mathématiques
-
-Vous pouvez écrire des expressions mathématiques LaTeX à l'intérieur d'une paire de signes dollar, par ex. &#36;\alpha+\beta$ rend $\alpha+\beta$. Vous pouvez utiliser le style d'affichage avec des signes dollar doubles :
-
-```
-$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
-```
-
-$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
-
-Limites:
-
-1. Le code source d'une expression mathématique LaTeX doit être sur une seule ligne, à moins qu'il ne soit à l'intérieur d'une paire de signes dollar doubles, auquel cas le `$$` de départ doit apparaître au tout début d'une ligne, suivi immédiatement d'un caractère autre qu'un espace et la terminaison `$$` doit être à la fin d'une ligne, précédée d'un caractère autre qu'un espace ;
-
-1. Il ne doit pas y avoir d'espaces après le `$` d'ouverture ou avant le `$` de fermeture.
-
-1. Les mathématiques ne fonctionnent pas sur la diapositive de titre (voir [#61](https://github.com/yihui/xaringan/issues/61) pour une solution de contournement).
-
----
-
-# Envie d'aventure ?
-
-- Vous voulez en savoir plus sur `xaringan` ? Voir https://slides.yihui.name/xaringan/#1.
-
-- Vous êtes invités à utiliser le style par défaut des diapositives. En fait, c'est ce que j'attends de la majorité d'entre vous. Vous vous différencierez par le contenu de votre présentation.
-
-- Mais certains d'entre vous voudront peut-être jouer avec le style des diapositives. La librairie
-`xaringanthemer` fournit des solutions pour cela : https://pkg.garrickadenbuie.com/xaringanthemer.
-
-- Et si vous voulez plus de cloches et de sifflets, il y a aussi `xaringanExtra` : https://pkg.garrickadenbuie.com/xaringanExtra.
