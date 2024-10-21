@@ -109,7 +109,8 @@ anim_save(filename="Siecle.gif", gifsiecle)
 
 length(unique(geoanim$siecle))
 
-mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
+###VRAIE ANIMATION GIF (fps=2) ET VIDEO (fps=1)
+ mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
   mapWorld + 
   geom_point(alpha=0.7)+
@@ -118,8 +119,8 @@ mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Populatio
   labs(title = 'Année: {current_frame}', x="longitude", y="latitude") + 
   transition_manual(grpannee)
 
-gifannees<-animate(mp7,fps=2,width=900, height=600, nframes=373)
-anim_save(filename="ToutesAnnées.gif", gifannees)
+gifanneesvid<-animate(mp7,fps=1,width=900, height=600, nframes=368)
+anim_save(filename="ToutesAnnéesVid.gif", gifannees)
 
 
 

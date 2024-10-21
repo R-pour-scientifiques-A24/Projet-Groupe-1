@@ -218,13 +218,10 @@ class: inverse, center, middle
 Nous avons d'abord créé un ggplot qui utilise comme axes des x et des y les variables *longitudes* et *latitudes*. Puis, nous avons positionné sur la grille une carte du monde avec le package ggmap. Les coordonnées géographiques des éruptions y ont été placés. La couleur du point représente la force d'éruption, puis la grosseur du point représente la taille de la population vivant dans un rayon de 5km. Comme il aurait été étourdissant de représenter les 11200 éruptions sur cette carte, nous avons utilisé la variable *année d'éruption* pour animer les éruptions dans le temps. Voici le graphique de base pour une seule année:
 
 ```{r ggplot2004, echo = TRUE, eval=FALSE}
-library(ggplot2)
-library(ggmap)
-
 cols<-colorRampPalette(c("yellow", "red"))
 colsvei<-cols(8)
 
-mapWorld <- borders("world", colour="palegreen3", fill="palegreen3")
+mapWorld <- borders("world", colour="palegreen3", fill="palegreen3") #Package ggmap
 
 mp1 <- ggplot(geoanim[geoanim$annee==2004,], 
               aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
@@ -264,25 +261,26 @@ include_graphics("img/plot_1812.png")
 ```
 
 ---
-# Carte animée finale
+# Carte animée - Problèmes et solutions
 
 L'animation finale est basée sur les paramètres du graphique statique de 2004, mais ici l'année a été utilisée comme variable d'animation. Nous avons eu quelques difficultées pour trouver comment bien représenter les données dans l'animation:
 - transition_time() utilise fait des saut équidistants et fait abstraction des années manquantes dans le jeu de données
 - transition_manual() ne cible que les données présentes, mais si on ne veut pas une image par année (1540 images dans notre cas), alors le bond dans le temps est calculé automatiquement en fonction de *nframes* et de *fps* et certaines années sont simplement exclues de l'animation.
 
-Solution: Créer une nouvelle colonne avec la fonction *bins* et utiliser transition_manual(). Ainsi, toutes les éruptions sont représentés. Nous avons utilisé la distribution des années pour créer les catégories. Chaque image présente environ 0.00333% des éruptions du jeu de données. Plus le temps avance, plus nous avons des données et on peut donc voir la longueur des catégories rapetisser dans le temps.
+Solution: Créer une nouvelle colonne avec la fonction *cut* et utiliser transition_manual(). Ainsi, toutes les éruptions sont représentés. Nous avons utilisé la distribution des années pour créer les catégories. Chaque image présente environ 0.0025% des éruptions du jeu de données. Plus le temps avance, plus nous avons des données et on peut voir la longueur des catégories rapetisser dans le temps.
+
+```{r colonnebin, echo = TRUE, eval=FALSE, message=FALSE}
+geoanim<-geoanim %>% 
+          mutate(grpannee = cut(annee, 
+            breaks=unique(round(c(-11350, quantile(annee, seq(from=0, to =1, by=0.0025))),0))))
+```
 
 ---
-# Carte animée finale suite
+# Carte animée finale
 
 Voici le code qui a permis de généré le gif à la page suivante. 
 
-L'option transition_time() a été testée, mais cette option fait des bonds équidistants dans le temps en fonction du nombre d'images et du fps. Or, nous avons beaucoup d'années absentes du jeu de données. Nous avons donc utilisé l'option transition_manual() pour animer seulement sur les années présentes dans le jeu de données.
-
-
 ```{r ggplotanim, echo = TRUE, eval=FALSE, message=FALSE}
-library(gganimate)
-
 mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
   mapWorld + 
@@ -290,18 +288,20 @@ mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Populatio
   scale_colour_manual(name="vei", values=colsvei)+
   theme(aspect.ratio=3/4)+
   labs(title = 'Année: {current_frame}', x="longitude", y="latitude") + 
-  transition_manual(grpannee)
+  transition_manual(grpannee) #Package gganimate
 
-gifannees<-animate(mp7,fps=2,width=900, height=600, nframes=308)
-# Dans l'application, nous avons utilisé *fps=1* et nous avons exporté le gif en vidéo. Cela donne plus de contrôle à l'utilisateur pour aller voir des années ciblées. L'animation plus lente est aussi plus facile à interpréter. 
+gifannees<-animate(mp7,fps=2,width=900, height=600, nframes=368) 
 anim_save(filename="ToutesAnnées.gif", gifannees)
+# Dans l'application, nous avons utilisé fps=1 et nous avons exporté le gif en vidéo. 
+# Cela donne plus de contrôle à l'utilisateur pour aller voir des années ciblées. 
+# L'animation plus lente est aussi plus facile à interpréter. 
 ```
 
 ---
 # Résultat:
-```{r gif, echo=FALSE, out.width="75%", fig.align = 'center'}
+
+```{r gif, echo=FALSE, out.width="70%", fig.align = 'center'}
 include_graphics("img/ToutesAnnées.gif")
-#(ne loop pas... mettre en video comme sur l'app?)  
 ```
 
 ---

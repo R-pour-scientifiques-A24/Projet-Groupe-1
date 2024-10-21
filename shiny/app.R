@@ -115,24 +115,20 @@ ui <- fluidPage(
           ),
           verbatimTextOutput("sortie_predict"),
         ),
-    
-        #Volet carte animée:
-        tabPanel(
-          title = "Carte animée",
-          img(src = "ToutesAnnées.gif", width = "100%")
-        ),
+
   
   
-        #Test vidéo:
-        tabPanel(title = "Test video",
+        #Carte animée:
+        tabPanel(title = "Carte animée",
             mainPanel(
               p("Éruptions volcaniques par années"),
               tags$video(
-                src = "hirondellebic_M_vidéo_480px320px.mp4",
+                src = "ToutesAnnéesVidHQ.mp4",
                 type = "video/mp4",
-                controls=TRUE, autoplay=TRUE),
+                controls=TRUE
             )
-        ),
+         )
+      ),
 
         #Statistiques descriptives
         tabPanel(
@@ -163,10 +159,10 @@ ui <- fluidPage(
          
             leafletOutput("carte_interac",width = "100%", height = 800)
           
-        )
+       
     )
+  )
 )
-
 
 
 # Define server logic
