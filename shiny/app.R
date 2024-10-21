@@ -248,7 +248,7 @@ server <- function(input, output) {
         
       } else if (as.character(input$variable) %in% "population_within_5_km"){
           volcan_pop <- volcan_resume[volcan_resume$population_within_5_km<=449,]
-          hist(na.omit(volcan_pop[[input$variable]]), , main= " ", xlab= input$variable, ylab= "Fréquence")
+          hist(na.omit(volcan_pop[[input$variable]]), main= " ", xlab= input$variable, ylab= "Fréquence")
           
       }
       
