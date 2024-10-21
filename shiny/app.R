@@ -187,16 +187,17 @@ server <- function(input, output) {
     
     modpred <- reactive({
       mod <- lm(vei~region+start_year+event_type+primary_volcano_type+elevation, data=volcan)
-      predict(mod, newdata = data.frame(region=input$var1,
+      prediction<-predict(mod, newdata = data.frame(region=input$var1,
                                         elevation=input$var2,
                                         start_year=input$var3,
                                         event_type=input$var4,
                                         primary_volcano_type=input$var5))
+      ifelse(prediction<=0, 0, ifelse(prediction>=7, 7, round(prediction)))
     })
     
     output$sortie_predict <- renderText(
       paste("Prédiction de l'intensité d'un volcan avec les caractéristiques choisies", 
-            ":", round(modpred()))
+            ":", modpred())
     )
   
     
