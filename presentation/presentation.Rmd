@@ -132,7 +132,7 @@ class: inverse, center, middle
 boxplot(
   elevation ~ vei, data = volcan, 
   lwd = 1.5,
-  main = "Élévation d'un volcan selon sa valeur d'intensité de force",
+  main = "Élévation d'un volcan par valeur d'indice de force",
   xlab = "Indice de force",
   ylab = "Élévation"
 )
@@ -150,7 +150,7 @@ ggplot(
   scale_size_area(max_size = 10) +
   theme_classic() +
   labs(
-    title="Proportion de volcans par région selon \nl'indice de force de ses éruptions",
+    title="Proportion des régions de volcans par \nvaleur d'indice de force",
     x="Indice de force", y="Région"
   ) +
   theme(
@@ -163,7 +163,7 @@ ggplot(
 boxplot(
   start_year ~ vei, data = volcan, 
   lwd = 1.5,
-  main = "Année où un événement à débuté \npar indice de force de ses éruptions",
+  main = "Année où un événement à débuté \npar valeur d'indice de force",
   xlab = "Indice de force",
   ylab = "Année"
 )
@@ -186,7 +186,7 @@ ggplot(
   guides(color="legend") +
   theme_classic() +
   labs(
-    title="Proportion de volcans par type d'événement \nselon l'indice de force de ses éruptions",
+    title="Proportion des types d'événement \npar valeur d'indice de force",
     x="Indice de force", y="Type d'événement"
   ) +
   theme(
@@ -205,7 +205,7 @@ ggplot(
   guides(color="legend") +
   theme_classic() +
   labs(
-    title="Proportion de volcans par type de volcan \nselon l'indice de force de ses éruptions",
+    title="Proportion des types de volcans \npar valeur d'indice de force",
     x="Indice de force", y="Type de volcan"
   ) +
   theme(
