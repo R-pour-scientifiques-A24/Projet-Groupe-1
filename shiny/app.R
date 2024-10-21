@@ -237,7 +237,7 @@ server <- function(input, output) {
 
       
       if (as.character(input$variable) %in% c("volcano_name", "primary_volcano_type", "country", "region",  "subregion","area_of_activity","eruption_category", "evidence_method_dating", "event_type")) {
-        barplot(tabvolfreqord10, las=2)
+        barplot(tabvolfreqord10, las=2, ylab="Fréquence")
         
        
         
