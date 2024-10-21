@@ -69,6 +69,29 @@ ui <- fluidPage(
         DT::dataTableOutput("volcan_resume")
         ),
         
+        #Statistiques descriptives
+        tabPanel(
+          title = "Statistiques descriptives",
+          p("Structure de l'objet R contenant les données :"),
+          verbatimTextOutput("sortie_str"),
+          p("Statistiques descriptives pour une variable sélectionnée :"),
+          sidebarLayout(     
+            sidebarPanel = sidebarPanel(
+              varSelectInput(
+                inputId = "variable",
+                label = "Choix de la variable :",
+                data = volcan_resume
+              )
+            ),
+            mainPanel = mainPanel(
+              textOutput("type_var"),
+              plotOutput("graphDesc"),
+              tableOutput("sortie_stat_desc")
+              
+            )
+          )
+        ),
+        
         #Onglet pour les prédictions:
         tabPanel(
           title = "Prédictions des intensités volcaniques", 
@@ -130,28 +153,7 @@ ui <- fluidPage(
          )
       ),
 
-        #Statistiques descriptives
-        tabPanel(
-            title = "Statistiques descriptives",
-            p("Structure de l'objet R contenant les données :"),
-            verbatimTextOutput("sortie_str"),
-            p("Statistiques descriptives pour une variable sélectionnée :"),
-            sidebarLayout(     
-                sidebarPanel = sidebarPanel(
-                    varSelectInput(
-                        inputId = "variable",
-                        label = "Choix de la variable :",
-                        data = volcan_resume
-                    )
-                ),
-                mainPanel = mainPanel(
-                    textOutput("type_var"),
-                    plotOutput("graphDesc"),
-                    tableOutput("sortie_stat_desc")
-                    
-                )
-            )
-        ),
+
         
         #Carte interactive
         tabPanel(
