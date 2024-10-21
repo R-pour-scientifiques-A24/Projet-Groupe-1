@@ -65,7 +65,7 @@ ui <- fluidPage(
         
         #Données brutes sur les volcans:
         tabPanel(
-        title = "Données brutes volcan",
+        title = "Données brutes",
         DT::dataTableOutput("volcan_resume")
         ),
         

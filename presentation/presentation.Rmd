@@ -36,7 +36,7 @@ library(leaflet)
 # Pour une meilleure résolution de figure
 knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "80%", warning = FALSE, message = FALSE)
 style_xaringan(
-  title_slide_background_image = "img/volcan.png"
+  title_slide_background_image = "img/volcan.png", inverse_text_shadow = TRUE, inverse_text_color = "#FFFFFF",
 )
 ```
 
@@ -140,7 +140,7 @@ class: inverse, center, middle
 ---
 # Carte animée - Première étape
 
-Avec le package ggmap, on peut positionner une carte du monde sur une grille où les axes sont des longitudes et des latitudes. Ici, on représente l'année pour laquelle il y a le plus d'éruptions enregistrée.
+Avec le package ggmap, on peut positionner une carte du monde sur une grille où les axes sont des longitudes et des latitudes. Ici, on représente l'année pour laquelle il y a le plus d'éruptions enregistrées.
 
 .pull-left[
 - aes: x = longitudes, y=latitudes
@@ -178,6 +178,11 @@ geoanim<-geoanim %>%
 Voici le code qui a permis de généré le gif à la page suivante. 
 
 ```{r ggplotanim, echo = TRUE, eval=FALSE, message=FALSE}
+cols<-colorRampPalette(c("yellow", "red"))
+colsvei<-cols(8)
+
+mapWorld <- borders("world", colour="palegreen3", fill="palegreen3") #Package ggmap
+
 mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
   theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
   mapWorld + 
@@ -328,56 +333,5 @@ ggplot(
 
 ---
 
+# Lien vers l'application:
 
-class: inverse, center, middle
-
-# Annexe
-
----
-
-# Code 1
-
-Comme ce sont des images et des gifs exportés qui ont été utilisés dans la présentation, voici les éléments de code qui ont servis à la création de ces fichiers.
-
-Code pour la carte des érutpions de 2004:
-
-```{r ggplot2004, echo = TRUE, eval=FALSE}
-cols<-colorRampPalette(c("yellow", "red"))
-colsvei<-cols(8)
-
-mapWorld <- borders("world", colour="palegreen3", fill="palegreen3") #Package ggmap
-
-mp1 <- ggplot(geoanim[geoanim$annee==2004,], 
-              aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
-  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
-  mapWorld + 
-  geom_point(alpha=0.7)+
-  scale_colour_manual(name="vei", values=colsvei)+
-  theme(aspect.ratio=3/4)+
-  labs(title="Éruptions volcaniques de 2004", x="longitude", y="latitude" )
-```
-
----
-
-# Code 2
-
-Deuxième option de ggplot pour la représentation des éruptions en fonction de l'indice de force. C'est très beau, mais très long à exporter en animation, et aussi très dur à interpréter!
-
-```{r ggplot2004vei, echo = TRUE, eval=FALSE}
-mp2 <- ggplot(geoanim[geoanim$anne==1812,], 
-              aes(x=long, y=lati, colour=as.factor(vei), size=popquant)) + 
-  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
-  mapWorld + 
-  geom_point(alpha=0.7)+
-  scale_colour_manual(name="vei", values=colsvei)+
-  theme(aspect.ratio=3/4)+
-  facet_wrap(~vei)
-```
-
----
-
-# Code 2 - Sortie
-
-```{r imageplot1812, echo=FALSE, out.width="75%",fig.align = 'center'}
-include_graphics("img/plot_1812.png")
-```
