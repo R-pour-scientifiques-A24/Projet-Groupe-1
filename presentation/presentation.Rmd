@@ -123,6 +123,94 @@ kable(volcan_resume[c(1:10),], "html", row.names = FALSE) %>%
 
 class: inverse, center, middle
 
+# Éléments de l'application shiny
+
+---
+# Carte animée - Première étape
+
+Avec le package ggmap, on peut positionner une carte du monde sur une grille où les axes sont des longitudes et des latitudes. Ici, on représente l'année pour laquelle il y a le plus d'éruptions enregistrée.
+
+.pull-left[
+- aes: x = longitudes, y=latitudes
+- cols: En fonction d'un facteur ordonné: Indice de force d'éruption
+- size: Population vivant dans un rayon de 5km
+]
+
+.pull-right[
+```{r imageplot2004, echo=FALSE, out.width="100%", fig.align = 'center'}
+include_graphics("img/plot_2004.png")
+```
+
+]
+
+---
+# Carte animée - Problèmes et solutions
+
+Objectif: Utiliser la variable année d'éruption pour animer des cartes géographiques. 
+
+Problème:
+- transition_time() fait des saut équidistants et fait abstraction des années manquantes dans le jeu de données
+- transition_manual() ne cible que les données présentes, mais si on ne veut pas une image par année (1540 images dans notre cas), alors certaines années sont exclues de l'animation.
+
+Solution: Créer une nouvelle colonne avec la fonction *cut* et utiliser transition_manual().
+
+```{r colonnebin, echo = TRUE, eval=FALSE, message=FALSE}
+geoanim<-geoanim %>% 
+          mutate(grpannee = cut(annee, 
+            breaks=unique(round(c(-11350, quantile(annee, seq(from=0, to =1, by=0.0025))),0))))
+```
+
+---
+# Carte animée finale
+
+Voici le code qui a permis de généré le gif à la page suivante. 
+
+```{r ggplotanim, echo = TRUE, eval=FALSE, message=FALSE}
+mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
+  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
+  mapWorld + 
+  geom_point(alpha=0.7)+
+  scale_colour_manual(name="vei", values=colsvei)+
+  theme(aspect.ratio=3/4)+
+  labs(title = 'Année: {current_frame}', x="longitude", y="latitude") + 
+  transition_manual(grpannee) #Package gganimate
+
+gifannees<-animate(mp7,fps=2,width=900, height=600, nframes=368) 
+#nframes = nombre de modalités de grpannee
+
+anim_save(filename="ToutesAnnées.gif", gifannees)
+# Dans l'application, nous avons exporté le gif en vidéo. 
+# Cela donne plus de contrôle à l'utilisateur pour aller voir des années ciblées et 
+# pour ralentir la vitesse de lecture
+```
+
+---
+# Résultat:
+
+```{r gif, echo=FALSE, out.width="70%", fig.align = 'center'}
+include_graphics("img/ToutesAnnées.gif")
+```
+
+---
+# Carte interactive
+- Créer un jeu de données contenant les informations qui nous intéressent sans les doublons (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude).
+
+- Package leaflet pour la carte du monde avec punaises.
+
+- L'utilisateur choisit une punaise pour avoir les informations sur le volcan : nom, pays, altitude et année de sa dernière éruption.
+
+
+```{r out.width="100%",out.height="50%", echo=FALSE}
+leaflet(options=leafletOptions(minZoom = 1, maxZoom = 18))%>% addTiles() %>% 
+  addMarkers(data = data.frame(lng = tab_point$long, lat = tab_point$lati),
+             popup = paste0("Nom du volcan: ",tab_point$nom, "<br>", "Pays: ",tab_point$pays, "<br>",
+                            "Altitude: ",tab_point$altitude,"<br>","Année de la dernière activité volcanique: ",tab_point$derniere_erup),
+             icon = icone)
+```
+---
+
+class: inverse, center, middle
+
 # Statistiques descriptives bivariées
 
 ---
@@ -210,95 +298,6 @@ ggplot(
   theme(
     plot.title=element_text(hjust=0.5)
   )
-```
-
----
-
-class: inverse, center, middle
-
-# Éléments de l'application shiny
-
----
-# Carte animée - Première étape
-
-Avec le package ggmap, on peut positionner une carte du monde sur une grille où les axes sont des longitudes et des latitudes. Ici, on représente l'année pour laquelle il y a le plus d'éruptions enregistrée.
-
-.pull-left[
-- aes: x = longitudes, y=latitudes
-- cols: En fonction d'un facteur ordonné: Indice de force d'éruption
-- size: Population vivant dans un rayon de 5km
-]
-
-.pull-right[
-```{r imageplot2004, echo=FALSE, out.width="100%", fig.align = 'center'}
-include_graphics("img/plot_2004.png")
-```
-
-]
-
----
-# Carte animée - Problèmes et solutions
-
-Objectif: Utiliser la variable année d'éruption pour animer des cartes géographiques. 
-
-Problème:
-- transition_time() fait des saut équidistants et fait abstraction des années manquantes dans le jeu de données
-- transition_manual() ne cible que les données présentes, mais si on ne veut pas une image par année (1540 images dans notre cas), alors certaines années sont exclues de l'animation.
-
-Solution: Créer une nouvelle colonne avec la fonction *cut* et utiliser transition_manual().
-
-```{r colonnebin, echo = TRUE, eval=FALSE, message=FALSE}
-geoanim<-geoanim %>% 
-          mutate(grpannee = cut(annee, 
-            breaks=unique(round(c(-11350, quantile(annee, seq(from=0, to =1, by=0.0025))),0))))
-```
-
----
-# Carte animée finale
-
-Voici le code qui a permis de généré le gif à la page suivante. 
-
-```{r ggplotanim, echo = TRUE, eval=FALSE, message=FALSE}
-mp7 <- ggplot(geoanim, aes(x=long, y=lati, colour=as.factor(vei), size=Population_5km)) + 
-  theme(panel.background = element_rect(fill = 'lightskyblue1', colour = 'gray90'))+
-  mapWorld + 
-  geom_point(alpha=0.7)+
-  scale_colour_manual(name="vei", values=colsvei)+
-  theme(aspect.ratio=3/4)+
-  labs(title = 'Année: {current_frame}', x="longitude", y="latitude") + 
-  transition_manual(grpannee) #Package gganimate
-
-gifannees<-animate(mp7,fps=2,width=900, height=600, nframes=368) 
-#nframes = nombre de modalités de grpannee
-
-anim_save(filename="ToutesAnnées.gif", gifannees)
-# Dans l'application, nous avons exporté le gif en vidéo. 
-# Cela donne plus de contrôle à l'utilisateur pour aller voir des années ciblées et 
-# pour ralentir la vitesse de lecture
-```
-
----
-# Résultat:
-
-```{r gif, echo=FALSE, out.width="70%", fig.align = 'center'}
-include_graphics("img/ToutesAnnées.gif")
-```
-
----
-# Carte interactive
-- Créer un jeu de données contenant les informations qui nous intéressent sans les doublons (latitude, longitude, nom du volcan, pays, année de la dernière éruption, altitude).
-
-- Package leaflet pour la carte du monde avec punaises.
-
-- L'utilisateur choisit une punaise pour avoir les informations sur le volcan : nom, pays, altitude et année de sa dernière éruption.
-
-
-```{r out.width="100%",out.height="50%", echo=FALSE}
-leaflet(options=leafletOptions(minZoom = 1, maxZoom = 18))%>% addTiles() %>% 
-  addMarkers(data = data.frame(lng = tab_point$long, lat = tab_point$lati),
-             popup = paste0("Nom du volcan: ",tab_point$nom, "<br>", "Pays: ",tab_point$pays, "<br>",
-                            "Altitude: ",tab_point$altitude,"<br>","Année de la dernière activité volcanique: ",tab_point$derniere_erup),
-             icon = icone)
 ```
 
 ---
