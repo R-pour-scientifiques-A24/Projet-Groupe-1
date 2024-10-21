@@ -131,6 +131,15 @@ kable(volcan_resume[c(1:10),], "html", row.names = FALSE) %>%
     kable_styling(font_size = 8)
 ```
 
+
+
+---
+
+# Lien vers l'application:
+
+.link-style2[[Shiny app](https://amgroulx.shinyapps.io/shiny)]
+
+
 ---
 
 class: inverse, center, middle
@@ -330,8 +339,3 @@ ggplot(
   - Entier entre 0 et 7
   - Ajustable
 
----
-
-# Lien vers l'application:
-
-Application: .link-style2[[Shiny app](https://en.wikipedia.org/wiki/Main_Page)]
