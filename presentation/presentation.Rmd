@@ -329,7 +329,7 @@ ggplot(
 
 # Prédiction de l'intensité d'un volcan
 
-- Modèle de prédiction : Régression linéaire simple
+- Modèle de prédiction : Régression linéaire multiple
   - Comparaison des valeurs de AIC, BIC et R carré ajusté
 
 - 5 caractéristiques à choisir par l'utilisateur :
