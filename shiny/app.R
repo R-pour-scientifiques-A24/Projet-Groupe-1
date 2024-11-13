@@ -8,13 +8,12 @@ library(skimr)
 library(ggplot2)
 library(readr)
 library(leaflet)
-#library(plotly)
 
 
 #Chargement des tableaux
-eruptions <- read_csv("../data/eruptions.csv")
-events <- read_csv("../data/events.csv")
-volcano <- read_csv("../data/volcano.csv")
+eruptions <- read_csv("data/eruptions.csv")
+events <- read_csv("data/events.csv")
+volcano <- read_csv("data/volcano.csv")
 #Création du jeu de donnée
 volcan1<-merge(eruptions,events, by="eruption_number") #Jeu intermédiaire pour 1er merge
 volcan<-merge(volcan1,volcano, by.x="volcano_number.x", by.y="volcano_number")

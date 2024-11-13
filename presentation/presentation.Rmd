@@ -170,7 +170,7 @@ include_graphics("img/plot_2004.png")
 Objectif: Utiliser la variable année d'éruption pour animer des cartes géographiques. 
 
 Problème:
-- transition_time() fait des saut équidistants et fait abstraction des années manquantes dans le jeu de données
+- transition_time() fait des sauts équidistants et fait abstraction des années manquantes dans le jeu de données
 - transition_manual() ne cible que les données présentes, mais si on ne veut pas une image par année (1540 images dans notre cas), alors certaines années sont exclues de l'animation.
 
 Solution: Créer une nouvelle colonne avec la fonction *cut* et utiliser transition_manual().
@@ -329,7 +329,7 @@ ggplot(
 
 # Prédiction de l'intensité d'un volcan
 
-- Modèle de prédiction : Régression linéaire simple
+- Modèle de prédiction : Régression linéaire multiple
   - Comparaison des valeurs de AIC, BIC et R carré ajusté
 
 - 5 caractéristiques à choisir par l'utilisateur :
