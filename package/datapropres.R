@@ -32,4 +32,4 @@ volcan$major_rock_1<-as.factor(volcan$major_rock_1)
 volcan$minor_rock_1<-as.factor(volcan$minor_rock_1)
 
 
-write.csv(volcan, "volcan.csv")
+write.csv(volcan, "package/data/volcan.csv")
