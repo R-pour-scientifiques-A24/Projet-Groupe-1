@@ -1,6 +1,6 @@
 fct_catego <- function(x){
   if (!(is.factor(x))){
-    stop(" L'argument fourni n'est pas de type Facteur.")
+    stop(" L'argument fourni n'est pas de type facteur.")
   } else {
     
     freq<-as.matrix(rbind(names(table(volcan$eruption_category)), table(volcan$eruption_category), prop.table(table(volcan$eruption_category))))
@@ -25,9 +25,7 @@ print.statcateg<-function(x){
   if (class(x)!="statcateg"){
     stop("L'argument fourni n'est pas de classe statcateg.")
   }else{
-    ligne<-c(x[[2]], x[[3]], x[[4]])
-    names(ligne)<-c("0%", "10%", "25%", "50%", "75%", "90%", "100%", "Moyenne", "E.T.")
-    print(ligne)
+    print(as.data.frame(x[[2]]), row.names=FALSE)
   }
 }
 print(categ)
@@ -39,8 +37,8 @@ summary.statcateg<-function(x){
   }else{
     cat("Variable catégoriquee\n\nNombre d'observations:\n")
     cat("Total:", as.character(x[[1]][1]), "\nManquantes(NA):", as.character(x[[1]][2]))
-    cat("\n\nFréquences:")
-    as.data.frame(x[[2]])
+    cat("\n\nFréquences:\n")
+    print(as.data.frame(x[[2]]), row.names=FALSE)
   }
 }
 summary(categ)
