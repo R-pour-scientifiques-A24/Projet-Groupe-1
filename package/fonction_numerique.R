@@ -1,4 +1,3 @@
-
 fct_numerique <- function(x){
   if (!(is.numeric(x) & is.vector(x))){
     stop("L'argument fourni n'est pas de type numerique.")
@@ -11,3 +10,6 @@ fct_numerique <- function(x){
 
 year<-fct_numerique(volcan$start_year)
 str(year)
+print(year)
+
+print.sd
