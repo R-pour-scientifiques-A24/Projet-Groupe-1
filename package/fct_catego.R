@@ -15,14 +15,13 @@ categ<-fct_catego(volcan$eruption_category)
 str(categ)
 
 
-# x : Un objet de type statnum 
+# x : Un objet de type statcateg 
 print.statcateg<-function(x){
   if (class(x)!="statcateg"){
     stop("L'argument fourni n'est pas de classe statcateg.")
   }else{
-    ligne<-c(x[[2]], x[[3]], x[[4]])
-    names(ligne)<-c("0%", "10%", "25%", "50%", "75%", "90%", "100%", "Moyenne", "E.T.")
-    print(ligne)
+    infos <- data.frame(c(levels(x), table(x), prop.table(table(x))))
   }
 }
 print(categ)
+
