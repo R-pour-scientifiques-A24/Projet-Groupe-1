@@ -1,3 +1,5 @@
+library(readr)
+
 
 fct_catego <- function(x){
   if (!(is.factor(x) & is.vector(x))){
@@ -6,3 +8,4 @@ fct_catego <- function(x){
     
   }
 }
+
