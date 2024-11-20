@@ -8,8 +8,7 @@ fct_numerique <- function(x){
   }
 }
 
+fct_numerique(volcan$start_year)
 year<-fct_numerique(volcan$start_year)
 str(year)
-print(year)
 
-print.sd
