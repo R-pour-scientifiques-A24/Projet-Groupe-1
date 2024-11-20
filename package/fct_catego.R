@@ -35,7 +35,7 @@ summary.statcateg<-function(x){
   if (class(x)!="statcateg"){
     stop("L'argument fourni n'est pas de classe statcateg.")
   }else{
-    cat("Variable catégoriquee\n\nNombre d'observations:\n")
+    cat("Variable catégorique\n\nNombre d'observations:\n")
     cat("Total:", as.character(x[[1]][1]), "\nManquantes(NA):", as.character(x[[1]][2]))
     cat("\n\nFréquences:\n")
     print(as.data.frame(x[[2]]), row.names=FALSE)
