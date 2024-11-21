@@ -4,10 +4,10 @@ fonction_principale <- function(x){
   } else{
     for (colonne in 1:length(x)){
       if (is.numeric(colonne) & is.vector(colonne)){
-        num <- lapply(colonne, FUN=fct_numerique)
+        num <- lapply(x, FUN=fct_numerique(colonne))
       }
       if (is.factor(colonne)){
-        categ <- lapply(colonne, FUN=fct_catego)
+        categ <- lapply(x, FUN=fct_catego(colonne))
       } else {
         autre <- "autre"
       }
