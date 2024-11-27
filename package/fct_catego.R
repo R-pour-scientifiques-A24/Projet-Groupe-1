@@ -3,12 +3,13 @@ fct_catego <- function(x){
     stop(" L'argument fourni n'est pas de type facteur.")
   } else {
     
-    freq<-as.matrix(rbind(names(table(volcan$eruption_category)), table(volcan$eruption_category), prop.table(table(volcan$eruption_category))))
-    freq<-as.data.frame(t(freq))
+    freq<-cbind(names(table(x)), table(x), prop.table(table(x)))
+    freq<-as.data.frame(freq)
+    freq[,2]<-as.integer(freq[,2])
+    freq[,3]<-as.numeric(freq[,3])
     colnames(freq)<-c("Modalités","Fréquences", "Proportion")
     rownames(freq) <- NULL
-    
-    liste_statcateg<-list(nombre_observations=list(length(x), sum(is.na(x))), 
+    liste_statcateg<-list(nombre_observations=c("Total :"=length(x),  "Manquantes (NA) :"=sum(is.na(x))), 
                     frequences=freq,
                     mode=which.max(table(x)), observations=x)
     class(liste_statcateg) <- "statcateg"
