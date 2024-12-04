@@ -1,10 +1,13 @@
 library(readr)
-volcan <- read_csv("package/data/volcan.csv")
+volcan <- read.csv("package/data/volcan.csv")
 
+#Retrait variable random
+volcan <- volcan[,-1]
+
+#ajuster le bon type
 volcan$volcano_number<-as.character(volcan$volcano_number)
 volcan$eruption_number<-as.character(volcan$eruption_number)
 volcan$event_number<-as.character(volcan$event_number)
-
 volcan$eruption_category<-as.factor(volcan$eruption_category)
 volcan$evidence_method_dating<-as.factor(volcan$evidence_method_dating)
 volcan$event_type<-as.factor(volcan$event_type)
