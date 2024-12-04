@@ -56,8 +56,8 @@ fct_principale<- function(x){
     }
     row.names(matrice_stat_num) = c("0%", "10%", "25%", "50%", "75%", "90%", "100%", "Moyenne", "E.T.")
     liste_finale <- list(nombre_observations=as.matrix(matrice_nb_obs), type_variable=matrice_type_variable, stat_num=as.matrix(matrice_stat_num), stat_fact=liste_stat_fact, var_autre=vecteur_var_autre)
-    return(liste_finale)
     class(liste_finale) <- "principale"
+    return(liste_finale)
   }
 }
 
