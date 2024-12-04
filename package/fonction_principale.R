@@ -49,11 +49,7 @@ fct_principale <- function(x){
         vecteur_var_autre <- c(vecteur_var_autre, names(x)[colonne])
       }
     }
-    return(matrice_nb_obs)
-    return(matrice_type_variable)
-    return(matrice_stat_num)
-    return(liste_stat_fact)
-    return(vecteur_var_autre)
+    return(list(matrice_nb_obs, matrice_type_variable, matrice_stat_num, liste_stat_fact, vecteur_var_autre))
     class() <- "principale"
   }
 }
