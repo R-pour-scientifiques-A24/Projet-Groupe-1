@@ -21,26 +21,18 @@ categ<-fct_catego(volcan$eruption_category)
 str(categ)
 
 
-<<<<<<< HEAD
-# x : Un objet de type statcateg 
-=======
+
 # x : Un objet de type statcateg
->>>>>>> 1a5d94d3cfaa4ff20901e7da4a937c2afb3463f6
 print.statcateg<-function(x){
   if (class(x)!="statcateg"){
     stop("L'argument fourni n'est pas de classe statcateg.")
   }else{
-<<<<<<< HEAD
     infos <- data.frame(c(levels(x), table(x), prop.table(table(x))))
-=======
     print(as.data.frame(x[[2]]), row.names=FALSE)
->>>>>>> 1a5d94d3cfaa4ff20901e7da4a937c2afb3463f6
   }
 }
 print(categ)
 
-<<<<<<< HEAD
-=======
 # x : Un objet de type statcateg
 summary.statcateg<-function(x){
   if (class(x)!="statcateg"){
@@ -54,4 +46,3 @@ summary.statcateg<-function(x){
 }
 summary(categ)
 
->>>>>>> 1a5d94d3cfaa4ff20901e7da4a937c2afb3463f6
