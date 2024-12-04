@@ -33,10 +33,11 @@ fct_principale<- function(x){
         matrice_nb_obs[,colonne] <- as.matrix(fct_numerique(x[,colonne])[[1]])
         colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
         matrice_type_variable[,colonne] <- "Numerique"
-      #  matrice_stat_num <- cbind(matrice_stat_num, fct_numerique(x[,colonne])[c(2,3,4)])
-        stat_num <- c(fct_numerique(x[,colonne])[[2]],fct_numerique(x[,colonne])[[3]],fct_numerique(x[,colonne])[[4]])
-        stat_num <- t(stat_num)
-        matrice_stat_num <- cbind(matrice_stat_num,stat_num)
+        stat_num <- matrix(c(fct_numerique(x[,colonne])[[2]],fct_numerique(x[,colonne])[[3]],fct_numerique(x[,colonne])[[4]]),9,1)
+        colnames(stat_num) = colnames(x)[colonne]
+        matrice_stat_num <- (cbind(matrice_stat_num,stat_num))
+        #colnames(matrice_stat_num)[colonne] <- colnames(x)[colonne]
+      #  print(matrice_stat_num)
       }
       if (is.factor(x[,colonne])){
         catego <- fct_catego(x[,colonne])
@@ -52,14 +53,14 @@ fct_principale<- function(x){
         vecteur_var_autre <- c(vecteur_var_autre, names(x)[colonne])
       }
     }
-    liste_finale <- list(nombre_observations=as.matrix(matrice_nb_obs), type_variable=matrice_type_variable, stat_num=matrice_stat_num, stat_fact=liste_stat_fact, var_autre=vecteur_var_autre)
+  row.names(matrice_stat_num) = c("0%", "10%", "25%", "50%", "75%", "90%", "100%", "Moyenne", "E.T.")
+    liste_finale <- list(nombre_observations=as.matrix(matrice_nb_obs), type_variable=matrice_type_variable, stat_num=as.matrix(matrice_stat_num), stat_fact=liste_stat_fact, var_autre=vecteur_var_autre)
     return(liste_finale)
     class(liste_finale) <- "principale"
   }
 }
 
 result <- fct_principale(volcan)
-x = volcan
 str(result)
 
 # Méthode summary pour un objet retourné par la fct_principale
