@@ -17,3 +17,4 @@ volcan$tectonic_settings<-as.factor(volcan$tectonic_settings)
 volcan$evidence_category<-as.factor(volcan$evidence_category)
 volcan$major_rock_1<-as.factor(volcan$major_rock_1)
 volcan$minor_rock_1<-as.factor(volcan$minor_rock_1)
+

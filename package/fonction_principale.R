@@ -104,4 +104,4 @@ str(test)
 summary(test)
 
 
-#Reste à changer type 
+#Reste à changer type numérique
