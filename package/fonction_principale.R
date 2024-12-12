@@ -23,26 +23,25 @@ fct_principale<- function(x){
         matrice_stat_num <- cbind(matrice_stat_num,stat_num)
         #colnames(matrice_stat_num)[colonne] <- colnames(x)[colonne]
         #  print(matrice_stat_num)
-      }
-      if (is.factor(x[,colonne])){
-        nom_col_facteur<-c(nom_col_facteur, colnames(x)[colonne])
-        catego <- fct_catego(x[,colonne])
-        matrice_nb_obs[,colonne] <- as.matrix(fct_catego(x[,colonne])[[1]])
-        matrice_type_variable[,colonne] <- "Facteur"
-        colnames(matrice_type_variable)[colonne] <- colnames(x)[colonne]
-        tab_freq <- data.frame(catego[[2]])
-        freq <- c(freq,list(tab_freq))
-        tab_mode <- data.frame(catego[[3]])
-        mode <- c(mode,list(tab_mode))
-        colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
-      } else {
-        class(x[,colonne]) <- "autre"
-        matrice_nb_obs[,colonne] <- c("Total"=length(x[,colonne]), "Manquantes (NA)"=sum(is.na(x[,colonne])))
-        colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
-        matrice_type_variable[,colonne] <- "Autre"
-        colnames(matrice_type_variable)[colonne] <- colnames(x)[colonne]
-        vecteur_var_autre <- c(vecteur_var_autre, names(x)[colonne])
-      }
+      } else if (is.factor(x[,colonne])){
+          nom_col_facteur<-c(nom_col_facteur, colnames(x)[colonne])
+          catego <- fct_catego(x[,colonne])
+          matrice_nb_obs[,colonne] <- as.matrix(fct_catego(x[,colonne])[[1]])
+          matrice_type_variable[,colonne] <- "Facteur"
+          colnames(matrice_type_variable)[colonne] <- colnames(x)[colonne]
+          tab_freq <- data.frame(catego[[2]])
+          freq <- c(freq,list(tab_freq))
+          tab_mode <- data.frame(catego[[3]])
+          mode <- c(mode,list(tab_mode))
+          colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
+        } else {
+          class(x[,colonne]) <- "autre"
+          matrice_nb_obs[,colonne] <- c("Total"=length(x[,colonne]), "Manquantes (NA)"=sum(is.na(x[,colonne])))
+          colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
+          matrice_type_variable[,colonne] <- "Autre"
+          colnames(matrice_type_variable)[colonne] <- colnames(x)[colonne]
+          vecteur_var_autre <- c(vecteur_var_autre, names(x)[colonne])
+          }
     }
     row.names(matrice_stat_num) = c("0%", "10%", "25%", "50%", "75%", "90%", "100%", "Moyenne", "E.T.")
     names(freq) <- nom_col_facteur
@@ -103,5 +102,3 @@ test <- fct_principale(mon_tab)
 str(test)
 summary(test)
 
-
-#Reste à changer type numérique
