@@ -27,7 +27,7 @@ print.statcateg<-function(x){
   if (class(x)!="statcateg"){
     stop("L'argument fourni n'est pas de classe statcateg.")
   }else{
-    infos <- data.frame(c(levels(x), table(x), prop.table(table(x))))
+    #infos <- data.frame(c(levels(x), table(x), prop.table(table(x))))
     print(as.data.frame(x[[2]]), row.names=FALSE)
   }
 }

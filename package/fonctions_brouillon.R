@@ -256,3 +256,237 @@ names(liste_random)<- c("a","b")
 liste_random
 # trouver comment changer le nom data frame et summary
 liste_statcateg
+
+
+# tests amg, na aps en tenir compte:
+stat_table<- function(x){
+  if (!is.data.frame(x)){
+    stop("L'argument fourni n'est pas un data frame.")
+  } else{
+    liste <- list()
+    matrice_nb_obs <- as.data.frame(matrix(NA, nrow=2, ncol=ncol(x)))
+    rownames(matrice_nb_obs) <- c( "Total :", "Manquantes (NA) :")
+    matrice_type_variable <- as.data.frame(matrix(NA,nrow=1,ncol=ncol(x)))
+    matrice_stat_num <- matrix(nrow=9, ncol=0)
+    liste_stat_fact <- list()
+    freq <- list()
+    mode <- list()
+    nom_col_facteur <- c()
+    vecteur_var_autre <- c()
+    for (colonne in 1:ncol(x)){
+      if (is.numeric(x[,colonne]) & is.vector(x[,colonne])){
+        matrice_nb_obs[,colonne] <- as.matrix(stat_num(x[,colonne])[[1]])
+        colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
+        matrice_type_variable[,colonne] <- "Numerique"
+        colnames(matrice_type_variable)[colonne] <- colnames(x)[colonne]
+        statsnums <- matrix(c(stat_num(x[,colonne])[[2]],stat_num(x[,colonne])[[3]],stat_num(x[,colonne])[[4]]),9,1)
+        colnames(statsnums) = colnames(x)[colonne]
+        matrice_stat_num <- cbind(matrice_stat_num,statsnums)
+        #colnames(matrice_stat_num)[colonne] <- colnames(x)[colonne]
+        #  print(matrice_stat_num)
+      } else if (is.factor(x[,colonne]) & is.vector(x[,colonne])){
+        nom_col_facteur<-c(nom_col_facteur, colnames(x)[colonne])
+        catego <- stat_categ(x[,colonne])
+        matrice_nb_obs[,colonne] <- as.matrix(stat_categ(x[,colonne])[[1]])
+        matrice_type_variable[,colonne] <- "Facteur"
+        colnames(matrice_type_variable)[colonne] <- colnames(x)[colonne]
+        tab_freq <- data.frame(catego[[2]])
+        freq <- c(freq,list(tab_freq))
+        tab_mode <- data.frame(catego[[3]])
+        mode <- c(mode,list(tab_mode))
+        colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
+      } else {
+        matrice_nb_obs[,colonne] <- c("Total"=length(x[,colonne]), "Manquantes (NA)"=sum(is.na(x[,colonne])))
+        colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
+        matrice_type_variable[,colonne] <- "Autre"
+        colnames(matrice_type_variable)[colonne] <- colnames(x)[colonne]
+        vecteur_var_autre <- c(vecteur_var_autre, names(x)[colonne])
+      }
+    }
+    row.names(matrice_stat_num) = c("0%", "10%", "25%", "50%", "75%", "90%", "100%", "Moyenne", "E.T.")
+    names(freq) <- nom_col_facteur
+    names(mode) <- nom_col_facteur
+    liste_stat_fact <- c(liste_stat_fact, "Fréquences"=list(freq), "Mode"=list(mode))
+    liste_finale <- list(nombre_observations=as.matrix(matrice_nb_obs), type_variable=as.matrix(matrice_type_variable), statsnums=as.matrix(matrice_stat_num), stat_fact=liste_stat_fact, var_autre=vecteur_var_autre)
+    class(liste_finale) <- "stat_table"
+    return(liste_finale)
+  }
+}
+
+
+volcan<-volcan::volcan
+obj<-stat_table(volcan::volcan)
+summary(obj)
+
+obj2<-fct_principale(volcan::volcan)
+summary(obj2)
+
+summary.stat_table <- function(object){
+  if (!methods::is(object,"stat_table")){
+    stop("L'argument fourni n'est pas de classe stat_table.")
+  }else{
+    cat("Type de variable :\n\n")
+    print(t(object[[2]]))
+    cat("\n\n")
+    cat("Nombre d'observations par variable :\n\n")
+    print(t(object[[1]]))
+    cat("\n\n")
+    cat("*********************** \n\n")
+    cat("Statistiques descriptives des variables numeriques:\n\n")
+    cat("Quantiles par variable numerique:\n\n")
+    print(t(object[[3]])[,1:7])
+    cat("\n\n")
+    cat("Moyenne et variance par variable numerique:\n\n")
+    print(t(object[[3]])[,c(8,9)])
+    cat("\n\n")
+    cat("*********************** \n\n")
+    cat("Statistiques descriptives des facteurs: \n\n")
+    
+    for(i in 1:length(object[[4]][[1]])){
+      cat(names(object[[4]][[1]][i]), ": Fréquences des catégories: \n\n")
+      print(object[[4]][[1]][[i]])
+      cat("\n\n")
+      mode_fac <- as.numeric(object[[4]][[2]][[i]])
+      cat(names(object[[4]][[2]][i]),": Le mode est", mode_fac, "\n\n\n")
+    }
+  }
+}
+
+stat_table<- function(x){
+  if (!is.data.frame(x)){
+    stop("L'argument fourni n'est pas un data frame.")
+  } else {
+    
+  nnum<-0
+  ncat<-0
+  nautre<-0
+  typevarlist<-vector()
+  nalist<-vector()
+
+#Analyse de chaque colonne:    
+for(i in 1:ncol(x)){
+  if (is.numeric(x[,i])){
+    nnum<-nnum+1
+    typevarlist[i]<-"Numérique"
+    nalist[i]<-sum(is.na(x[,i]))
+  } else if(is.factor(x[,i])){
+    ncat<-ncat+1
+    typevarlist[i]<-"Facteur"
+    nalist[i]<-sum(is.na(x[,i]))
+  }else{
+    nautre<-nautre+1
+    typevarlist[i]<-"Autre"
+    nalist[i]<-sum(is.na(x[,i]))
+    }
+}
+  
+ #Mise en forme des éléments de la liste
+ typevarmat<-as.data.frame(cbind(colnames(x),typevarlist))
+ colnames(typevarmat)<-c("Variable", "Type")
+ 
+ nbobsmat<-as.data.frame(cbind(colnames(x), rep(nrow(x), ncol(x)), nalist))
+ colnames(nbobsmat)<-c("", "Total:", "Manquantes (NA)")
+
+ #Liste finale
+ liste_finale<-list("nombre_observations"=nbobsmat, "type_variable"=typevarmat)
+ class(liste_finale)<-"stat_table"
+ print(liste_finale[[1]], row.names=FALSE)
+ print(liste_finale[[2]],row.names=FALSE)
+ return(liste_finale)
+  }
+}
+
+
+stat_table(volcan)  
+
+
+
+stat_table<- function(x){
+  if (!is.data.frame(x)){
+    stop("L'argument fourni n'est pas un data frame.")
+  } else{
+    liste <- list()
+    matrice_nb_obs <- as.data.frame(matrix(NA, nrow=2, ncol=ncol(x)))
+    rownames(matrice_nb_obs) <- c( "Total :", "Manquantes (NA) :")
+    matrice_type_variable <- as.data.frame(matrix(NA,nrow=1,ncol=ncol(x)))
+    matrice_stat_num <- matrix(nrow=9, ncol=0)
+    liste_stat_fact <- list()
+    freq <- list()
+    mode <- list()
+    nom_col_facteur <- c()
+    vecteur_var_autre <- c()
+    for (colonne in 1:ncol(x)){
+      if (is.numeric(x[,colonne]) & is.vector(x[,colonne])){
+        matrice_nb_obs[,colonne] <- as.matrix(stat_num(x[,colonne])[[1]])
+        colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
+        matrice_type_variable[,colonne] <- "Numerique"
+        colnames(matrice_type_variable)[colonne] <- colnames(x)[colonne]
+        statsnumeriques <- matrix(c(stat_num(x[,colonne])[[2]],stat_num(x[,colonne])[[3]],stat_num(x[,colonne])[[4]]),9,1)
+        colnames(statsnumeriques) = colnames(x)[colonne]
+        matrice_stat_num <- cbind(matrice_stat_num,statsnumeriques)
+        #colnames(matrice_stat_num)[colonne] <- colnames(x)[colonne]
+        #  print(matrice_stat_num)
+      } else if (is.factor(x[,colonne])){
+        nom_col_facteur<-c(nom_col_facteur, colnames(x)[colonne])
+        catego <- stat_categ(x[,colonne])
+        matrice_nb_obs[,colonne] <- as.matrix(stat_categ(x[,colonne])[[1]])
+        matrice_type_variable[,colonne] <- "Facteur"
+        colnames(matrice_type_variable)[colonne] <- colnames(x)[colonne]
+        tab_freq <- data.frame(catego[[2]])
+        freq <- c(freq,list(tab_freq))
+        tab_mode <- data.frame(catego[[3]])
+        mode <- c(mode,list(tab_mode))
+        colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
+      } else {
+        matrice_nb_obs[,colonne] <- c("Total"=length(x[,colonne]), "Manquantes (NA)"=sum(is.na(x[,colonne])))
+        colnames(matrice_nb_obs)[colonne] <- colnames(x)[colonne]
+        matrice_type_variable[,colonne] <- "Autre"
+        colnames(matrice_type_variable)[colonne] <- colnames(x)[colonne]
+        vecteur_var_autre <- c(vecteur_var_autre, names(x)[colonne])
+      }
+    }
+    row.names(matrice_stat_num) = c("0%", "10%", "25%", "50%", "75%", "90%", "100%", "Moyenne", "E.T.")
+    names(freq) <- nom_col_facteur
+    names(mode) <- nom_col_facteur
+    liste_stat_fact <- c(liste_stat_fact, "Fréquences"=list(freq), "Mode"=list(mode))
+    liste_finale <- list(nombre_observations=as.matrix(matrice_nb_obs), type_variable=as.matrix(matrice_type_variable), stats_numeriques=as.matrix(matrice_stat_num), stats_facteurs=liste_stat_fact, var_autre=vecteur_var_autre)
+    class(liste_finale) <- "stat_table"
+    return(liste_finale)
+  }
+}
+
+summary.stat_table <- function(object){
+  if (!methods::is(object,"stat_table")){
+    stop("L'argument fourni n'est pas de classe principale.")
+  }else{
+    cat("Type de variable :\n\n")
+    print(t(object[[2]]))
+    cat("\n\n")
+    cat("Nombre d'observations par variable :\n\n")
+    print(t(object[[1]]))
+    cat("\n\n")
+    cat("*********************** \n\n")
+    cat("Statistiques descriptives des variables numeriques:\n\n")
+    cat("Quantiles par variable numerique:\n\n")
+    print(t(object[[3]])[,1:7])
+    cat("\n\n")
+    cat("Moyenne et variance par variable numerique:\n\n")
+    print(t(object[[3]])[,c(8,9)])
+    cat("\n\n")
+    cat("*********************** \n\n")
+    cat("Statistiques descriptives des facteurs: \n\n")
+    for(i in 1:length(object[[4]][[1]])){
+      cat(names(object[[4]][[1]][i]), ": Fréquences des catégories: \n\n")
+      print(object[[4]][[1]][[i]])
+      cat("\n\n")
+      mode_fac <- as.numeric(object[[4]][[2]][[i]])
+      cat(names(object[[4]][[2]][i]),": Le mode est", mode_fac, "\n\n\n")
+    }
+    
+  }
+}
+
+obj <- stat_table(volcan)
+obj
+str(obj)
+summary(obj)
